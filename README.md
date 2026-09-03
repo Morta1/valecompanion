@@ -2,6 +2,8 @@
 
 Vale Companion is the preferred desktop companion for **Spirit Vale**. It combines the ValeLoot live bag and rule-based alerts with the ValeMarket browser and passive community contribution in one application.
 
+![Vale Companion interface](readme-img.png)
+
 - No DLL injection, BepInEx, runtime patching, or game-file modification
 - No gameplay automation, input simulation, buying, selling, dismantling, or item movement
 - Passive, process-scoped network observation through Npcap on Windows or libpcap/dumpcap on Linux
