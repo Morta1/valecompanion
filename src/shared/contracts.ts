@@ -1,0 +1,150 @@
+export const DESKTOP_API_PORT = 47832;
+
+export type CollectorPhase = "disabled" | "capture-unavailable" | "waiting-for-game" | "capturing" | "error";
+export type LootKind = "equipment" | "artifact" | "gem" | "card";
+export type LootHighlight = "dot" | "mark" | "glow";
+export type LootBackground = "border" | "fill" | "holo";
+
+export interface CaptureDevice {
+  name: string;
+  description: string;
+  addresses: string[];
+  loopback: boolean;
+  automaticCandidate?: boolean;
+}
+
+export interface LootLine {
+  stat: string;
+  rollPct: number;
+  printed: number | null;
+  isChaos: boolean;
+  over: boolean;
+}
+
+export interface LootMatchView {
+  rule: string;
+  tag: string;
+  color: string;
+  highlight: LootHighlight;
+  background: LootBackground;
+  border: boolean;
+  sound: string | null;
+}
+
+export interface LootItemView {
+  uid: string;
+  itemId: string;
+  name: string;
+  type: string;
+  kind: LootKind;
+  icon: string | null;
+  refine: number;
+  count: number;
+  favorite: boolean;
+  hasChaos: boolean;
+  topRolls: number | null;
+  highRolls: number;
+  avgRollPct: number | null;
+  lines: LootLine[];
+  match: LootMatchView | null;
+}
+
+export interface FilterErrorView {
+  line: number;
+  text: string;
+  message: string;
+}
+
+export interface ProfileView {
+  name: string;
+  active: boolean;
+}
+
+export interface AlertHistoryView {
+  sequence: number;
+  at: string;
+  uid: string;
+  name: string;
+  type: string;
+  rule: string;
+  tag: string;
+  sound: string | null;
+  soundWinner: boolean;
+  soundPlayed: boolean;
+  note: string;
+}
+
+export type LinuxCaptureMode = "auto" | "libpcap" | "dumpcap";
+export interface MarketContributorView {
+  prepared: number;
+  uploaded: number;
+  queuedBatches: number;
+  marketEventsDecoded: number;
+  listingsDecoded: number;
+  observationsNormalized: number;
+  latestObservationAt?: string;
+  latestUploadAt?: string;
+  warning?: string;
+}
+
+
+export interface DesktopState {
+  version: string;
+  enabled: boolean;
+  soundsEnabled: boolean;
+  contributionEnabled: boolean;
+  deviceName: string | null;
+  linuxCaptureMode: LinuxCaptureMode;
+  captureAdapter?: {
+    name: string;
+    description: string;
+    selection: "automatic" | "manual";
+    automaticCandidate: boolean;
+  };
+  phase: CollectorPhase;
+  detail: string;
+  capture: {
+    backend: string;
+    availability: "ready" | "missing" | "error";
+    detail: string;
+    version?: string;
+  };
+  gameDetected: boolean;
+  packetsObserved: number;
+  lastAttributedPacketAt?: string;
+  automaticCaptureRestarts: number;
+  snapshotsDecoded: number;
+  partialSnapshots: number;
+  duplicateSnapshots: number;
+  market: MarketContributorView;
+  bag: LootItemView[];
+  bagGeneratedAt: string | null;
+  bagCoverage: string;
+  filter: {
+    text: string;
+    path: string;
+    threshold: number;
+    ruleCount: number;
+    errors: FilterErrorView[];
+  };
+  profiles: ProfileView[];
+  soundsDirectory: string;
+  logsDirectory: string;
+  history: AlertHistoryView[];
+  sounds: string[];
+  warning?: string;
+}
+
+export interface DesktopSettingsUpdate {
+  enabled?: boolean;
+  soundsEnabled?: boolean;
+  contributionEnabled?: boolean;
+  deviceName?: string | null;
+  linuxCaptureMode?: LinuxCaptureMode;
+}
+
+export type ProfileCommand =
+  | { action: "create"; name: string; text: string }
+  | { action: "duplicate"; source: string; name: string }
+  | { action: "rename"; source: string; name: string }
+  | { action: "activate"; name: string };

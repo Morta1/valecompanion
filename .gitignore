@@ -1,0 +1,8 @@
+node_modules/
+build/
+dist/
+data/
+*.log
+*.zip
+.DS_Store
+.valecompanion-portable

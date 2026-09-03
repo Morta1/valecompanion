@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0f0e">
+  <title>Vale Companion — switcher prototype</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-variant="rail">
+  <div class="prototype-note">UX PROTOTYPE · layout and switching only</div>
+
+  <div class="shell">
+    <aside class="rail chrome-panel" aria-label="Companion modules">
+      <div class="brand-lockup">
+        <span class="brand-sigil" aria-hidden="true">V</span>
+        <span><b>Vale</b><strong>Companion</strong></span>
+      </div>
+      <div class="rail-label">Modules</div>
+      <nav class="module-nav module-nav-rail"></nav>
+      <div class="capture-spine" data-capture-toggle tabindex="0" role="button" aria-label="Open capture status">
+        <span class="capture-pulse" aria-hidden="true"></span>
+        <span><b>Spirit Vale connected</b><small>Npcap · Ethernet</small></span>
+        <span class="capture-rate">84 p/s</span>
+      </div>
+      <button class="rail-command" type="button" data-command-open><kbd>Ctrl K</kbd><span>Quick switch</span></button>
+      <div class="rail-meta"><span>Prototype 01</span><span>Capture v2</span></div>
+    </aside>
+
+    <header class="ribbon chrome-panel">
+      <div class="brand-lockup compact">
+        <span class="brand-sigil" aria-hidden="true">V</span>
+        <span><b>Vale</b><strong>Companion</strong></span>
+      </div>
+      <nav class="module-nav module-nav-ribbon" aria-label="Companion modules"></nav>
+      <button class="ribbon-capture" type="button" data-capture-toggle>
+        <span class="capture-pulse" aria-hidden="true"></span>
+        <span><b>Connected</b><small>84 packets/s</small></span>
+      </button>
+      <button class="icon-action" type="button" data-command-open aria-label="Quick switch"><kbd>⌘K</kbd></button>
+    </header>
+
+    <aside class="dock chrome-panel" aria-label="Companion modules">
+      <div class="brand-sigil" aria-hidden="true">V</div>
+      <nav class="module-nav module-nav-dock"></nav>
+      <span class="dock-line" aria-hidden="true"></span>
+      <button class="dock-capture" type="button" data-capture-toggle aria-label="Open capture status"><span class="capture-pulse"></span></button>
+      <button class="dock-settings" type="button" data-settings-toggle data-label="Settings" aria-label="Open settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg>
+      </button>
+      <button class="dock-command" type="button" data-command-open aria-label="Quick switch">K</button>
+    </aside>
+
+    <main class="workspace">
+      <header class="workspace-header">
+        <div>
+          <div class="workspace-breadcrumb"><span>Vale Companion</span><i></i><span id="module-kicker">Live inventory</span></div>
+          <h1 id="module-title">Loot ledger</h1>
+        </div>
+        <div class="workspace-actions">
+          <span class="freshness"><i></i><span id="module-freshness">Updated just now</span></span>
+          <button class="quiet-action" type="button">Refresh</button>
+          <button class="command-action" type="button" data-command-open><kbd>Ctrl K</kbd><span>Switch module</span></button>
+        </div>
+      </header>
+
+      <section class="module-panel" data-panel="loot" aria-label="Loot module">
+        <div class="surface-toolbar">
+          <label class="search-control">
+            <span class="search-glyph" aria-hidden="true"></span>
+            <input id="loot-search" type="search" placeholder="Find an item in this bag" autocomplete="off">
+          </label>
+          <div class="toolbar-rule"></div>
+          <label class="field-control"><span>Profile</span><select><option>Default</option><option>Bossing</option><option>Leveling</option></select></label>
+          <label class="field-control"><span>Bag</span><select><option>Equipment</option><option>Artifacts</option></select></label>
+          <span class="result-count">18 / 30 slots</span>
+        </div>
+
+        <div class="loot-layout">
+          <section class="loot-grid-wrap">
+            <div class="section-heading"><span>Equipment bag</span><small>New arrivals carry a signal mark</small></div>
+            <div class="loot-grid" id="loot-grid">
+              <button class="loot-item rare selected" type="button" data-item="Duskscourge" data-detail="AGI +3 · Crit +7 · 91% average"><span class="item-mark">KEEP</span><span class="item-glyph blade"></span><b>Duskscourge</b><small>Launcher · +4</small></button>
+              <button class="loot-item good" type="button" data-item="Falcon Wings" data-detail="VIT +3 · Evasion +11 · 86% average"><span class="item-mark">VIT</span><span class="item-glyph wing"></span><b>Falcon Wings</b><small>Back · +2</small></button>
+              <button class="loot-item" type="button" data-item="Ashen Katar" data-detail="ATK +2 · Hit +8 · 54% average"><span class="item-glyph ring"></span><b>Ashen Katar</b><small>Katar · +0</small></button>
+              <button class="loot-item muted" type="button" data-item="Iron Greaves" data-detail="DEF +1 · VIT +1 · 31% average"><span class="item-glyph boot"></span><b>Iron Greaves</b><small>Feet · +1</small></button>
+              <button class="loot-item good" type="button" data-item="Bloomroot Staff" data-detail="MATK +4 · Cast speed +6 · 88% average"><span class="item-mark">MAG</span><span class="item-glyph staff"></span><b>Bloomroot Staff</b><small>Wand · +3</small></button>
+              <button class="loot-item" type="button" data-item="Duskweave Hood" data-detail="MDEF +2 · INT +2 · 64% average"><span class="item-glyph helm"></span><b>Duskweave Hood</b><small>Head · +0</small></button>
+              <button class="loot-item muted" type="button" data-item="Traveler Ring" data-detail="HP +12 · Move speed +1 · 42% average"><span class="item-glyph ring"></span><b>Traveler Ring</b><small>Accessory · +0</small></button>
+              <button class="loot-item rare" type="button" data-item="Duskharvest" data-detail="ATK +4 · Multistrike +5 · 94% average"><span class="item-mark">TOP2</span><span class="item-glyph blade"></span><b>Duskharvest</b><small>Scythe · +5</small></button>
+              <button class="loot-item empty" type="button" disabled><span>Empty</span></button>
+              <button class="loot-item empty" type="button" disabled><span>Empty</span></button>
+              <button class="loot-item empty" type="button" disabled><span>Empty</span></button>
+              <button class="loot-item empty" type="button" disabled><span>Empty</span></button>
+            </div>
+          </section>
+          <aside class="inspector" id="loot-inspector">
+            <div class="inspector-kicker">Selected item</div>
+            <div class="inspector-title"><span class="item-glyph blade"></span><div><h2>Duskscourge</h2><p>Launcher · refine +4</p></div></div>
+            <div class="verdict"><span>Winning rule</span><b>Weapons worth keeping</b><small>KEEP · glow · chime</small></div>
+            <dl class="stat-list">
+              <div><dt>AGI</dt><dd>+3 <span>100%</span></dd></div>
+              <div><dt>Critical chance</dt><dd>+7 <span>92%</span></dd></div>
+              <div><dt>Attack</dt><dd>+4 <span>82%</span></dd></div>
+            </dl>
+            <p class="inspector-note">Observed at 17:42:08. Switching modules keeps this item selected.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="module-panel" data-panel="market" aria-label="Market module" hidden>
+        <div class="surface-toolbar">
+          <label class="search-control">
+            <span class="search-glyph" aria-hidden="true"></span>
+            <input id="market-search" type="search" placeholder="Search active listings" autocomplete="off">
+          </label>
+          <div class="toolbar-rule"></div>
+          <label class="field-control"><span>Order</span><select><option>Lowest price</option><option>Highest price</option><option>Newest</option></select></label>
+          <label class="field-control narrow"><span>Maximum</span><input inputmode="numeric" placeholder="Any"></label>
+          <span class="result-count" id="market-count">8 listings</span>
+        </div>
+
+        <div class="market-layout">
+          <section class="market-ledger">
+            <div class="ledger-heading"><span>Item</span><span>Rolls</span><span>Qty</span><span>Unit price</span><span>Observed</span></div>
+            <div id="market-rows">
+              <button class="market-row selected" type="button" data-market-item="Duskscourge"><span><i class="market-icon blade"></i><b>Duskscourge</b><small>Launcher · +4</small></span><span><em>AGI +3</em><em>Crit +7</em></span><span>1</span><strong>42,500</strong><time>2m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Bloomroot Staff"><span><i class="market-icon staff"></i><b>Bloomroot Staff</b><small>Wand · +3</small></span><span><em>MATK +4</em><em>Cast +6</em></span><span>1</span><strong>38,000</strong><time>5m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Falcon Wings"><span><i class="market-icon wing"></i><b>Falcon Wings</b><small>Back · +2</small></span><span><em>VIT +3</em><em>Evasion +11</em></span><span>1</span><strong>29,900</strong><time>8m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Duskweave Hood"><span><i class="market-icon helm"></i><b>Duskweave Hood</b><small>Head · +0</small></span><span><em>MDEF +2</em><em>INT +2</em></span><span>2</span><strong>11,200</strong><time>11m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Ashen Katar"><span><i class="market-icon ring"></i><b>Ashen Katar</b><small>Katar · +0</small></span><span><em>ATK +2</em><em>Hit +8</em></span><span>1</span><strong>9,750</strong><time>13m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Traveler Ring"><span><i class="market-icon ring"></i><b>Traveler Ring</b><small>Accessory · +0</small></span><span><em>HP +12</em><em>Move +1</em></span><span>3</span><strong>6,400</strong><time>18m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Iron Greaves"><span><i class="market-icon boot"></i><b>Iron Greaves</b><small>Feet · +1</small></span><span><em>DEF +1</em><em>VIT +1</em></span><span>1</span><strong>2,100</strong><time>22m ago</time></button>
+              <button class="market-row" type="button" data-market-item="Duskharvest"><span><i class="market-icon blade"></i><b>Duskharvest</b><small>Scythe · +5</small></span><span><em>ATK +4</em><em>Multi +5</em></span><span>1</span><strong>87,000</strong><time>27m ago</time></button>
+            </div>
+          </section>
+          <aside class="inspector market-inspector">
+            <div class="inspector-kicker">Market detail</div>
+            <div class="inspector-title"><span class="item-glyph blade"></span><div><h2 id="market-selected-name">Duskscourge</h2><p>Seven-day observed range</p></div></div>
+            <div class="price-block"><span>Current lowest</span><strong>42,500</strong><small>1 active listing</small></div>
+            <div class="sparkline" aria-label="Observed price trend"><i style="height:38%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:78%"></i><i style="height:65%"></i><i style="height:52%"></i><i style="height:58%"></i><i style="height:44%"></i><i style="height:49%"></i><i style="height:42%"></i></div>
+            <p class="inspector-note">Observed asking prices, not completed sales. Your filters and selection remain when you return.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="module-panel future-panel" data-panel="module-3" aria-label="Future module slot three" hidden>
+        <div class="future-index">03</div>
+        <div class="future-copy">
+          <span class="eyebrow">Capacity test</span>
+          <h2>Third module</h2>
+          <p>This slot tests how another first-party tool enters the companion without changing the shell or crowding the switcher.</p>
+          <div class="module-contract"><span>Own workspace</span><span>Shared capture</span><span>Persistent state</span><span>Unified diagnostics</span></div>
+        </div>
+      </section>
+
+      <section class="module-panel future-panel" data-panel="module-4" aria-label="Future module slot four" hidden>
+        <div class="future-index">04</div>
+        <div class="future-copy">
+          <span class="eyebrow">Capacity test</span>
+          <h2>Fourth module</h2>
+          <p>Four modules still fit without an app-grid home screen. Direct switching remains one click or one keyboard chord away.</p>
+          <div class="module-contract"><span>Own workspace</span><span>Shared capture</span><span>Persistent state</span><span>Unified diagnostics</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <aside class="side-drawer capture-drawer" aria-hidden="true" id="capture-drawer">
+    <div class="drawer-header"><div><span class="eyebrow">Shared runtime</span><h2>Capture</h2></div><button type="button" data-drawer-close aria-label="Close capture status">Close</button></div>
+    <div class="capture-hero"><span class="capture-pulse large"></span><div><b>Spirit Vale connected</b><small>Traffic is reaching both active modules.</small></div></div>
+    <dl class="capture-facts"><div><dt>Backend</dt><dd>Npcap 1.83</dd></div><div><dt>Adapter</dt><dd>Ethernet</dd></div><div><dt>Throughput</dt><dd>84 packets/s</dd></div><div><dt>Consumers</dt><dd>Loot · Market</dd></div></dl>
+    <div class="drawer-actions"><button type="button">Change adapter</button><button type="button">Export diagnostics</button></div>
+    <p>The capture runtime belongs to the companion, not to an individual module. Disabling Market contribution does not interrupt Loot.</p>
+  </aside>
+
+  <aside class="side-drawer settings-drawer" aria-hidden="true" id="settings-drawer">
+    <div class="drawer-header"><div><span class="eyebrow">Vale Companion</span><h2>Settings</h2></div><button type="button" data-drawer-close aria-label="Close settings">Close</button></div>
+    <section class="settings-group">
+      <div class="settings-heading"><span>Interface</span><small>Changes apply immediately</small></div>
+      <label class="settings-row"><span><b>App switcher</b><small>Keep the compact module dock visible.</small></span><select id="settings-shell"><option value="dock">Dock</option><option value="rail">Rail</option><option value="ribbon">Ribbon</option></select></label>
+      <label class="settings-row"><span><b>Start with Windows</b><small>Open before Spirit Vale to observe the full session.</small></span><input type="checkbox" role="switch" checked></label>
+    </section>
+    <section class="settings-group">
+      <div class="settings-heading"><span>Shared capture</span><small>Used by enabled modules</small></div>
+      <label class="settings-row"><span><b>Capture game traffic</b><small>Passive observation through Npcap.</small></span><input type="checkbox" role="switch" checked></label>
+      <button class="settings-link" type="button" data-capture-toggle><span><b>Network adapter</b><small>Automatic · Ethernet</small></span><span>Review</span></button>
+    </section>
+    <section class="settings-group">
+      <div class="settings-heading"><span>Modules</span><small>Two active</small></div>
+      <label class="settings-row"><span><b>Loot</b><small>Inventory ledger, filters, and alerts.</small></span><input type="checkbox" role="switch" checked></label>
+      <label class="settings-row"><span><b>Market contribution</b><small>Upload anonymized listing observations.</small></span><input type="checkbox" role="switch" checked></label>
+    </section>
+  </aside>
+  <div class="drawer-scrim" data-drawer-close></div>
+
+  <dialog class="command-dialog" id="command-dialog">
+    <form method="dialog">
+      <div class="command-input"><span class="search-glyph"></span><input id="command-query" autocomplete="off" placeholder="Switch module…"><kbd>Esc</kbd></div>
+      <div class="command-label">Modules</div>
+      <div class="command-results"></div>
+      <footer><span><kbd>↑↓</kbd> move</span><span><kbd>Enter</kbd> open</span><span>State is retained between modules</span></footer>
+    </form>
+  </dialog>
+
+  <nav class="variant-picker" aria-label="Prototype variants">
+    <span>Shell</span>
+    <a href="?variant=rail" data-variant-link="rail">Rail</a>
+    <a href="?variant=ribbon" data-variant-link="ribbon">Ribbon</a>
+    <a href="?variant=dock" data-variant-link="dock">Dock</a>
+  </nav>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

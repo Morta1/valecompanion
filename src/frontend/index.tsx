@@ -1,0 +1,252 @@
+import { Command, Coins, Radio, Settings, Store, X } from "lucide-preact";
+import { render } from "preact";
+import { useCallback, useEffect, useState } from "preact/hooks";
+import {
+  DESKTOP_API_PORT,
+  type CaptureDevice,
+  type DesktopSettingsUpdate,
+  type DesktopState,
+  type LinuxCaptureMode,
+} from "../shared/contracts.ts";
+import { LootWorkspace } from "./loot-workspace.tsx";
+import { MarketWorkspace } from "./market-workspace.tsx";
+import { companionModules, isModuleId, type ModuleId } from "./modules.ts";
+
+const apiRoot = `http://127.0.0.1:${DESKTOP_API_PORT}`;
+
+function App() {
+  const [activeModule, setActiveModule] = useState<ModuleId>(() => {
+    const stored = window.localStorage.getItem("valecompanion.active-module");
+    return stored && isModuleId(stored) ? stored : "loot";
+  });
+  const [state, setState] = useState<DesktopState>();
+  const [devices, setDevices] = useState<CaptureDevice[]>([]);
+  const [connectionError, setConnectionError] = useState<string>();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [switcherOpen, setSwitcherOpen] = useState(false);
+  const [settingsBusy, setSettingsBusy] = useState(false);
+  const [settingsError, setSettingsError] = useState<string>();
+
+  const loadState = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiRoot}/v1/state`, { cache: "no-store" });
+      if (!response.ok) throw new Error(await responseError(response));
+      setState(await response.json() as DesktopState);
+      setConnectionError(undefined);
+    } catch (error) {
+      setState(undefined);
+      setConnectionError(errorMessage(error));
+    }
+  }, []);
+
+  const loadDevices = useCallback(async () => {
+    try {
+      const response = await fetch(`${apiRoot}/v1/devices`, { cache: "no-store" });
+      if (!response.ok) throw new Error(await responseError(response));
+      const value = await response.json() as { devices?: CaptureDevice[] } | CaptureDevice[];
+      setDevices(Array.isArray(value) ? value : value.devices ?? []);
+    } catch (error) {
+      setSettingsError(`Network adapters could not be listed: ${errorMessage(error)}`);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadState();
+    const timer = window.setInterval(() => void loadState(), 2_000);
+    return () => window.clearInterval(timer);
+  }, [loadState]);
+
+  useEffect(() => {
+    if (state?.capture.availability === "ready") void loadDevices();
+  }, [loadDevices, state?.capture.availability]);
+
+  useEffect(() => {
+    window.localStorage.setItem("valecompanion.active-module", activeModule);
+  }, [activeModule]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key.toLocaleLowerCase() === "k") {
+        event.preventDefault();
+        setSwitcherOpen((open) => !open);
+        return;
+      }
+      if (event.ctrlKey && (event.key === "1" || event.key === "2")) {
+        event.preventDefault();
+        const module = companionModules.find((entry) => entry.shortcut === event.key);
+        if (module) setActiveModule(module.id);
+        setSwitcherOpen(false);
+        return;
+      }
+      if (event.key === "Escape") {
+        setSwitcherOpen(false);
+        setSettingsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+  useEffect(() => {
+    const onMessage = (event: MessageEvent<unknown>) => {
+      if (event.origin !== window.location.origin || event.source === window) return;
+      if (typeof event.data !== "object" || event.data === null) return;
+      const message = event.data as { type?: unknown; module?: unknown };
+      if (message.type === "valecompanion:switcher") {
+        setSwitcherOpen(true);
+      } else if (message.type === "valecompanion:module" && typeof message.module === "string" && isModuleId(message.module)) {
+        setActiveModule(message.module);
+        setSwitcherOpen(false);
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+
+
+  const updateSettings = async (update: DesktopSettingsUpdate) => {
+    setSettingsBusy(true);
+    setSettingsError(undefined);
+    try {
+      const response = await fetch(`${apiRoot}/v1/settings`, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(update),
+      });
+      if (!response.ok) throw new Error(await responseError(response));
+      setState(await response.json() as DesktopState);
+    } catch (error) {
+      setSettingsError(errorMessage(error));
+    } finally {
+      setSettingsBusy(false);
+    }
+  };
+
+  const restartCapture = async () => {
+    setSettingsBusy(true);
+    setSettingsError(undefined);
+    try {
+      const response = await fetch(`${apiRoot}/v1/capture/restart`, { method: "POST" });
+      if (!response.ok) throw new Error(await responseError(response));
+      setState(await response.json() as DesktopState);
+    } catch (error) {
+      setSettingsError(errorMessage(error));
+    } finally {
+      setSettingsBusy(false);
+    }
+  };
+
+  const activateModule = (id: ModuleId) => {
+    setActiveModule(id);
+    setSwitcherOpen(false);
+  };
+
+  return (
+    <div class="suite-shell">
+      <aside class="suite-dock" aria-label="Vale Companion modules">
+        <div class="suite-mark" aria-label="Vale Companion">V</div>
+        <nav class="dock-modules">
+          {companionModules.map((module) => {
+            const Icon = module.id === "loot" ? Coins : Store;
+            return <button class={`dock-button ${activeModule === module.id ? "active" : ""}`} type="button" aria-label={module.name} aria-current={activeModule === module.id ? "page" : undefined} data-tooltip={module.name} onClick={() => activateModule(module.id)}><Icon size={21} strokeWidth={1.7} /><kbd>⌃{module.shortcut}</kbd></button>;
+          })}
+        </nav>
+        <div class="dock-spacer" />
+        <button class="dock-button" type="button" aria-label="Switch module" data-tooltip="Switch module" onClick={() => setSwitcherOpen(true)}><Command size={20} strokeWidth={1.7} /><kbd>⌃K</kbd></button>
+        <button class={`dock-button ${settingsOpen ? "active" : ""}`} type="button" aria-label="Settings" data-tooltip="Settings" onClick={() => setSettingsOpen((open) => !open)}><Settings size={20} strokeWidth={1.7} /></button>
+        <div class="dock-capture" title={state?.detail ?? "Connecting to collector"}><span class={`state-light ${state?.phase ?? "offline"}`} /><Radio size={13} /><span class="visually-hidden">{state?.detail ?? "Connecting to collector"}</span></div>
+      </aside>
+
+      <div class="module-stage">
+        <section class={`module-pane ${activeModule === "loot" ? "active" : ""}`} aria-hidden={activeModule !== "loot"}>
+          <LootWorkspace state={state} connectionError={connectionError} refreshState={loadState} />
+        </section>
+        <section class={`module-pane ${activeModule === "market" ? "active" : ""}`} aria-hidden={activeModule !== "market"}>
+          <MarketWorkspace />
+        </section>
+      </div>
+
+      {switcherOpen && <div class="overlay-scrim" onMouseDown={() => setSwitcherOpen(false)}><section class="module-switcher" role="dialog" aria-modal="true" aria-labelledby="switcher-title" onMouseDown={(event) => event.stopPropagation()}><header><div><div class="eyebrow">Vale Companion</div><h2 id="switcher-title">Switch module</h2></div><button type="button" onClick={() => setSwitcherOpen(false)} aria-label="Close module switcher"><X size={17} /></button></header><div>{companionModules.map((module) => { const Icon = module.id === "loot" ? Coins : Store; return <button class={activeModule === module.id ? "active" : ""} type="button" onClick={() => activateModule(module.id)}><Icon size={19} /><span><strong>{module.name}</strong><small>{module.description}</small></span><kbd>Ctrl {module.shortcut}</kbd></button>; })}</div></section></div>}
+
+      {settingsOpen && <GlobalSettings state={state} devices={devices} busy={settingsBusy} error={settingsError} onClose={() => setSettingsOpen(false)} onUpdate={updateSettings} onRestart={restartCapture} />}
+    </div>
+  );
+}
+
+function GlobalSettings({ state, devices, busy, error, onClose, onUpdate, onRestart }: {
+  state: DesktopState | undefined;
+  devices: CaptureDevice[];
+  busy: boolean;
+  error: string | undefined;
+  onClose(): void;
+  onUpdate(update: DesktopSettingsUpdate): void;
+  onRestart(): void;
+}) {
+  const linuxCapture = state ? ["libpcap", "libpcap (direct)", "dumpcap"].includes(state.capture.backend) : false;
+  return <aside class="settings-drawer" aria-label="Settings">
+    <header><div><div class="eyebrow">Vale Companion</div><h2>Settings</h2></div><button type="button" onClick={onClose} aria-label="Close settings"><X size={17} /></button></header>
+    <div class="settings-scroll">
+      {error && <div class="settings-error" role="alert">{error}</div>}
+      <section><div class="settings-heading"><span>Capture</span><button type="button" disabled={!state || busy} onClick={onRestart}>{busy ? "Working…" : "Restart"}</button></div>
+        <label class="switch-row"><span><strong>Passive capture</strong><small>Observe local Spirit Vale traffic for enabled modules.</small></span><input type="checkbox" role="switch" checked={state?.enabled ?? false} disabled={!state || busy} onChange={(event) => onUpdate({ enabled: event.currentTarget.checked })} /></label>
+        <label class="settings-field"><span>Network adapter</span><select value={state?.deviceName ?? ""} disabled={!state || busy || state.capture.availability !== "ready"} onChange={(event) => onUpdate({ deviceName: event.currentTarget.value || null })}><option value="">Automatic</option>{devices.filter((device) => !device.loopback).map((device) => <option key={device.name} value={device.name}>{device.description || device.name}</option>)}</select><small>{state?.captureAdapter ? `Using ${state.captureAdapter.description}` : "Uses the active default-route adapter."}</small></label>
+        {linuxCapture && <label class="settings-field"><span>Linux capture method</span><select value={state?.linuxCaptureMode ?? "auto"} disabled={!state || busy} onChange={(event) => onUpdate({ linuxCaptureMode: event.currentTarget.value as LinuxCaptureMode })}><option value="auto">Automatic</option><option value="dumpcap">dumpcap helper</option><option value="libpcap">Direct libpcap</option></select></label>}
+      </section>
+      <section><div class="settings-heading"><span>Modules</span></div>
+        <label class="switch-row"><span><strong>Loot alerts</strong><small>Play sounds for matching inventory rules.</small></span><input type="checkbox" role="switch" checked={state?.soundsEnabled ?? false} disabled={!state || busy} onChange={(event) => onUpdate({ soundsEnabled: event.currentTarget.checked })} /></label>
+        <label class="switch-row"><span><strong>Market contribution</strong><small>Upload normalized listings. Raw packets never leave this device.</small></span><input type="checkbox" role="switch" checked={state?.contributionEnabled ?? false} disabled={!state || busy} onChange={(event) => onUpdate({ contributionEnabled: event.currentTarget.checked })} /></label>
+      </section>
+      <section>
+        <div class="settings-heading"><span>Loot sounds</span></div>
+        <div class="settings-copy">
+          <strong>Custom alert folder</strong>
+          <p>Drop <code>.wav</code> files here. Vale Companion detects them automatically; use <code>Sound filename</code> in a rule, with or without the extension.</p>
+          <code class="settings-path">{state?.soundsDirectory ?? "Loading sounds folder…"}</code>
+        </div>
+        <div class="settings-copy">
+          <strong>Available sounds</strong>
+          <p class="sound-list">{(state?.sounds ?? []).join(", ") || "Loading…"}</p>
+        </div>
+      </section>
+      <section>
+        <div class="settings-heading"><span>Diagnostics</span></div>
+        {state?.warning && <div class="diagnostic-warning">{state.warning}</div>}
+        <div class="diagnostic-state">
+          <strong>{state?.capture.availability === "ready" ? "Capture backend ready" : state?.capture.availability === "missing" ? "Capture backend missing" : state?.capture.availability === "error" ? "Capture backend unavailable" : "Checking capture backend"}</strong>
+          <p>{state?.capture.detail ?? "Waiting for the local collector."}</p>
+          {state?.capture.version && <code>{state.capture.backend} {state.capture.version}</code>}
+          {state?.captureAdapter && <p>{state.captureAdapter.selection === "automatic" ? "Automatic" : "Manual"} adapter · {state.captureAdapter.description}{state.automaticCaptureRestarts ? ` · ${state.automaticCaptureRestarts} route restart${state.automaticCaptureRestarts === 1 ? "" : "s"}` : ""}</p>}
+        </div>
+        <dl class="diagnostic-grid">
+          <div><dt>Packets observed</dt><dd>{(state?.packetsObserved ?? 0).toLocaleString()}</dd></div>
+          <div><dt>Loot snapshots</dt><dd>{(state?.snapshotsDecoded ?? 0).toLocaleString()}</dd></div>
+          <div><dt>Partial snapshots</dt><dd>{(state?.partialSnapshots ?? 0).toLocaleString()}</dd></div>
+          <div><dt>Duplicate snapshots</dt><dd>{(state?.duplicateSnapshots ?? 0).toLocaleString()}</dd></div>
+          <div><dt>Market listings decoded</dt><dd>{(state?.market.listingsDecoded ?? 0).toLocaleString()}</dd></div>
+          <div><dt>Market queue</dt><dd>{state ? `${state.market.queuedBatches} batches` : "—"}</dd></div>
+        </dl>
+        <div class="settings-copy">
+          <strong>Diagnostic logs</strong>
+          <p>Desktop, collector, capture, connection, warning, and shutdown events stay local in this folder.</p>
+          <code class="settings-path">{state?.logsDirectory ?? "Loading log folder…"}</code>
+        </div>
+      </section>
+      <section class="runtime-summary"><div class="settings-heading"><span>Runtime</span></div><dl><div><dt>Status</dt><dd><span class={`state-light ${state?.phase ?? "offline"}`} />{state?.detail ?? "Connecting"}</dd></div><div><dt>Last traffic</dt><dd>{state?.lastAttributedPacketAt ? new Date(state.lastAttributedPacketAt).toLocaleString() : "Not observed"}</dd></div><div><dt>Version</dt><dd>{state ? `v${state.version}` : "—"}</dd></div></dl></section>
+    </div>
+  </aside>;
+}
+
+async function responseError(response: Response): Promise<string> {
+  const text = await response.text();
+  if (!text) return `HTTP ${response.status} ${response.statusText}`;
+  try {
+    const value = JSON.parse(text) as { error?: unknown };
+    if (typeof value.error === "string") return value.error;
+  } catch {}
+  return text;
+}
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+render(<App />, document.getElementById("app")!);
