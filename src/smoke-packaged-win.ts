@@ -1,0 +1,40 @@
+import { existsSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
+if (process.platform !== "win32") throw new Error("The packaged Windows smoke test must run on Windows.");
+
+const root = path.resolve(import.meta.dir, "..");
+const packageJson = await Bun.file(path.join(root, "package.json")).json() as { version?: unknown };
+if (typeof packageJson.version !== "string" || !packageJson.version) {
+  throw new Error("package.json does not contain an application version.");
+}
+const executable = path.join(root, "dist", `ValeCompanion-${packageJson.version}-windows-${process.arch}.exe`);
+if (!existsSync(executable)) throw new Error(`Release package is missing: ${executable}`);
+
+const dataDirectory = mkdtempSync(path.join(tmpdir(), "valecompanion-package-smoke-"));
+const legacyPortBlocker = Bun.serve({
+  hostname: "127.0.0.1",
+  port: 47_832,
+  fetch: () => new Response("occupied by packaged smoke test"),
+});
+
+try {
+  const application = Bun.spawn([executable, `--user-data-dir=${dataDirectory}`], {
+    cwd: path.dirname(executable),
+    env: {
+      ...process.env,
+      VALECOMPANION_DATA_DIR: dataDirectory,
+      VALECOMPANION_SMOKE_TEST: "1",
+    },
+    stdin: "ignore",
+    stdout: "inherit",
+    stderr: "inherit",
+  });
+  const exitCode = await application.exited;
+  if (exitCode !== 0) throw new Error(`Packaged application smoke test failed with exit code ${exitCode}.`);
+  console.log("Release package launched its collector and renderer successfully.");
+} finally {
+  legacyPortBlocker.stop(true);
+  rmSync(dataDirectory, { recursive: true, force: true });
+}

@@ -2,7 +2,6 @@ import { Command, Coins, Radio, Settings, Store, X } from "lucide-preact";
 import { render } from "preact";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import {
-  DESKTOP_API_PORT,
   type CaptureDevice,
   type DesktopSettingsUpdate,
   type DesktopState,
@@ -12,7 +11,7 @@ import { LootWorkspace } from "./loot-workspace.tsx";
 import { MarketWorkspace } from "./market-workspace.tsx";
 import { companionModules, isModuleId, type ModuleId } from "./modules.ts";
 
-const apiRoot = `http://127.0.0.1:${DESKTOP_API_PORT}`;
+const apiRoot = window.location.origin;
 
 function App() {
   const [activeModule, setActiveModule] = useState<ModuleId>(() => {

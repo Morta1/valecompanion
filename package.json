@@ -1,6 +1,6 @@
 {
   "name": "valecompanion",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Unified passive companion for Spirit Vale",
   "desktopName": "valecompanion",
@@ -13,7 +13,8 @@
     "dev": "bun run prepare && electron .",
     "build": "bun run prepare",
     "package": "bun run prepare && electron-builder --publish never",
-    "package:win": "bun run prepare && electron-builder --win portable --publish never",
+    "package:win": "bun run prepare && electron-builder --win portable --publish never && bun run smoke:package:win",
+    "smoke:package:win": "bun run src/smoke-packaged-win.ts",
     "package:linux": "bun run prepare && electron-builder --linux AppImage deb rpm --publish never",
     "prototype": "bun run prototype/server.ts",
     "test": "bun test",

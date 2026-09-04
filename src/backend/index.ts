@@ -4,7 +4,6 @@ import type { CaptureConnectionEvent, CaptureTargetStatus } from "@kar-mi/spirit
 import type { PacketCapture } from "@kar-mi/spirit-vale-tools-capture/capture";
 import { serializeCollectorMessage } from "../shared/collector-protocol.ts";
 import type { DesktopSettingsUpdate, DesktopState, ProfileCommand } from "../shared/contracts.ts";
-import { DESKTOP_API_PORT } from "../shared/contracts.ts";
 import { createDiagnosticLogger, formatError } from "../shared/diagnostics.ts";
 import { LootSession } from "../core/loot-session.ts";
 import { parseLootFilter } from "../core/filter/loot-dsl.ts";
@@ -794,7 +793,7 @@ function corsResponse(request: Request, response: Response): Response {
 
 const server = Bun.serve({
   hostname: "127.0.0.1",
-  port: DESKTOP_API_PORT,
+  port: 0,
   async fetch(request) {
     const origin = request.headers.get("origin");
     if (origin && !localOrigin(origin)) return errorResponse("origin is not allowed", 403);
@@ -806,7 +805,8 @@ const server = Bun.serve({
     }
   },
 });
-const listeningPort = server.port ?? DESKTOP_API_PORT;
+const listeningPort = server.port;
+if (listeningPort === undefined) throw new Error("Collector server did not receive a listening port.");
 
 let stopping = false;
 async function shutdown(): Promise<void> {

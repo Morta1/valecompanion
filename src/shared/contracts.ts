@@ -1,5 +1,3 @@
-export const DESKTOP_API_PORT = 47832;
-
 export type CollectorPhase = "disabled" | "capture-unavailable" | "waiting-for-game" | "capturing" | "error";
 export type LootKind = "equipment" | "artifact" | "gem" | "card";
 export type LootHighlight = "dot" | "mark" | "glow";

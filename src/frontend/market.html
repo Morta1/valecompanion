@@ -813,7 +813,7 @@ const state = {
   statFingerprintGeneratedAt: null,
 };
 const $ = (id) => document.getElementById(id);
-const DESKTOP_API = "http://127.0.0.1:47831";
+const DESKTOP_API = window.location.origin;
 let desktopState = null;
 let collectorBusy = false;
 let devicesLoadedAt = 0;

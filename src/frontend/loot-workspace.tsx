@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import type { JSX } from "preact";
 import {
-  DESKTOP_API_PORT,
   type AlertHistoryView,
   type DesktopState,
   type LootItemView,
   type ProfileCommand,
 } from "../shared/contracts.ts";
 
-const apiRoot = `http://127.0.0.1:${DESKTOP_API_PORT}`;
+const apiRoot = window.location.origin;
 type Surface = "bag" | "filters" | "history";
 
 export interface LootWorkspaceProps {

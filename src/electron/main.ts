@@ -8,6 +8,8 @@ import { parseCollectorMessage } from "../shared/collector-protocol.ts";
 import { createDiagnosticLogger, formatError } from "../shared/diagnostics.ts";
 
 const COLLECTOR_START_TIMEOUT_MS = 20_000;
+const packagedSmokeTest = process.env.VALECOMPANION_SMOKE_TEST === "1";
+let smokeTestCompleting = false;
 let collector: ChildProcessWithoutNullStreams | undefined;
 let mainWindow: BrowserWindow | undefined;
 let quitAfterCollectorStops = false;
@@ -34,6 +36,11 @@ else {
     } catch (error) {
       diagnostics.error("Desktop startup failed", { error: formatError(error) });
       await stopCollector();
+      if (packagedSmokeTest) {
+        process.exitCode = 1;
+        app.quit();
+        return;
+      }
       dialog.showErrorBox("Vale Companion collector could not start", error instanceof Error ? error.message : String(error));
       app.quit();
     }
@@ -155,21 +162,50 @@ function createMainWindow(port: number): void {
     diagnostics.warn("Blocked renderer navigation", { url });
     event.preventDefault();
   });
-  mainWindow.webContents.on("did-finish-load", () => diagnostics.info("Renderer finished loading", { url: applicationUrl }));
+  mainWindow.webContents.on("did-finish-load", () => {
+    diagnostics.info("Renderer finished loading", { url: applicationUrl });
+    void finishPackagedSmoke(applicationUrl);
+  });
   mainWindow.webContents.on("did-fail-load", (_event, code, description, validatedUrl) => {
     diagnostics.error("Renderer failed to load", { code, description, url: validatedUrl });
+    void finishPackagedSmoke(applicationUrl, new Error(`Renderer failed to load (${code}): ${description}`));
   });
   mainWindow.webContents.on("render-process-gone", (_event, details) => diagnostics.error("Renderer process exited", { details }));
   mainWindow.on("unresponsive", () => diagnostics.warn("Desktop window became unresponsive"));
   mainWindow.once("ready-to-show", () => {
     diagnostics.info("Desktop window ready to show");
-    mainWindow?.show();
+    if (!packagedSmokeTest) mainWindow?.show();
   });
   mainWindow.on("closed", () => {
     diagnostics.info("Desktop window closed");
     mainWindow = undefined;
   });
-  void mainWindow.loadURL(applicationUrl).catch((error) => diagnostics.error("Renderer URL load rejected", { error: formatError(error) }));
+  void mainWindow.loadURL(applicationUrl).catch((error) => {
+    diagnostics.error("Renderer URL load rejected", { error: formatError(error) });
+    void finishPackagedSmoke(applicationUrl, error);
+  });
+}
+
+async function finishPackagedSmoke(applicationUrl: string, failure?: unknown): Promise<void> {
+  if (!packagedSmokeTest || smokeTestCompleting) return;
+  smokeTestCompleting = true;
+  let error = failure;
+  if (!error) {
+    try {
+      const response = await fetch(`${applicationUrl}v1/state`);
+      if (!response.ok) throw new Error(`Collector state request failed with HTTP ${response.status}`);
+      const rendererReady = await mainWindow?.webContents.executeJavaScript("document.readyState === 'complete'");
+      if (!rendererReady) throw new Error("Renderer document did not reach the complete state");
+      diagnostics.info("Packaged smoke test passed", { url: applicationUrl });
+    } catch (cause) {
+      error = cause;
+    }
+  }
+  if (error) {
+    process.exitCode = 1;
+    diagnostics.error("Packaged smoke test failed", { error: formatError(error) });
+  }
+  app.quit();
 }
 
 async function stopCollector(): Promise<void> {
@@ -218,6 +254,7 @@ function runtimePaths(): RuntimePaths {
     entrypoint: path.join(collectorDirectory, "index.js"),
     renderer: rendererDirectory,
     installRoot: executableDirectory,
-    data: portable ? path.join(executableDirectory, "data") : app.getPath("userData"),
+    data: process.env.VALECOMPANION_DATA_DIR
+      ?? (portable ? path.join(executableDirectory, "data") : app.getPath("userData")),
   };
 }
