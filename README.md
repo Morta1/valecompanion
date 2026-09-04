@@ -1,6 +1,6 @@
 # Vale Companion
 
-Vale Companion is the preferred desktop companion for **Spirit Vale**. It combines the ValeLoot live bag and rule-based alerts with the ValeMarket browser and passive community contribution in one application.
+Vale Companion is the preferred desktop companion for **Spirit Vale**. It combines the ValeLoot live bag and rule-based alerts, live gold-session analytics, and the ValeMarket browser with passive community contribution in one application.
 
 ![Vale Companion interface](readme-img.png)
 
@@ -10,6 +10,7 @@ Vale Companion is the preferred desktop companion for **Spirit Vale**. It combin
 - Local loot rules, profiles, alert history, and sounds
 - Equipment, artifacts, gems, and stack-aware card tracking
 - Live inventory updates for drops, dismantling, selling, and personal-storage transfers
+- Live gross and net gold rates, spending, earning events, and recorded-kill efficiency
 - Current market listings and seven-day observed asking-price summaries
 - Optional market contribution; raw packets never leave the device
 
@@ -77,6 +78,14 @@ Show "cards"
 
 Use the in-app editor to validate rules, manage profiles, choose colors and emphasis, and configure built-in or custom WAV sounds.
 
+## Gold analytics
+
+The Gold workspace starts a local session from the first authoritative coin total sent by the game server. It separates positive and negative balance changes, then reports gross gold per hour and minute, net gold per hour, a rolling 15-minute pace, earning and spending events, and a one-hour five-minute-bucket chart. Large values use compact notation with the exact amount available on hover.
+
+**Finish session** saves the run's yield, spend, rates, and kill efficiency in the previous-sessions ledger, then keeps the current balance as the next baseline. Finished sessions and the active session are stored locally and survive application restarts; the most recent 100 finished sessions are retained. Each saved session can be deleted independently, or the entire history can be cleared.
+
+Gold per confirmed kill uses the cumulative kill count included in character snapshots, paired at each observed gold balance update. Kills received after the latest balance update remain visible as pending instead of distorting the ratio.
+
 ## Market workspace
 
 The market browser loads the current public listing snapshot from [market.spiritvalers.com](https://market.spiritvalers.com/). Item inspectors show a rolling seven-day series of hourly observed asking-price quartiles. These are listing observations, not completed-sale history.
@@ -90,7 +99,7 @@ Vale Companion is passive:
 - It sends no gameplay RPCs or packets.
 - It never clicks, types, moves, equips, buys, sells, dismantles, or picks up items.
 - It does not inject code into Spirit Vale or modify the game installation.
-- Loot inventory, filters, profiles, sounds, and alert history stay local.
+- Loot inventory, gold analytics, filters, profiles, sounds, and alert history stay local.
 - Raw captured packets are not persisted or uploaded.
 - Market contribution sends normalized listing observations, not account credentials, character identity, seller identity, buyer identity, or raw packet payloads.
 
@@ -132,9 +141,9 @@ bun run package:linux Build Linux AppImage, deb, and rpm artifacts
 
 ```text
 src/backend/       Capture lifecycle, local API, persistence, and market contribution
-src/core/          Character decoding, inventory projection, and loot rules
+src/core/          Character decoding, inventory projection, loot rules, and gold analytics
 src/electron/      Desktop shell and collector supervision
-src/frontend/      Companion navigation, settings, and loot workspace
+src/frontend/      Companion navigation, settings, loot, and gold workspaces
 prototype/         Local market UI development server
 test/              Decoder, capture, filter, and session contract tests
 docs/              Starter ruleset and supporting assets

@@ -6,10 +6,12 @@ import { serializeCollectorMessage } from "../shared/collector-protocol.ts";
 import type { DesktopSettingsUpdate, DesktopState, ProfileCommand } from "../shared/contracts.ts";
 import { createDiagnosticLogger, formatError } from "../shared/diagnostics.ts";
 import { LootSession } from "../core/loot-session.ts";
+import { GoldSession } from "../core/gold-session.ts";
 import { parseLootFilter } from "../core/filter/loot-dsl.ts";
 import { consumeFishNetPacket } from "../core/packet-consumer.ts";
 import { FishNetCaptureDecoder } from "./fishnet-capture-decoder.ts";
 import { MarketContributor } from "./market-contributor.ts";
+import { loadJson, writeJsonAtomic } from "./market-storage.ts";
 import {
   automaticCaptureRouteChanged,
   captureBackendName,
@@ -143,6 +145,13 @@ const session = new LootSession({
   },
 });
 session.setFilter(persisted.filter);
+const goldStatePath = path.join(dataDirectory, "gold-sessions.json");
+const goldSession = await loadJson(
+  goldStatePath,
+  () => new GoldSession(),
+  (value) => GoldSession.restore(value),
+  (error) => diagnostics.warn("Ignored invalid gold analytics state", { error: formatError(error) }),
+);
 const marketContributor = await MarketContributor.load({
   statePath: path.join(dataDirectory, "market-contributor.json"),
   collectorVersion: applicationVersion,
@@ -175,16 +184,50 @@ let targetActiveAtMs: number | undefined;
 let automaticCaptureRestarts = 0;
 let routeCheckRunning = false;
 let routeMonitor: NodeJS.Timeout | undefined;
+let goldSaveTimer: NodeJS.Timeout | undefined;
+let goldSaveChain: Promise<void> = Promise.resolve();
+
+function scheduleGoldSave(): void {
+  clearTimeout(goldSaveTimer);
+  goldSaveTimer = setTimeout(() => {
+    goldSaveTimer = undefined;
+    queueGoldSave();
+  }, 250);
+}
+
+function queueGoldSave(): void {
+  const value = goldSession.persisted();
+  goldSaveChain = goldSaveChain
+    .then(() => writeJsonAtomic(goldStatePath, value))
+    .catch((error) => {
+      warning = `Gold session history could not be saved: ${formatError(error)}`;
+      diagnostics.warn("Could not save gold analytics state", { error: formatError(error) });
+    });
+}
+
+async function flushGoldSave(): Promise<void> {
+  if (goldSaveTimer !== undefined) {
+    clearTimeout(goldSaveTimer);
+    goldSaveTimer = undefined;
+  }
+  queueGoldSave();
+  await goldSaveChain;
+}
 const fishNetDecoder = new FishNetCaptureDecoder({
   onPacket: (packet) => {
     marketContributor.consume(packet);
+    if (goldSession.consumePacket(packet)) scheduleGoldSave();
     packetsObserved++;
     const result = consumeFishNetPacket(packet);
     if (!result.snapshot && !result.inventory) return;
     snapshotsDecoded++;
     if (result.snapshot?.partial) partialSnapshots++;
-    if (result.snapshot) session.consume(result.snapshot);
-    else session.consumeInventory(result.inventory!);
+    if (result.snapshot) {
+      if (goldSession.consumeSnapshot(result.snapshot)) scheduleGoldSave();
+      session.consume(result.snapshot);
+    } else {
+      session.consumeInventory(result.inventory!);
+    }
     bagGeneratedAt = new Date().toISOString();
     bagCoverage = result.snapshot?.partial
       ? "Complete inventory; partial character tail"
@@ -523,6 +566,7 @@ function currentState(): DesktopState {
     partialSnapshots,
     duplicateSnapshots,
     market: marketContributor.snapshot(),
+    gold: goldSession.snapshot(),
     bag: session.bag(),
     bagGeneratedAt,
     bagCoverage,
@@ -611,6 +655,27 @@ async function routeRequest(request: Request): Promise<Response> {
 
 
   if (method === "GET" && route === "/v1/state") return Response.json(currentState());
+  if (method === "POST" && route === "/v1/gold/reset") {
+    goldSession.reset();
+    scheduleGoldSave();
+    return Response.json(goldSession.snapshot());
+  }
+  if (method === "DELETE" && route === "/v1/gold/history") {
+    goldSession.clearHistory();
+    scheduleGoldSave();
+    return new Response(null, { status: 204 });
+  }
+  if (method === "DELETE" && route.startsWith("/v1/gold/history/")) {
+    let id: string;
+    try {
+      id = decodeURIComponent(route.slice("/v1/gold/history/".length));
+    } catch {
+      return errorResponse("invalid gold session id", 400);
+    }
+    if (!id || !goldSession.deleteSession(id)) return errorResponse("gold session not found", 404);
+    scheduleGoldSave();
+    return new Response(null, { status: 204 });
+  }
   if (method === "GET" && route === "/v1/devices") {
     if (captureStatus.availability !== "ready") return Response.json([]);
     const devices = await listCaptureDevices().catch(() => []);
@@ -820,6 +885,7 @@ async function shutdown(): Promise<void> {
   }
   await capture?.stop().catch((error) => diagnostics.warn("Packet capture did not stop cleanly during shutdown", { error: formatError(error) }));
   await marketContributor.shutdown().catch((error) => diagnostics.warn("Market contributor did not stop cleanly during shutdown", { error: formatError(error) }));
+  await flushGoldSave();
   diagnostics.info("Collector shutdown completed");
 }
 process.on("SIGINT", () => void shutdown());

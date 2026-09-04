@@ -85,6 +85,53 @@ export interface MarketContributorView {
   warning?: string;
 }
 
+export interface GoldBucketView {
+  startedAt: string;
+  earned: number;
+  spent: number;
+}
+
+export interface GoldSessionSummaryView {
+  id: string;
+  startedAt: string;
+  endedAt: string;
+  elapsedSeconds: number;
+  startingBalance: number;
+  endingBalance: number;
+  earned: number;
+  spent: number;
+  net: number;
+  goldPerHour: number;
+  netPerHour: number;
+  earningEvents: number;
+  monsterKills: number;
+  goldPerMonsterKill: number | null;
+}
+
+export interface GoldAnalyticsView {
+  status: "waiting" | "tracking";
+  balance: number | null;
+  startedAt: string | null;
+  lastChangeAt?: string;
+  elapsedSeconds: number;
+  earned: number;
+  spent: number;
+  net: number;
+  goldPerHour: number;
+  goldPerMinute: number;
+  netPerHour: number;
+  recentGoldPerHour: number;
+  earningEvents: number;
+  spendingEvents: number;
+  averageGoldPerEvent: number;
+  monsterKills: number;
+  unconfirmedMonsterKills: number;
+  goldPerMonsterKill: number | null;
+  killCountAvailable: boolean;
+  buckets: GoldBucketView[];
+  previousSessions: GoldSessionSummaryView[];
+}
+
 
 export interface DesktopState {
   version: string;
@@ -115,6 +162,7 @@ export interface DesktopState {
   partialSnapshots: number;
   duplicateSnapshots: number;
   market: MarketContributorView;
+  gold: GoldAnalyticsView;
   bag: LootItemView[];
   bagGeneratedAt: string | null;
   bagCoverage: string;

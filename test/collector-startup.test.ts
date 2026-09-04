@@ -48,6 +48,8 @@ test("collector starts when the legacy fixed port is occupied", async () => {
 
     const response = await fetch(`http://127.0.0.1:${message.port}/v1/state`);
     expect(response.status).toBe(200);
+    const missingSession = await fetch(`http://127.0.0.1:${message.port}/v1/gold/history/missing`, { method: "DELETE" });
+    expect(missingSession.status).toBe(404);
   } finally {
     collector.stdin.end();
     await collector.exited;

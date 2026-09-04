@@ -1,4 +1,4 @@
-import { Command, Coins, Radio, Settings, Store, X } from "lucide-preact";
+import { ChartNoAxesCombined, Command, Coins, Radio, Settings, Store, X } from "lucide-preact";
 import { render } from "preact";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import {
@@ -8,6 +8,7 @@ import {
   type LinuxCaptureMode,
 } from "../shared/contracts.ts";
 import { LootWorkspace } from "./loot-workspace.tsx";
+import { GoldWorkspace } from "./gold-workspace.tsx";
 import { MarketWorkspace } from "./market-workspace.tsx";
 import { companionModules, isModuleId, type ModuleId } from "./modules.ts";
 
@@ -70,7 +71,7 @@ function App() {
         setSwitcherOpen((open) => !open);
         return;
       }
-      if (event.ctrlKey && (event.key === "1" || event.key === "2")) {
+      if (event.ctrlKey && (event.key === "1" || event.key === "2" || event.key === "3")) {
         event.preventDefault();
         const module = companionModules.find((entry) => entry.shortcut === event.key);
         if (module) setActiveModule(module.id);
@@ -145,7 +146,7 @@ function App() {
         <div class="suite-mark" aria-label="Vale Companion">V</div>
         <nav class="dock-modules">
           {companionModules.map((module) => {
-            const Icon = module.id === "loot" ? Coins : Store;
+            const Icon = module.id === "loot" ? Coins : module.id === "market" ? Store : ChartNoAxesCombined;
             return <button class={`dock-button ${activeModule === module.id ? "active" : ""}`} type="button" aria-label={module.name} aria-current={activeModule === module.id ? "page" : undefined} data-tooltip={module.name} onClick={() => activateModule(module.id)}><Icon size={21} strokeWidth={1.7} /><kbd>⌃{module.shortcut}</kbd></button>;
           })}
         </nav>
@@ -162,9 +163,12 @@ function App() {
         <section class={`module-pane ${activeModule === "market" ? "active" : ""}`} aria-hidden={activeModule !== "market"}>
           <MarketWorkspace />
         </section>
+        <section class={`module-pane ${activeModule === "gold" ? "active" : ""}`} aria-hidden={activeModule !== "gold"}>
+          <GoldWorkspace state={state} connectionError={connectionError} refreshState={loadState} />
+        </section>
       </div>
 
-      {switcherOpen && <div class="overlay-scrim" onMouseDown={() => setSwitcherOpen(false)}><section class="module-switcher" role="dialog" aria-modal="true" aria-labelledby="switcher-title" onMouseDown={(event) => event.stopPropagation()}><header><div><div class="eyebrow">Vale Companion</div><h2 id="switcher-title">Switch module</h2></div><button type="button" onClick={() => setSwitcherOpen(false)} aria-label="Close module switcher"><X size={17} /></button></header><div>{companionModules.map((module) => { const Icon = module.id === "loot" ? Coins : Store; return <button class={activeModule === module.id ? "active" : ""} type="button" onClick={() => activateModule(module.id)}><Icon size={19} /><span><strong>{module.name}</strong><small>{module.description}</small></span><kbd>Ctrl {module.shortcut}</kbd></button>; })}</div></section></div>}
+      {switcherOpen && <div class="overlay-scrim" onMouseDown={() => setSwitcherOpen(false)}><section class="module-switcher" role="dialog" aria-modal="true" aria-labelledby="switcher-title" onMouseDown={(event) => event.stopPropagation()}><header><div><div class="eyebrow">Vale Companion</div><h2 id="switcher-title">Switch module</h2></div><button type="button" onClick={() => setSwitcherOpen(false)} aria-label="Close module switcher"><X size={17} /></button></header><div>{companionModules.map((module) => { const Icon = module.id === "loot" ? Coins : module.id === "market" ? Store : ChartNoAxesCombined; return <button class={activeModule === module.id ? "active" : ""} type="button" onClick={() => activateModule(module.id)}><Icon size={19} /><span><strong>{module.name}</strong><small>{module.description}</small></span><kbd>Ctrl {module.shortcut}</kbd></button>; })}</div></section></div>}
 
       {settingsOpen && <GlobalSettings state={state} devices={devices} busy={settingsBusy} error={settingsError} onClose={() => setSettingsOpen(false)} onUpdate={updateSettings} onRestart={restartCapture} />}
     </div>
