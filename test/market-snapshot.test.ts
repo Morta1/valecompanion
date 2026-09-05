@@ -115,6 +115,56 @@ describe("MarketSnapshot", () => {
     });
   });
 
+  for (const cached of [false, true]) {
+    test(`shares failure backoff across readers ${cached ? "with stale data" : "without a cache"}`, async () => {
+      const file = await cachePath();
+      const stale = body("2026-09-05T11:00:00.000Z", [listing("Ghost", 4_000)]);
+      if (cached) {
+        await writeFile(file, JSON.stringify({ fetchedAt: new Date(NOW - 20 * MIN).toISOString(), body: stale }));
+      }
+      let clock = NOW;
+      const { calls, fetch } = api([
+        () => new Response("down", { status: 503 }),
+        () => { throw new Error("offline"); },
+        fresh(),
+      ]);
+      const snapshot = await MarketSnapshot.load({ cachePath: file, now: () => new Date(clock), fetch });
+      const expected = cached ? stale : null;
+
+      expect(await snapshot.body()).toEqual(expected);
+      const warning = snapshot.view().warning;
+      expect(warning).toBeDefined();
+      expect(await snapshot.body()).toEqual(expected);
+      expect(await snapshot.ensureFresh()).toBe(false);
+      expect(await snapshot.refresh()).toBe(false);
+      clock = NOW + 2 * MIN - 1;
+      expect(await snapshot.body()).toEqual(expected);
+      expect(snapshot.view().warning).toBe(warning);
+      expect(calls).toHaveLength(1);
+
+      clock++;
+      await Promise.all([snapshot.body(), snapshot.body(), snapshot.ensureFresh()]);
+      expect(calls).toHaveLength(2);
+      clock = NOW + 4 * MIN - 1;
+      expect(await snapshot.body()).toEqual(expected);
+      expect(calls).toHaveLength(2);
+
+      clock++;
+      const [first, second] = await Promise.all([snapshot.body(), snapshot.body()]);
+      expect(first).toBe(second);
+      expect(first?.generatedAt).toBe("2026-09-05T11:50:00.000Z");
+      expect(snapshot.view().warning).toBeUndefined();
+      expect(calls).toHaveLength(3);
+
+      clock += 15 * MIN - 1;
+      await snapshot.body();
+      expect(calls).toHaveLength(3);
+      clock++;
+      await snapshot.body();
+      expect(calls).toHaveLength(4);
+    });
+  }
+
   test("ignores an unreadable cache file", async () => {
     const file = await cachePath();
     await writeFile(file, "{not json");

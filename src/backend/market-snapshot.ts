@@ -30,6 +30,7 @@ export class MarketSnapshot {
   private byItem = new Map<string, MarketListing[]>();
   private refreshTimer: ReturnType<typeof setTimeout> | undefined;
   private inflight: Promise<boolean> | undefined;
+  private nextRetryAt = 0;
   private readonly lifetime = new AbortController();
   private fetchWarning: string | undefined;
   private cacheWarning: string | undefined;
@@ -78,6 +79,8 @@ export class MarketSnapshot {
   }
 
   refresh(): Promise<boolean> {
+    // Cache reads and the background timer share the same failure cooldown.
+    if (this.now().getTime() < this.nextRetryAt) return Promise.resolve(false);
     this.inflight ??= this.download().finally(() => { this.inflight = undefined; });
     return this.inflight;
   }
@@ -108,11 +111,13 @@ export class MarketSnapshot {
       if (!parsed) throw new Error("market snapshot returned an invalid response");
       next = { fetchedAt, ...parsed };
     } catch (error) {
+      this.nextRetryAt = this.now().getTime() + RETRY_INTERVAL_MS;
       this.fetchWarning = `Market prices ${this.state ? "may be stale" : "are unavailable"}: ${errorMessage(error)}`;
       this.options.logger?.warn("market_snapshot.refresh_failed", errorLogFields(error));
       return false;
     }
     this.state = next;
+    this.nextRetryAt = 0;
     this.fetchWarning = undefined;
     this.index();
     this.options.logger?.info("market_snapshot.refreshed", { generatedAt: next.generatedAt, listings: next.listings.length });
