@@ -170,7 +170,7 @@ function BagSurface({ state, error, query, matchesOnly, items, selected, busy, o
   const heading = state?.phase === "capturing" ? "Live bag" : "Bag ledger";
   const bagTotal = (state?.bag ?? []).reduce((sum, item) => sum + (item.value?.low ?? 0), 0);
   const prices = state?.marketPrices.generatedAt
-    ? <span class="bag-total" title={state.marketPrices.warning ?? `${state.marketPrices.listings.toLocaleString()} ValeMarket listings, asking prices`}>· bag ≈ {shortMoney(bagTotal)} · prices {relativeTime(state.marketPrices.generatedAt)}{state.marketPrices.warning ? " (stale)" : ""}</span>
+    ? <span class="bag-total" title={state.marketPrices.warning ?? state.marketPrices.cacheWarning ?? `${state.marketPrices.listings.toLocaleString()} ValeMarket listings, asking prices`}>· bag ≈ {shortMoney(bagTotal)} · prices {relativeTime(state.marketPrices.generatedAt)}{state.marketPrices.warning ? " (stale)" : ""}</span>
     : undefined;
   return <>
     <SurfaceHeader eyebrow="Inventory · passive observation" title={heading} freshness={state?.bagGeneratedAt ? `Snapshot ${relativeTime(state.bagGeneratedAt)}` : state ? state.bagCoverage : "Local collector"} live={state?.phase === "capturing"}>{prices}</SurfaceHeader>

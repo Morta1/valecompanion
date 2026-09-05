@@ -87,6 +87,7 @@ export interface MarketPricesView {
   generatedAt: string | null;
   listings: number;
   warning?: string;
+  cacheWarning?: string;
 }
 
 export interface MarketContributorView {

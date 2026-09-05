@@ -8,7 +8,9 @@ const REFRESH_INTERVAL_MS = 15 * 60 * 1_000;
 const RETRY_INTERVAL_MS = 2 * 60 * 1_000;
 
 interface SnapshotState {
+  fetchedAt: number;
   generatedAt: string;
+  body: Record<string, unknown>;
   listings: MarketListing[];
 }
 
@@ -20,13 +22,17 @@ export interface MarketSnapshotOptions {
   logger?: AppLogger;
 }
 
-// Read-only mirror of the public ValeMarket snapshot, refreshed on the API's own
-// 15 minute cadence and kept across failures so bag pricing degrades to stale, not empty.
+// The one place the collector and the Market frame get the public ValeMarket snapshot from.
+// Serves the cached body while it is under 15 minutes old, refreshes otherwise with concurrent
+// callers sharing a single download, and keeps stale data across failures so bag pricing
+// degrades to old numbers rather than none. The cache stores the API body untouched.
 export class MarketSnapshot {
   private byItem = new Map<string, MarketListing[]>();
   private refreshTimer: ReturnType<typeof setTimeout> | undefined;
+  private inflight: Promise<boolean> | undefined;
   private readonly lifetime = new AbortController();
-  private warning: string | undefined;
+  private fetchWarning: string | undefined;
+  private cacheWarning: string | undefined;
   private readonly endpoint: string;
   private readonly fetch: NonNullable<MarketSnapshotOptions["fetch"]>;
   private readonly now: () => Date;
@@ -40,7 +46,7 @@ export class MarketSnapshot {
 
   static async load(options: MarketSnapshotOptions): Promise<MarketSnapshot> {
     const now = (options.now ?? (() => new Date()))().getTime();
-    const state = await loadJson<SnapshotState | null>(options.cachePath, () => null, (value) => parseState(value, now), (error) => {
+    const state = await loadJson<SnapshotState | null>(options.cachePath, () => null, (value) => parseCache(value, now), (error) => {
       options.logger?.warn("state.load.invalid", { state: "market-snapshot", ...errorLogFields(error) });
     });
     return new MarketSnapshot(options, state);
@@ -54,13 +60,30 @@ export class MarketSnapshot {
     return {
       generatedAt: this.state?.generatedAt ?? null,
       listings: this.state?.listings.length ?? 0,
-      ...(this.warning === undefined ? {} : { warning: this.warning }),
+      ...(this.fetchWarning === undefined ? {} : { warning: this.fetchWarning }),
+      ...(this.cacheWarning === undefined ? {} : { cacheWarning: this.cacheWarning }),
     };
   }
 
+  // The API body as last downloaded, refreshed first when it is due. Null only when nothing
+  // has ever been fetched and the download fails.
+  async body(): Promise<Record<string, unknown> | null> {
+    await this.ensureFresh();
+    return this.state?.body ?? null;
+  }
+
+  async ensureFresh(): Promise<boolean> {
+    if (this.dueIn() > 0) return true;
+    return this.refresh();
+  }
+
+  refresh(): Promise<boolean> {
+    this.inflight ??= this.download().finally(() => { this.inflight = undefined; });
+    return this.inflight;
+  }
+
   start(): void {
-    const age = this.state ? this.now().getTime() - Date.parse(this.state.generatedAt) : Infinity;
-    this.schedule(Math.max(0, REFRESH_INTERVAL_MS - age));
+    this.schedule(this.dueIn());
   }
 
   stop(): void {
@@ -68,32 +91,45 @@ export class MarketSnapshot {
     this.lifetime.abort();
   }
 
-  async refresh(): Promise<boolean> {
+  private dueIn(): number {
+    return this.state ? Math.max(0, REFRESH_INTERVAL_MS - (this.now().getTime() - this.state.fetchedAt)) : 0;
+  }
+
+  private async download(): Promise<boolean> {
+    let next: SnapshotState;
     try {
       const response = await this.fetch(`${this.endpoint}/v2/markets/global/snapshot`, {
         redirect: "error",
         signal: AbortSignal.any([this.lifetime.signal, AbortSignal.timeout(20_000)]),
       });
       if (!response.ok) throw new Error(`market snapshot returned HTTP ${response.status}`);
-      const next = parseState(await response.json(), this.now().getTime());
-      if (!next) throw new Error("market snapshot returned an invalid response");
-      this.state = next;
-      this.warning = undefined;
-      this.index();
-      await writeJsonAtomic(this.options.cachePath, next);
-      this.options.logger?.info("market_snapshot.refreshed", { generatedAt: next.generatedAt, listings: next.listings.length });
-      return true;
+      const fetchedAt = this.now().getTime();
+      const parsed = parseBody(await response.json(), fetchedAt);
+      if (!parsed) throw new Error("market snapshot returned an invalid response");
+      next = { fetchedAt, ...parsed };
     } catch (error) {
-      this.warning = `Market prices ${this.state ? "may be stale" : "are unavailable"}: ${errorMessage(error)}`;
+      this.fetchWarning = `Market prices ${this.state ? "may be stale" : "are unavailable"}: ${errorMessage(error)}`;
       this.options.logger?.warn("market_snapshot.refresh_failed", errorLogFields(error));
       return false;
     }
+    this.state = next;
+    this.fetchWarning = undefined;
+    this.index();
+    this.options.logger?.info("market_snapshot.refreshed", { generatedAt: next.generatedAt, listings: next.listings.length });
+    try {
+      await writeJsonAtomic(this.options.cachePath, { fetchedAt: new Date(next.fetchedAt).toISOString(), body: next.body });
+      this.cacheWarning = undefined;
+    } catch (error) {
+      this.cacheWarning = `Market snapshot could not be cached: ${errorMessage(error)}`;
+      this.options.logger?.warn("market_snapshot.cache_failed", errorLogFields(error));
+    }
+    return true;
   }
 
   private schedule(delayMs: number): void {
     if (this.lifetime.signal.aborted) return;
     this.refreshTimer = setTimeout(() => {
-      void this.refresh().then((ok) => this.schedule(ok ? REFRESH_INTERVAL_MS : RETRY_INTERVAL_MS));
+      void this.ensureFresh().then((ok) => this.schedule(ok ? Math.max(this.dueIn(), RETRY_INTERVAL_MS) : RETRY_INTERVAL_MS));
     }, delayMs);
   }
 
@@ -107,7 +143,15 @@ export class MarketSnapshot {
   }
 }
 
-function parseState(value: unknown, now: number): SnapshotState | null {
+function parseCache(value: unknown, now: number): SnapshotState | null {
+  if (!isRecord(value) || typeof value.fetchedAt !== "string") return null;
+  const fetchedAt = Date.parse(value.fetchedAt);
+  if (!Number.isFinite(fetchedAt)) return null;
+  const parsed = parseBody(value.body, now);
+  return parsed ? { fetchedAt, ...parsed } : null;
+}
+
+function parseBody(value: unknown, now: number): Omit<SnapshotState, "fetchedAt"> | null {
   if (!isRecord(value) || typeof value.generatedAt !== "string" || !Number.isFinite(Date.parse(value.generatedAt))
     || !Array.isArray(value.listings)) return null;
   const listings: MarketListing[] = [];
@@ -115,7 +159,7 @@ function parseState(value: unknown, now: number): SnapshotState | null {
     const listing = parseListing(entry, now);
     if (listing) listings.push(listing);
   }
-  return { generatedAt: value.generatedAt, listings };
+  return { generatedAt: value.generatedAt, body: value, listings };
 }
 
 function parseListing(value: unknown, now: number): MarketListing | null {
