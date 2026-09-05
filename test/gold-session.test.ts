@@ -264,6 +264,34 @@ describe("GoldSession pauses while the game is off", () => {
     expect(fromLegacy.snapshot(START + 8 * 60 * MIN).elapsedSeconds).toBe(15 * 60);
   });
 
+  test("finishing a session while paused starts the next one paused", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.consumeBalance(1_200, START + 10 * MIN);
+    session.setGameActive(false, START + 10 * MIN);
+    session.reset(START + 11 * MIN);
+    const paused = session.snapshot(START + 40 * MIN);
+    expect(paused.status).toBe("paused");
+    expect(paused.elapsedSeconds).toBe(0);
+    session.setGameActive(true, START + 40 * MIN);
+    const resumed = session.snapshot(START + 45 * MIN);
+    expect(resumed.status).toBe("tracking");
+    expect(resumed.elapsedSeconds).toBe(5 * 60);
+  });
+
+  test("the recent rate survives a restart once the session has paused before", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.consumeBalance(1_600, START + 10 * MIN);
+    session.setGameActive(false, START + 10 * MIN);
+    expect(session.snapshot(START + 10 * MIN).recentGoldPerHour).toBe(3_600);
+
+    const restored = GoldSession.restore(session.persisted());
+    expect(restored.snapshot(START + 12 * MIN).recentGoldPerHour).toBe(3_600);
+    restored.setGameActive(true, START + 12 * MIN);
+    expect(restored.snapshot(START + 13 * MIN).recentGoldPerHour).toBeCloseTo(600 / 11 * 60, 5); // 600 over 11 played minutes
+  });
+
   test("finishing a session archives played time, not wall time", () => {
     const session = new GoldSession();
     session.consumeBalance(1_000, START);

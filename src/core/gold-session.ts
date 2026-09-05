@@ -27,6 +27,7 @@ type PersistedActiveSession = {
   lastMonsterKillCount?: number;
   activeMs?: number;
   activeSince?: number;
+  activeIntervals?: ActiveInterval[];
   events: GoldEvent[];
 };
 
@@ -81,9 +82,10 @@ export class GoldSession {
       // Restore starts paused. An in-progress stretch is closed at the last balance change, the
       // latest moment the game is known to have been running. Saves without activeMs predate
       // pausing and are treated as one stretch from the start.
-      const { activeMs, activeSince, startedAt, lastChangeAt } = state.active;
+      const { activeMs, activeSince, activeIntervals, startedAt, lastChangeAt } = state.active;
       session.#activeMs = activeMs ?? 0;
       session.#activeSince = activeMs === undefined ? startedAt : activeSince ?? null;
+      session.#activeIntervals.push(...(activeIntervals ?? []));
       session.#pause(lastChangeAt ?? startedAt);
     }
     return session;
@@ -106,6 +108,7 @@ export class GoldSession {
             lastChangeAt: this.#lastChangeAt,
             activeMs: this.#activeMs,
             ...(this.#activeSince === null ? {} : { activeSince: this.#activeSince }),
+            activeIntervals: this.#activeIntervals.map((interval) => ({ ...interval })),
             earned: this.#earned,
             spent: this.#spent,
             earningEvents: this.#earningEvents,
@@ -180,8 +183,11 @@ export class GoldSession {
     const balance = this.#balance;
     const playerObjectId = this.#playerObjectId;
     const lastMonsterKillCount = this.#lastMonsterKillCount;
+    // The next session inherits the pause state: finishing while the game is closed must not start
+    // a clock that only a balance update or game detection should resume.
+    const active = this.#activeSince !== null;
     this.#archiveCurrent(observedAt);
-    this.#start(balance, observedAt, playerObjectId);
+    this.#start(balance, observedAt, playerObjectId, active);
     this.#lastMonsterKillCount = lastMonsterKillCount;
   }
 
@@ -262,13 +268,13 @@ export class GoldSession {
     };
   }
 
-  #start(balance: number, observedAt: number, playerObjectId: number | undefined): void {
+  #start(balance: number, observedAt: number, playerObjectId: number | undefined, active = true): void {
     this.#clearSession();
     this.#balance = balance;
     this.#startingBalance = balance;
     this.#playerObjectId = playerObjectId;
     this.#startedAt = observedAt;
-    this.#activeSince = observedAt;
+    this.#activeSince = active ? observedAt : null;
   }
 
   #clearSession(): void {
@@ -402,6 +408,13 @@ function parsePersistedState(value: unknown): PersistedGoldState {
   }
   if (value.active.activeSince !== undefined) {
     active.activeSince = safeInteger(value.active.activeSince, "activeSince");
+  }
+  if (value.active.activeIntervals !== undefined) {
+    if (!Array.isArray(value.active.activeIntervals)) throw new Error("gold analytics active intervals are invalid");
+    active.activeIntervals = value.active.activeIntervals.map((interval) => {
+      if (!isRecord(interval)) throw new Error("gold analytics active interval is invalid");
+      return { from: safeInteger(interval.from, "interval.from"), to: safeInteger(interval.to, "interval.to") };
+    });
   }
   return { schema: 1, active, previousSessions };
 }
