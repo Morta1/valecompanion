@@ -255,7 +255,7 @@ export function cardFacts(item: SaviStack): Facts {
   };
 }
 
-export function storageStackFacts(item: SaviStack, kind: "material" | "consumable"): Facts {
+export function stackFacts(item: SaviStack, kind: "material" | "consumable"): Facts {
   const facts = cardFacts(item);
   const type = kind === "material" ? "Material" : "Consumable";
   const uid = `${item.itemId}:${kind}`;

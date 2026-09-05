@@ -1,5 +1,5 @@
 import type { AlertHistoryView, LootItemView, LootMatchView } from "../shared/contracts.ts";
-import { artifactFacts, cardFacts, equipmentFacts, gemFacts, storageStackFacts, cosmeticFacts } from "./catalog.ts";
+import { artifactFacts, cardFacts, equipmentFacts, gemFacts, stackFacts, cosmeticFacts } from "./catalog.ts";
 import { matchLoot, type LootContext, type LootMatch } from "./filter/loot-filter.ts";
 import { parseLootFilter, type ParsedFilter } from "./filter/loot-dsl.ts";
 import type { OwnedGear } from "./filter/types.ts";
@@ -7,7 +7,6 @@ import type { SaviInventory, SaviSnapshot } from "./types.ts";
 
 export interface LootSessionOptions {
   historyLimit?: number;
-  includeStorageItems?: boolean;
   silent?: boolean;
   soundsEnabled?: () => boolean;
   onSound?: (sound: string) => boolean | Promise<boolean>;
@@ -100,19 +99,17 @@ export class LootSession {
       next.set(fact.view.uid, { owned: fact, view: fact.view });
     }
 
-    if (this.options.includeStorageItems) {
-      for (const item of inventory.junks) {
-        const fact = storageStackFacts(item, "material");
-        next.set(fact.view.uid, { owned: fact, view: fact.view });
-      }
-      for (const item of inventory.consumables) {
-        const fact = storageStackFacts(item, "consumable");
-        next.set(fact.view.uid, { owned: fact, view: fact.view });
-      }
-      for (const item of inventory.cosmetics ?? []) {
-        const fact = cosmeticFacts(item);
-        next.set(fact.view.uid, { owned: fact, view: fact.view });
-      }
+    for (const item of inventory.junks) {
+      const fact = stackFacts(item, "material");
+      next.set(fact.view.uid, { owned: fact, view: fact.view });
+    }
+    for (const item of inventory.consumables) {
+      const fact = stackFacts(item, "consumable");
+      next.set(fact.view.uid, { owned: fact, view: fact.view });
+    }
+    for (const item of inventory.cosmetics ?? []) {
+      const fact = cosmeticFacts(item);
+      next.set(fact.view.uid, { owned: fact, view: fact.view });
     }
 
     const baseline = !this.#baseline;

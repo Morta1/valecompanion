@@ -16,7 +16,7 @@ const ARTIFACT_SLOT_IDS: Record<string, number> = Object.fromEntries(
 // A listing is comparable when it shares the item, artifact slot, and stat lines, and every
 // value is at least the owned roll. Looser tiers fall back to the same lines, then any roll.
 export function priceItem(item: LootItemView, listings: MarketListing[]): MarketValueView | null {
-  if (listings.length === 0) return null;
+  if (listings.length === 0 || item.kind === "material" || item.kind === "consumable" || item.kind === "cosmetic") return null;
   if (item.kind === "card" || item.kind === "gem") return unitValue(item, listings);
   const slot = item.kind === "artifact" ? ARTIFACT_SLOT_IDS[item.type] ?? null : null;
   const pool = slot === null ? listings : listings.filter((listing) => listing.artifactSlot === slot);

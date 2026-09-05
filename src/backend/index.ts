@@ -146,7 +146,7 @@ const session = new LootSession({
     }
   },
 });
-const storageSession = new LootSession({ includeStorageItems: true, silent: true });
+const storageSession = new LootSession({ silent: true });
 session.setFilter(persisted.filter);
 storageSession.setFilter(persisted.filter);
 const goldStatePath = path.join(dataDirectory, "gold-sessions.json");
@@ -590,7 +590,7 @@ function currentState(): DesktopState {
     marketPrices: marketSnapshot.view(),
     gold: goldSession.snapshot(),
     bag: priceBag(session.bag(), (itemId) => marketSnapshot.listingsFor(itemId)),
-    storage: storageSession.bag().map((item) => ["material", "consumable", "cosmetic"].includes(item.kind) ? item : priceBag([item], (itemId) => marketSnapshot.listingsFor(itemId))[0]!),
+    storage: priceBag(storageSession.bag(), (itemId) => marketSnapshot.listingsFor(itemId)),
     storageGeneratedAt,
     bagGeneratedAt,
     bagCoverage,
