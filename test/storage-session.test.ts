@@ -53,3 +53,27 @@ test("bag and storage both retain materials, consumables, and cosmetics", () => 
     expect(session.bag()).toEqual([]);
   }
 });
+
+
+test("shared item IDs retain category-specific card and cosmetic identities", () => {
+  for (const session of [new LootSession(), new LootSession({ silent: true })]) {
+    session.consumeInventory({ ...empty(), cards: [{ itemId: "Turtle", count: 2, favorite: false }], cosmetics: [{ itemId: "Turtle", uid: "pet-uid", refine: 0, favorite: false }] });
+    const card = session.bag().find(item => item.kind === "card")!;
+    const pet = session.bag().find(item => item.kind === "cosmetic")!;
+    expect(card.name).toBe("Turtle Baby Card");
+    expect(card.icon).toBe("card.webp");
+    expect(pet.name).toBe("Turtle Baby Pet");
+    expect(pet.icon).toBe("cosmetic-turtle.webp");
+    expect(pet.uid).not.toBe(card.uid);
+  }
+});
+
+
+test("bundled cosmetic artwork exists and never uses card artwork", async () => {
+  const catalog = await Bun.file(new URL("../assets/cosmetics.json", import.meta.url)).json() as Record<string, { icon?: string }>;
+  for (const entry of Object.values(catalog)) {
+    if (!entry.icon) continue;
+    expect(entry.icon.startsWith("icons/cosmetic-")).toBe(true);
+    expect(await Bun.file(new URL(`../assets/${entry.icon}`, import.meta.url)).exists()).toBe(true);
+  }
+});

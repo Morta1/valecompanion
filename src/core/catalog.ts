@@ -21,6 +21,7 @@ const catalogPath = existsSync(path.join(import.meta.dir, "catalog.json"))
   ? path.join(import.meta.dir, "catalog.json")
   : path.join(import.meta.dir, "../../assets/catalog.json");
 const exactCatalog = JSON.parse(readFileSync(catalogPath, "utf8")) as Record<string, CatalogEntry>;
+const cosmeticCatalog = JSON.parse(readFileSync(path.join(path.dirname(catalogPath), "cosmetics.json"), "utf8")) as Record<string, CatalogEntry>;
 const attributeStats: Readonly<Record<string, true>> = { Str: true, Vit: true, Agi: true, Dex: true, Int: true, Luk: true };
 const capGroupBySlot: Readonly<Record<string, string>> = {
   Accessory: "Accessory",
@@ -255,16 +256,33 @@ export function cardFacts(item: SaviStack): Facts {
   };
 }
 
+// Item IDs overlap across game categories (for example Turtle is both a card and a pet).
+// Only use artwork from a catalog entry whose category matches the wire inventory.
 export function stackFacts(item: SaviStack, kind: "material" | "consumable"): Facts {
-  const facts = cardFacts(item);
-  const type = kind === "material" ? "Material" : "Consumable";
-  const uid = `${item.itemId}:${kind}`;
-  return { ...facts, uid, slotType: type, view: { ...facts.view, uid, kind, type } };
+  return simpleInventoryFacts(item, kind);
 }
 
 export function cosmeticFacts(item: SaviGem): Facts {
-  const facts = gemFacts(item);
-  const exact = exactCatalog[item.itemId];
-  const name = exact?.name ?? item.itemId;
-  return { ...facts, name, slotType: "Cosmetic", view: { ...facts.view, name, kind: "cosmetic", type: "Cosmetic" } };
+  return simpleInventoryFacts({ ...item, count: 1 }, "cosmetic");
+}
+
+function simpleInventoryFacts(item: SaviStack & { uid?: string | null; refine?: number }, kind: "material" | "consumable" | "cosmetic"): Facts {
+  const type = { material: "Material", consumable: "Consumable", cosmetic: "Cosmetic" }[kind];
+  const itemType = { material: 0, consumable: 1, cosmetic: 6 }[kind];
+  const entry = kind === "cosmetic" ? cosmeticCatalog[item.itemId] : exactCatalog[item.itemId];
+  const exact = entry?.kind === type ? entry : undefined;
+  const definition = resolveFishNetItem(itemType, item.itemId);
+  const name = exact?.name ?? definition?.displayName ?? item.itemId;
+  const uid = item.uid ?? `${item.itemId}:${kind}`;
+  const refine = item.refine ?? 0;
+  return {
+    uid, itemId: item.itemId, name, slotType: type, refine, lines: [],
+    topRolls: 0, highRolls: 0, avgRollPct: null, favorite: item.favorite, hasChaos: false,
+    ...(exact || definition ? {} : { unknown: true as const }),
+    view: {
+      uid, itemId: item.itemId, name, type, kind, refine, count: item.count,
+      icon: exact?.icon ? path.basename(exact.icon) : null,
+      favorite: item.favorite, hasChaos: false, topRolls: 0, highRolls: 0, avgRollPct: null, lines: [],
+    },
+  };
 }

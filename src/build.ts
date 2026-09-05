@@ -34,6 +34,7 @@ await Promise.all([
   cp(path.join(root, "assets", "fonts"), path.join(rendererOutput, "fonts"), { recursive: true }),
   copyFile(path.join(root, "src", "frontend", "index.css"), path.join(rendererOutput, "index.css")),
   copyFile(path.join(root, "assets", "catalog.json"), path.join(collectorOutput, "catalog.json")),
+  copyFile(path.join(root, "assets", "cosmetics.json"), path.join(collectorOutput, "cosmetics.json")),
   copyFile(path.join(root, "docs", "starter-ruleset.txt"), path.join(collectorOutput, "starter-ruleset.txt")),
   cp(path.join(root, "assets", "icons"), path.join(collectorOutput, "icons"), { recursive: true }),
   copyFile(process.execPath, runtimeOutput),

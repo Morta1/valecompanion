@@ -1,0 +1,5871 @@
+{
+  "3D Glasses": {
+    "name": "3DGlasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-3d-glasses.webp"
+  },
+  "Abyss Shard": {
+    "name": "Abyss Shard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-abyss-shard.webp"
+  },
+  "Adventurer's Kit": {
+    "name": "Adventurer's Kit",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-adventurer-s-kit.webp"
+  },
+  "Adventurer's Pack": {
+    "name": "Adventurer's Pack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-adventurer-s-pack.webp"
+  },
+  "Alien Cyclops": {
+    "name": "Voidspawn Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-alien-cyclops.webp"
+  },
+  "Alien Sporella": {
+    "name": "Chompcap Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-alien-sporella.webp"
+  },
+  "Alien Star": {
+    "name": "Little Star Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-alien-star.webp"
+  },
+  "Alien Wheel": {
+    "name": "Cinderwheel Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-alien-wheel.webp"
+  },
+  "Amber Bow": {
+    "name": "Amber Bow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-amber-bow.webp"
+  },
+  "Amber Loop": {
+    "name": "Amber Loop",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-amber-loop.webp"
+  },
+  "Arcane Sigil": {
+    "name": "Arcane Sigil",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arcane-sigil.webp"
+  },
+  "ArcaneChest": {
+    "name": "Arcane Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arcanechest.webp"
+  },
+  "ArcaneFeet": {
+    "name": "Arcane Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arcanefeet.webp"
+  },
+  "ArcaneGloves": {
+    "name": "Arcane Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arcanegloves.webp"
+  },
+  "ArcaneLegs": {
+    "name": "Arcane Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arcanelegs.webp"
+  },
+  "Archangel": {
+    "name": "Archangel Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-archangel.webp"
+  },
+  "Archer's Beads": {
+    "name": "Archer's Beads",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-archer-s-beads.webp"
+  },
+  "Armor_Agi": {
+    "name": "Speed Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-armor-agi.webp"
+  },
+  "Armor_Dex": {
+    "name": "Precision Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-armor-dex.webp"
+  },
+  "Armor_Int": {
+    "name": "Mind Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-armor-int.webp"
+  },
+  "Armor_Luk": {
+    "name": "Fate Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-armor-luk.webp"
+  },
+  "Armor_Str": {
+    "name": "Power Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-armor-str.webp"
+  },
+  "Armor_Vit": {
+    "name": "Endurance Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-armor-vit.webp"
+  },
+  "Arrow Quiver": {
+    "name": "Arrow Quiver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arrow-quiver.webp"
+  },
+  "Arrowcatch Wall": {
+    "name": "Arrowcatch Wall",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-arrowcatch-wall.webp"
+  },
+  "Artemis": {
+    "name": "Artemis",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-artemis.webp"
+  },
+  "Aura_Angel": {
+    "name": "Angelic Aura",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-aura-angel.webp"
+  },
+  "Aura_Demon": {
+    "name": "Demonic Aura",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-aura-demon.webp"
+  },
+  "Axe": {
+    "name": "Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-axe.webp"
+  },
+  "Axe of Oblivion": {
+    "name": "Axe of Oblivion",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-axe-of-oblivion.webp"
+  },
+  "Axe2H_Umbra": {
+    "name": "Umbra Axe2H",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-axe2h-umbra.webp"
+  },
+  "Axe_GladysAxe": {
+    "name": "Gladys Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-axe-gladysaxe.webp"
+  },
+  "Axe_Umbra": {
+    "name": "Umbra Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-axe-umbra.webp"
+  },
+  "Azure Antlers": {
+    "name": "Azure Antlers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-azure-antlers.webp"
+  },
+  "Azure Crown": {
+    "name": "Azure Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-azure-crown.webp"
+  },
+  "Azure Cutlass": {
+    "name": "Azure Cutlass",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-azure-cutlass.webp"
+  },
+  "Azure Prism": {
+    "name": "Azure Prism",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-azure-prism.webp"
+  },
+  "Azure Tag": {
+    "name": "Azure Tag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-azure-tag.webp"
+  },
+  "Back_Academy": {
+    "name": "Academy Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-academy.webp"
+  },
+  "Back_Angel": {
+    "name": "Angel Back",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-angel.webp"
+  },
+  "Back_BabyChicken": {
+    "name": "Baby Chicken",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-babychicken.webp"
+  },
+  "Back_Balloon": {
+    "name": "Balloon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-balloon.webp"
+  },
+  "Back_BucketofShrooms": {
+    "name": "Bucket of Shrooms",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-bucketofshrooms.webp"
+  },
+  "Back_Cape_100m": {
+    "name": "100m Cape",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-cape-100m.webp"
+  },
+  "Back_Cape_Gladys": {
+    "name": "Gladys Cape",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-cape-gladys.webp"
+  },
+  "Back_CatBoltTail": {
+    "name": "Cat Bolt Tail",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-catbolttail.webp"
+  },
+  "Back_CrystalWings": {
+    "name": "Crystal Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-crystalwings.webp"
+  },
+  "Back_Cuervo": {
+    "name": "Cuervo Back",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-cuervo.webp"
+  },
+  "Back_CyberRogue": {
+    "name": "Cyber Rogue Back",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-cyberrogue.webp"
+  },
+  "Back_DawnWingsHeavenly": {
+    "name": "Heavenly Dawn Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dawnwingsheavenly.webp"
+  },
+  "Back_DawnWingsHellfire": {
+    "name": "Hellfire Dawn Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dawnwingshellfire.webp"
+  },
+  "Back_DawnWingsPhantom": {
+    "name": "Phantom Dawn Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dawnwingsphantom.webp"
+  },
+  "Back_DawnWingsPinkRose": {
+    "name": "Pink Rose Dawn Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dawnwingspinkrose.webp"
+  },
+  "Back_DawnWingsSolarFlare": {
+    "name": "Solar Flare Dawn Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dawnwingssolarflare.webp"
+  },
+  "Back_DawnWingsSunset": {
+    "name": "Sunset Dawn Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dawnwingssunset.webp"
+  },
+  "Back_Demonic": {
+    "name": "Demonic Back",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-demonic.webp"
+  },
+  "Back_DragonWings": {
+    "name": "Dragon Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dragonwings.webp"
+  },
+  "Back_DualAxes": {
+    "name": "Dual Axes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-dualaxes.webp"
+  },
+  "Back_FairyWings": {
+    "name": "Fairy Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-fairywings.webp"
+  },
+  "Back_FlowerPot": {
+    "name": "Flower Pot",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-flowerpot.webp"
+  },
+  "Back_ForgeWings": {
+    "name": "Forge Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-forgewings.webp"
+  },
+  "Back_HolyCape": {
+    "name": "Holy Cape",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-holycape.webp"
+  },
+  "Back_HourGlass": {
+    "name": "Hour Glass",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-hourglass.webp"
+  },
+  "Back_MinersPouch": {
+    "name": "Miners Pouch",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-minerspouch.webp"
+  },
+  "Back_RaggedCape": {
+    "name": "Ragged Cape",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-raggedcape.webp"
+  },
+  "Back_Supporterstar": {
+    "name": "Support Star",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-supporterstar.webp"
+  },
+  "Back_TeddyBear": {
+    "name": "Teddy Bear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-teddybear.webp"
+  },
+  "Back_UmbrasGrace": {
+    "name": "Umbra's Grace",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-umbrasgrace.webp"
+  },
+  "Back_VitaeGift": {
+    "name": "Vitae's Gift",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-vitaegift.webp"
+  },
+  "Back_WolfPack": {
+    "name": "Wolf Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-back-wolfpack.webp"
+  },
+  "Backpack": {
+    "name": "Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-backpack.webp"
+  },
+  "Badge_Demonic": {
+    "name": "Demonic",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-badge-demonic.webp"
+  },
+  "Badge_Designer": {
+    "name": "Designer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-badge-designer.webp"
+  },
+  "Bandit Wrap": {
+    "name": "Bandit Wrap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bandit-wrap.webp"
+  },
+  "Banner Helm": {
+    "name": "Banner Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-banner-helm.webp"
+  },
+  "Bat": {
+    "name": "Bat Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bat.webp"
+  },
+  "Batling Familiar": {
+    "name": "Batling Familiar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-batling-familiar.webp"
+  },
+  "Battle Bonnet": {
+    "name": "Battle Bonnet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-battle-bonnet.webp"
+  },
+  "Bear Backpack": {
+    "name": "Bear Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bear-backpack.webp"
+  },
+  "Bear Hug Hood": {
+    "name": "Bear Hug Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bear-hug-hood.webp"
+  },
+  "Beast Helm": {
+    "name": "Beast Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-beast-helm.webp"
+  },
+  "Beast Hood": {
+    "name": "Beast Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-beast-hood.webp"
+  },
+  "Beast Pelt Hood": {
+    "name": "Beast Pelt Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-beast-pelt-hood.webp"
+  },
+  "Bee": {
+    "name": "Bee Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bee.webp"
+  },
+  "BerserkChest": {
+    "name": "Direwolf Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-berserkchest.webp"
+  },
+  "BerserkFeet": {
+    "name": "Direwolf Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-berserkfeet.webp"
+  },
+  "BerserkLegs": {
+    "name": "Direwolf Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-berserklegs.webp"
+  },
+  "Binding Spirits Staff": {
+    "name": "Binding Spirits Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-binding-spirits-staff.webp"
+  },
+  "Bishop's Hood": {
+    "name": "Bishop's Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bishop-s-hood.webp"
+  },
+  "Blacksteel Blade": {
+    "name": "Blacksteel Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blacksteel-blade.webp"
+  },
+  "Blade of Eclipse": {
+    "name": "Blade of Eclipse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blade-of-eclipse.webp"
+  },
+  "Blade Standard": {
+    "name": "Blade Standard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blade-standard.webp"
+  },
+  "Blindfold": {
+    "name": "Blindfold",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blindfold.webp"
+  },
+  "Blood Clip": {
+    "name": "Blood Clip",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blood-clip.webp"
+  },
+  "Blood Pendant": {
+    "name": "Blood Pendant",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blood-pendant.webp"
+  },
+  "Bloodbound": {
+    "name": "Bloodbound",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bloodbound.webp"
+  },
+  "Bloom of Midnight": {
+    "name": "Bloom of Midnight",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bloom-of-midnight.webp"
+  },
+  "Bloom Pendant": {
+    "name": "Bloom Pendant",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bloom-pendant.webp"
+  },
+  "Bloom Ring": {
+    "name": "Bloom Ring",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bloom-ring.webp"
+  },
+  "Bloomroot": {
+    "name": "Bloomroot",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bloomroot.webp"
+  },
+  "Blue Shell": {
+    "name": "Blue Shell",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blue-shell.webp"
+  },
+  "Blunderbuss": {
+    "name": "Blunderbuss",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-blunderbuss.webp"
+  },
+  "Bomb": {
+    "name": "Bomb Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bomb.webp"
+  },
+  "Bomb Bud": {
+    "name": "Bomb Bud",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bomb-bud.webp"
+  },
+  "Bone Channeler": {
+    "name": "Bone Channeler",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bone-channeler.webp"
+  },
+  "Bone Helm": {
+    "name": "Bone Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bone-helm.webp"
+  },
+  "Bone Pick": {
+    "name": "Bone Pick",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bone-pick.webp"
+  },
+  "Bonefang": {
+    "name": "Bonefang",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bonefang.webp"
+  },
+  "Bow_Umbra": {
+    "name": "Umbra Bow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bow-umbra.webp"
+  },
+  "Boxy Robot": {
+    "name": "Boxy Robot Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-boxy-robot.webp"
+  },
+  "BreezeguardChest": {
+    "name": "Breezeguard Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-breezeguardchest.webp"
+  },
+  "BreezeguardFeet": {
+    "name": "Breezeguard Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-breezeguardfeet.webp"
+  },
+  "BreezeguardLegs": {
+    "name": "Breezeguard Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-breezeguardlegs.webp"
+  },
+  "Brimblade": {
+    "name": "Brimblade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-brimblade.webp"
+  },
+  "Broad Sword": {
+    "name": "Broad Sword",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-broad-sword.webp"
+  },
+  "Bronze Crescent": {
+    "name": "Bronze Crescent",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bronze-crescent.webp"
+  },
+  "Bronze Plugs": {
+    "name": "Bronze Plugs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bronze-plugs.webp"
+  },
+  "Bronze Visage": {
+    "name": "Bronze Visage",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bronze-visage.webp"
+  },
+  "Bubblebeast Hood": {
+    "name": "Bubblebeast Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bubblebeast-hood.webp"
+  },
+  "Buckler": {
+    "name": "Buckler",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-buckler.webp"
+  },
+  "Bud": {
+    "name": "Venom Bud Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bud.webp"
+  },
+  "Bullcrest Helm": {
+    "name": "Bullcrest Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bullcrest-helm.webp"
+  },
+  "Bunny Backpack": {
+    "name": "Bunny Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bunny-backpack.webp"
+  },
+  "Bunny Cap": {
+    "name": "Bunny Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-bunny-cap.webp"
+  },
+  "Burrow": {
+    "name": "Digger Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-burrow.webp"
+  },
+  "Butterfly Fairy": {
+    "name": "Fairy Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-butterfly-fairy.webp"
+  },
+  "Cactus": {
+    "name": "Cactus Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cactus.webp"
+  },
+  "Caged Spirit": {
+    "name": "Caged Spirit",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-caged-spirit.webp"
+  },
+  "Cardboard Chick": {
+    "name": "Cardboard Chick",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cardboard-chick.webp"
+  },
+  "Casual_Back_1": {
+    "name": "Brown Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-1.webp"
+  },
+  "Casual_Back_10": {
+    "name": "Travel Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-10.webp"
+  },
+  "Casual_Back_16": {
+    "name": "Red Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-16.webp"
+  },
+  "Casual_Back_2": {
+    "name": "School Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-2.webp"
+  },
+  "Casual_Back_3": {
+    "name": "Hipster Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-3.webp"
+  },
+  "Casual_Back_4": {
+    "name": "Brown Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-4.webp"
+  },
+  "Casual_Back_5": {
+    "name": "White Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-5.webp"
+  },
+  "Casual_Back_6": {
+    "name": "Blue Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-6.webp"
+  },
+  "Casual_Back_7": {
+    "name": "Leather Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-7.webp"
+  },
+  "Casual_Back_8": {
+    "name": "Stylish Bag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-back-8.webp"
+  },
+  "Casual_Chest_1": {
+    "name": "Duck Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-1.webp"
+  },
+  "Casual_Chest_10": {
+    "name": "Yellow Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-10.webp"
+  },
+  "Casual_Chest_11": {
+    "name": "Blue Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-11.webp"
+  },
+  "Casual_Chest_12": {
+    "name": "Red Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-12.webp"
+  },
+  "Casual_Chest_14": {
+    "name": "Purple Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-14.webp"
+  },
+  "Casual_Chest_15": {
+    "name": "Pink Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-15.webp"
+  },
+  "Casual_Chest_16": {
+    "name": "Grey Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-16.webp"
+  },
+  "Casual_Chest_17": {
+    "name": "Monster Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-17.webp"
+  },
+  "Casual_Chest_18": {
+    "name": "Green Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-18.webp"
+  },
+  "Casual_Chest_19": {
+    "name": "Brown Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-19.webp"
+  },
+  "Casual_Chest_20": {
+    "name": "Black Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-20.webp"
+  },
+  "Casual_Chest_21": {
+    "name": "Cute Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-21.webp"
+  },
+  "Casual_Chest_22": {
+    "name": "Purple Sweater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-22.webp"
+  },
+  "Casual_Chest_23": {
+    "name": "Yellow Hoodie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-23.webp"
+  },
+  "Casual_Chest_24": {
+    "name": "Orange Hoodie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-24.webp"
+  },
+  "Casual_Chest_25": {
+    "name": "Blue Hoodie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-25.webp"
+  },
+  "Casual_Chest_26": {
+    "name": "Navy Hoodie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-26.webp"
+  },
+  "Casual_Chest_27": {
+    "name": "White Bomber Jacket",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-27.webp"
+  },
+  "Casual_Chest_28": {
+    "name": "Black Bomber Jacket",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-28.webp"
+  },
+  "Casual_Chest_29": {
+    "name": "Blue Bomber Jacket",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-29.webp"
+  },
+  "Casual_Chest_3": {
+    "name": "White T",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-3.webp"
+  },
+  "Casual_Chest_30": {
+    "name": "Stylish Bomber Jacket",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-30.webp"
+  },
+  "Casual_Chest_31": {
+    "name": "Brown Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-31.webp"
+  },
+  "Casual_Chest_32": {
+    "name": "Blue Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-32.webp"
+  },
+  "Casual_Chest_33": {
+    "name": "White Jersey",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-33.webp"
+  },
+  "Casual_Chest_35": {
+    "name": "Formal Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-35.webp"
+  },
+  "Casual_Chest_36": {
+    "name": "Blue Formal Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-36.webp"
+  },
+  "Casual_Chest_37": {
+    "name": "Smart Casual Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-37.webp"
+  },
+  "Casual_Chest_38": {
+    "name": "Yellow School Wear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-38.webp"
+  },
+  "Casual_Chest_39": {
+    "name": "Pink School Wear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-39.webp"
+  },
+  "Casual_Chest_40": {
+    "name": "Black School Wear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-40.webp"
+  },
+  "Casual_Chest_41": {
+    "name": "Blue School Wear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-41.webp"
+  },
+  "Casual_Chest_42": {
+    "name": "Captain Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-42.webp"
+  },
+  "Casual_Chest_43": {
+    "name": "Sailor Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-43.webp"
+  },
+  "Casual_Chest_44": {
+    "name": "White Dress Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-44.webp"
+  },
+  "Casual_Chest_45": {
+    "name": "Yellow Dress Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-45.webp"
+  },
+  "Casual_Chest_46": {
+    "name": "Purple Dress Shirt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-46.webp"
+  },
+  "Casual_Chest_49": {
+    "name": "Business Graduation Gown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-49.webp"
+  },
+  "Casual_Chest_5": {
+    "name": "Black T",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-5.webp"
+  },
+  "Casual_Chest_50": {
+    "name": "Science Graduation Gown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-50.webp"
+  },
+  "Casual_Chest_51": {
+    "name": "Fireman Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-51.webp"
+  },
+  "Casual_Chest_53": {
+    "name": "Bandit Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-53.webp"
+  },
+  "Casual_Chest_54": {
+    "name": "Royal Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-54.webp"
+  },
+  "Casual_Chest_55": {
+    "name": "Hexweaver Robe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-55.webp"
+  },
+  "Casual_Chest_56": {
+    "name": "Witches Robe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-56.webp"
+  },
+  "Casual_Chest_57": {
+    "name": "Bunny Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-57.webp"
+  },
+  "Casual_Chest_58": {
+    "name": "Dino Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-58.webp"
+  },
+  "Casual_Chest_59": {
+    "name": "Bear Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-59.webp"
+  },
+  "Casual_Chest_6": {
+    "name": "Yellow T",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-6.webp"
+  },
+  "Casual_Chest_60": {
+    "name": "Neko Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-60.webp"
+  },
+  "Casual_Chest_61": {
+    "name": "Festive Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-61.webp"
+  },
+  "Casual_Chest_62": {
+    "name": "Red Boxing Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-62.webp"
+  },
+  "Casual_Chest_63": {
+    "name": "Shark Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-63.webp"
+  },
+  "Casual_Chest_64": {
+    "name": "Football Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-64.webp"
+  },
+  "Casual_Chest_7": {
+    "name": "Blue T",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-7.webp"
+  },
+  "Casual_Chest_70": {
+    "name": "Tuxedo Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-chest-70.webp"
+  },
+  "Casual_Eyewear_10": {
+    "name": "Diva Shades",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-10.webp"
+  },
+  "Casual_Eyewear_13": {
+    "name": "Snow Goggles",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-13.webp"
+  },
+  "Casual_Eyewear_14": {
+    "name": "Diver Goggles",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-14.webp"
+  },
+  "Casual_Eyewear_15": {
+    "name": "Aviator Goggles",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-15.webp"
+  },
+  "Casual_Eyewear_17": {
+    "name": "Red Bandit Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-17.webp"
+  },
+  "Casual_Eyewear_3": {
+    "name": "Hipster Specs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-3.webp"
+  },
+  "Casual_Eyewear_4": {
+    "name": "Stylish Specs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-4.webp"
+  },
+  "Casual_Eyewear_8": {
+    "name": "Star Glasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-eyewear-8.webp"
+  },
+  "Casual_Feet_1": {
+    "name": "Blue Dress Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-1.webp"
+  },
+  "Casual_Feet_10": {
+    "name": "School Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-10.webp"
+  },
+  "Casual_Feet_11": {
+    "name": "School Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-11.webp"
+  },
+  "Casual_Feet_12": {
+    "name": "Dress Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-12.webp"
+  },
+  "Casual_Feet_13": {
+    "name": "Dress Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-13.webp"
+  },
+  "Casual_Feet_14": {
+    "name": "Dress Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-14.webp"
+  },
+  "Casual_Feet_15": {
+    "name": "Dress Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-15.webp"
+  },
+  "Casual_Feet_16": {
+    "name": "Tuxedo Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-16.webp"
+  },
+  "Casual_Feet_17": {
+    "name": "Violet Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-17.webp"
+  },
+  "Casual_Feet_18": {
+    "name": "Black Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-18.webp"
+  },
+  "Casual_Feet_19": {
+    "name": "Black Sneakers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-19.webp"
+  },
+  "Casual_Feet_2": {
+    "name": "Green Sneakers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-2.webp"
+  },
+  "Casual_Feet_20": {
+    "name": "Fireman Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-20.webp"
+  },
+  "Casual_Feet_21": {
+    "name": "Grey Hightops",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-21.webp"
+  },
+  "Casual_Feet_22": {
+    "name": "Hiking Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-22.webp"
+  },
+  "Casual_Feet_23": {
+    "name": "Forest Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-23.webp"
+  },
+  "Casual_Feet_24": {
+    "name": "Heavy Duty Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-24.webp"
+  },
+  "Casual_Feet_25": {
+    "name": "Royal Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-25.webp"
+  },
+  "Casual_Feet_27": {
+    "name": "Bandit Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-27.webp"
+  },
+  "Casual_Feet_28": {
+    "name": "Dress Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-28.webp"
+  },
+  "Casual_Feet_29": {
+    "name": "Pointed Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-29.webp"
+  },
+  "Casual_Feet_3": {
+    "name": "Yellow Sneakers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-3.webp"
+  },
+  "Casual_Feet_30": {
+    "name": "Pointed Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-30.webp"
+  },
+  "Casual_Feet_32": {
+    "name": "Witch Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-32.webp"
+  },
+  "Casual_Feet_33": {
+    "name": "Witch Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-33.webp"
+  },
+  "Casual_Feet_34": {
+    "name": "Elf Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-34.webp"
+  },
+  "Casual_Feet_35": {
+    "name": "Bunny Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-35.webp"
+  },
+  "Casual_Feet_36": {
+    "name": "Dino Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-36.webp"
+  },
+  "Casual_Feet_37": {
+    "name": "Bear Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-37.webp"
+  },
+  "Casual_Feet_38": {
+    "name": "Neko Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-38.webp"
+  },
+  "Casual_Feet_39": {
+    "name": "Festive Slippers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-39.webp"
+  },
+  "Casual_Feet_4": {
+    "name": "Orange Sneakers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-4.webp"
+  },
+  "Casual_Feet_40": {
+    "name": "Diver Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-40.webp"
+  },
+  "Casual_Feet_41": {
+    "name": "Red Runners",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-41.webp"
+  },
+  "Casual_Feet_42": {
+    "name": "Blue Sneakers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-42.webp"
+  },
+  "Casual_Feet_43": {
+    "name": "Football Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-43.webp"
+  },
+  "Casual_Feet_48": {
+    "name": "Strapped Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-48.webp"
+  },
+  "Casual_Feet_5": {
+    "name": "White Runners",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-5.webp"
+  },
+  "Casual_Feet_50": {
+    "name": "Monster Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-50.webp"
+  },
+  "Casual_Feet_51": {
+    "name": "Shark Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-51.webp"
+  },
+  "Casual_Feet_52": {
+    "name": "Duck Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-52.webp"
+  },
+  "Casual_Feet_6": {
+    "name": "Red Runners",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-6.webp"
+  },
+  "Casual_Feet_7": {
+    "name": "Black Runners",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-7.webp"
+  },
+  "Casual_Feet_8": {
+    "name": "Blue Runners",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-8.webp"
+  },
+  "Casual_Feet_9": {
+    "name": "Hipster Hightops",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-feet-9.webp"
+  },
+  "Casual_Hands_10": {
+    "name": "Neko Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-10.webp"
+  },
+  "Casual_Hands_11": {
+    "name": "Bear Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-11.webp"
+  },
+  "Casual_Hands_12": {
+    "name": "Festive Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-12.webp"
+  },
+  "Casual_Hands_13": {
+    "name": "Red Boxing Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-13.webp"
+  },
+  "Casual_Hands_14": {
+    "name": "Blue Boxing Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-14.webp"
+  },
+  "Casual_Hands_15": {
+    "name": "Football Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-15.webp"
+  },
+  "Casual_Hands_21": {
+    "name": "Monster Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-21.webp"
+  },
+  "Casual_Hands_22": {
+    "name": "Duck Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-22.webp"
+  },
+  "Casual_Hands_3": {
+    "name": "Hiking Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-3.webp"
+  },
+  "Casual_Hands_4": {
+    "name": "Leather Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-4.webp"
+  },
+  "Casual_Hands_5": {
+    "name": "Elf Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-5.webp"
+  },
+  "Casual_Hands_8": {
+    "name": "Bunny Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-8.webp"
+  },
+  "Casual_Hands_9": {
+    "name": "Dino Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-hands-9.webp"
+  },
+  "Casual_Head_1": {
+    "name": "Baseball Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-1.webp"
+  },
+  "Casual_Head_10": {
+    "name": "Blue Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-10.webp"
+  },
+  "Casual_Head_13": {
+    "name": "Straw Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-13.webp"
+  },
+  "Casual_Head_14": {
+    "name": "Cowboy Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-14.webp"
+  },
+  "Casual_Head_16": {
+    "name": "Spring Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-16.webp"
+  },
+  "Casual_Head_17": {
+    "name": "Ribbon Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-17.webp"
+  },
+  "Casual_Head_2": {
+    "name": "Black Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-2.webp"
+  },
+  "Casual_Head_20": {
+    "name": "Chicky Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-20.webp"
+  },
+  "Casual_Head_21": {
+    "name": "Scout Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-21.webp"
+  },
+  "Casual_Head_23": {
+    "name": "Banana Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-23.webp"
+  },
+  "Casual_Head_28": {
+    "name": "Captain Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-28.webp"
+  },
+  "Casual_Head_29": {
+    "name": "Sailor Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-29.webp"
+  },
+  "Casual_Head_30": {
+    "name": "Science Graduation Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-30.webp"
+  },
+  "Casual_Head_31": {
+    "name": "Business Graduation Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-31.webp"
+  },
+  "Casual_Head_39": {
+    "name": "Fireman Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-39.webp"
+  },
+  "Casual_Head_4": {
+    "name": "Hipster Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-4.webp"
+  },
+  "Casual_Head_41": {
+    "name": "Red Bandit Bandana",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-41.webp"
+  },
+  "Casual_Head_42": {
+    "name": "Blue Bandit Bandana",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-42.webp"
+  },
+  "Casual_Head_46": {
+    "name": "Royal Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-46.webp"
+  },
+  "Casual_Head_5": {
+    "name": "Black Beanie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-5.webp"
+  },
+  "Casual_Head_6": {
+    "name": "Blue Beanie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-6.webp"
+  },
+  "Casual_Head_7": {
+    "name": "Snow Beanie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-7.webp"
+  },
+  "Casual_Head_8": {
+    "name": "Artist Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-head-8.webp"
+  },
+  "Casual_Legs_1": {
+    "name": "Duck Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-1.webp"
+  },
+  "Casual_Legs_10": {
+    "name": "Monster Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-10.webp"
+  },
+  "Casual_Legs_13": {
+    "name": "Orange Shorts",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-13.webp"
+  },
+  "Casual_Legs_15": {
+    "name": "Tuxedo Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-15.webp"
+  },
+  "Casual_Legs_18": {
+    "name": "Brown Cargos",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-18.webp"
+  },
+  "Casual_Legs_19": {
+    "name": "Grey Cargos",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-19.webp"
+  },
+  "Casual_Legs_2": {
+    "name": "Black Boxers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-2.webp"
+  },
+  "Casual_Legs_20": {
+    "name": "Black Cargos",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-20.webp"
+  },
+  "Casual_Legs_21": {
+    "name": "Green Cargos",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-21.webp"
+  },
+  "Casual_Legs_22": {
+    "name": "Blue Cargos",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-22.webp"
+  },
+  "Casual_Legs_23": {
+    "name": "White Jeans",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-23.webp"
+  },
+  "Casual_Legs_24": {
+    "name": "Light Jeans",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-24.webp"
+  },
+  "Casual_Legs_25": {
+    "name": "Navy Jeans",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-25.webp"
+  },
+  "Casual_Legs_3": {
+    "name": "Blue Boxers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-3.webp"
+  },
+  "Casual_Legs_32": {
+    "name": "Red Dress",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-32.webp"
+  },
+  "Casual_Legs_33": {
+    "name": "Black Dress",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-33.webp"
+  },
+  "Casual_Legs_34": {
+    "name": "Fireman Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-34.webp"
+  },
+  "Casual_Legs_36": {
+    "name": "Bandit Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-36.webp"
+  },
+  "Casual_Legs_37": {
+    "name": "Royal Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-37.webp"
+  },
+  "Casual_Legs_38": {
+    "name": "Blue Shorts",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-38.webp"
+  },
+  "Casual_Legs_40": {
+    "name": "Bunny Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-40.webp"
+  },
+  "Casual_Legs_41": {
+    "name": "Dino Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-41.webp"
+  },
+  "Casual_Legs_42": {
+    "name": "Bear Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-42.webp"
+  },
+  "Casual_Legs_43": {
+    "name": "Neko Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-43.webp"
+  },
+  "Casual_Legs_44": {
+    "name": "Festive Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-44.webp"
+  },
+  "Casual_Legs_45": {
+    "name": "Diver Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-45.webp"
+  },
+  "Casual_Legs_47": {
+    "name": "Shark Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-47.webp"
+  },
+  "Casual_Legs_48": {
+    "name": "Football Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-48.webp"
+  },
+  "Casual_Legs_54": {
+    "name": "Red Dress",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-54.webp"
+  },
+  "Casual_Legs_7": {
+    "name": "Yellow Boxers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-7.webp"
+  },
+  "Casual_Legs_8": {
+    "name": "White Shorts",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-casual-legs-8.webp"
+  },
+  "Cat Meow": {
+    "name": "Sparkit Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cat-meow.webp"
+  },
+  "Centurion Helm": {
+    "name": "Centurion Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-centurion-helm.webp"
+  },
+  "Ceremonial Mask": {
+    "name": "Ceremonial Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ceremonial-mask.webp"
+  },
+  "Cerulean Scepter": {
+    "name": "Cerulean Scepter",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cerulean-scepter.webp"
+  },
+  "Chainfrost Staff": {
+    "name": "Chainfrost Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chainfrost-staff.webp"
+  },
+  "Chains of Binding": {
+    "name": "Chains of Binding",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chains-of-binding.webp"
+  },
+  "Champion Blade": {
+    "name": "Divine Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-champion-blade.webp"
+  },
+  "Chaos Reaver": {
+    "name": "Chaos Reaver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chaos-reaver.webp"
+  },
+  "ChatBubble_Angelic": {
+    "name": "Angelic",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chatbubble-angelic.webp"
+  },
+  "ChatBubble_Demonic": {
+    "name": "Demonic",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chatbubble-demonic.webp"
+  },
+  "ChatBubble_Kaeru": {
+    "name": "Kaeru",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chatbubble-kaeru.webp"
+  },
+  "Chest_AcademyF": {
+    "name": "Academy Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-academyf.webp"
+  },
+  "Chest_AcademyM": {
+    "name": "Academy Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-academym.webp"
+  },
+  "Chest_Angel_F": {
+    "name": "Angel Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-angel-f.webp"
+  },
+  "Chest_Angel_M": {
+    "name": "Angel Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-angel-m.webp"
+  },
+  "Chest_ContentCreator": {
+    "name": "Content Creator Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-contentcreator.webp"
+  },
+  "Chest_Cuervo_F": {
+    "name": "Cuervo Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-cuervo-f.webp"
+  },
+  "Chest_Cuervo_M": {
+    "name": "Cuervo Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-cuervo-m.webp"
+  },
+  "Chest_CyberRogue": {
+    "name": "Cyber Rogue Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-cyberrogue.webp"
+  },
+  "Chest_Demonic_F": {
+    "name": "Demonic Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-demonic-f.webp"
+  },
+  "Chest_Demonic_M": {
+    "name": "Demonic Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-demonic-m.webp"
+  },
+  "Chest_Easter_F": {
+    "name": "Easter Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-easter-f.webp"
+  },
+  "Chest_Easter_M": {
+    "name": "Easter Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-easter-m.webp"
+  },
+  "Chest_FireFox": {
+    "name": "Fire Fox Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-firefox.webp"
+  },
+  "Chest_Gladys": {
+    "name": "Gladys Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-gladys.webp"
+  },
+  "Chest_GS": {
+    "name": "Gunslinger Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-gs.webp"
+  },
+  "Chest_IceFox": {
+    "name": "Ice Fox Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-icefox.webp"
+  },
+  "Chest_Kaeru": {
+    "name": "Kaeru Overalls",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-kaeru.webp"
+  },
+  "Chest_Priest_F": {
+    "name": "Priest Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-priest-f.webp"
+  },
+  "Chest_Priest_M": {
+    "name": "Priest Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-priest-m.webp"
+  },
+  "Chest_Shinobi": {
+    "name": "Shinobi Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-shinobi.webp"
+  },
+  "Chest_SpiritValer": {
+    "name": "Spirit Valer Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-spiritvaler.webp"
+  },
+  "Chest_SukebanF": {
+    "name": "Sukeban Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-sukebanf.webp"
+  },
+  "Chest_SukebanM": {
+    "name": "Sukeban Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-sukebanm.webp"
+  },
+  "Chest_Sunken": {
+    "name": "Sunken Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-sunken.webp"
+  },
+  "Chest_Transparent": {
+    "name": "Transparent Top",
+    "kind": "Cosmetic"
+  },
+  "Chest_Umbra_Knight": {
+    "name": "Umbral Knight Armor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-umbra-knight.webp"
+  },
+  "Chest_Urban": {
+    "name": "Urban Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-urban.webp"
+  },
+  "Chest_WhiteCatHoodie": {
+    "name": "White Cat Hoodie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-whitecathoodie.webp"
+  },
+  "Chest_Wizard_F": {
+    "name": "Wizard Female Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-wizard-f.webp"
+  },
+  "Chest_Wizard_M": {
+    "name": "Wizard Male Top",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chest-wizard-m.webp"
+  },
+  "Chick": {
+    "name": "Chick Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chick.webp"
+  },
+  "Chicky Hood": {
+    "name": "Chicky Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chicky-hood.webp"
+  },
+  "Chirpy Hat": {
+    "name": "Chirpy Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chirpy-hat.webp"
+  },
+  "Chompy Hood": {
+    "name": "Chompy Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chompy-hood.webp"
+  },
+  "Chronomancer's Codex": {
+    "name": "Chronomancer's Codex",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-chronomancer-s-codex.webp"
+  },
+  "ClericChest": {
+    "name": "Cleric Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-clericchest.webp"
+  },
+  "ClericFeet": {
+    "name": "Cleric Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-clericfeet.webp"
+  },
+  "ClericLegs": {
+    "name": "Cleric Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-clericlegs.webp"
+  },
+  "Cloud Loop": {
+    "name": "Cloud Loop",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cloud-loop.webp"
+  },
+  "Cloud Mount": {
+    "name": "Flying Nimbus",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cloud-mount.webp"
+  },
+  "Codex": {
+    "name": "Tome",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-codex.webp"
+  },
+  "Codex Binding Light": {
+    "name": "Grimoire of Binding Light",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-codex-binding-light.webp"
+  },
+  "Codex First Hymn": {
+    "name": "Tome of the First Hymn",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-codex-first-hymn.webp"
+  },
+  "Codex of Revelation": {
+    "name": "Codex of Revelation",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-codex-of-revelation.webp"
+  },
+  "Codex Umbra": {
+    "name": "Codex Umbra",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-codex-umbra.webp"
+  },
+  "Codex Vitae": {
+    "name": "Codex Vitae",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-codex-vitae.webp"
+  },
+  "Combat Knife": {
+    "name": "Combat Knife",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-combat-knife.webp"
+  },
+  "Cotton Mask": {
+    "name": "Cotton Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cotton-mask.webp"
+  },
+  "Crimson Crest": {
+    "name": "Crimson Crest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crimson-crest.webp"
+  },
+  "Crimson Plume": {
+    "name": "Crimson Plume",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crimson-plume.webp"
+  },
+  "Crown of Spikes": {
+    "name": "Crown of Spikes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crown-of-spikes.webp"
+  },
+  "Crusader Staff": {
+    "name": "Radiant Scepter",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crusader-staff.webp"
+  },
+  "Crusader Sword": {
+    "name": "Oathbreaker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crusader-sword.webp"
+  },
+  "Crystal Cache": {
+    "name": "Crystal Cache",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crystal-cache.webp"
+  },
+  "Crystal Slammer": {
+    "name": "Crystal Slammer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crystal-slammer.webp"
+  },
+  "Crystal Wings": {
+    "name": "Crystal Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-crystal-wings.webp"
+  },
+  "Curse Tag": {
+    "name": "Curse Tag",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-curse-tag.webp"
+  },
+  "Cursed Grimoire": {
+    "name": "Cursed Grimoire",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cursed-grimoire.webp"
+  },
+  "Cyclops Minion": {
+    "name": "Cyclopling Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-cyclops-minion.webp"
+  },
+  "Dagger_Gunblade_Chonky": {
+    "name": "Dagger GunBlade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dagger-gunblade-chonky.webp"
+  },
+  "Dagger_kotachi": {
+    "name": "Silent Fate, Kodachi",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dagger-kotachi.webp"
+  },
+  "Dagger_Umbra": {
+    "name": "Umbra Dagger",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dagger-umbra.webp"
+  },
+  "Daggers": {
+    "name": "Daggers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-daggers.webp"
+  },
+  "Darkfeather Wings": {
+    "name": "Darkfeather Wings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-darkfeather-wings.webp"
+  },
+  "Darkhide Gloves": {
+    "name": "Darkhide Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-darkhide-gloves.webp"
+  },
+  "Dawn Prayer": {
+    "name": "Dawn Prayer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dawn-prayer.webp"
+  },
+  "Dawnstar": {
+    "name": "Dawnstar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dawnstar.webp"
+  },
+  "Death": {
+    "name": "Wight Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-death.webp"
+  },
+  "Death's Grin": {
+    "name": "Death's Grin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-death-s-grin.webp"
+  },
+  "Demon Cat": {
+    "name": "Cheshire Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-demon-cat.webp"
+  },
+  "Demon Hood": {
+    "name": "Demon Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-demon-hood.webp"
+  },
+  "Destruction Staff": {
+    "name": "Destruction Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-destruction-staff.webp"
+  },
+  "Digger's Flask": {
+    "name": "Digger's Flask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-digger-s-flask.webp"
+  },
+  "Dino Cub Backpack": {
+    "name": "Dino Cub Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dino-cub-backpack.webp"
+  },
+  "DiscipleArmlets": {
+    "name": "Disciple's Bracers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-disciplearmlets.webp"
+  },
+  "DiscipleChest": {
+    "name": "Disciple's Manteau",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-disciplechest.webp"
+  },
+  "DiscipleFeet": {
+    "name": "Disciple's Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-disciplefeet.webp"
+  },
+  "DiscipleHelm": {
+    "name": "Disciple's Visage",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-disciplehelm.webp"
+  },
+  "DiscipleLegs": {
+    "name": "Disciple's Wraps",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-disciplelegs.webp"
+  },
+  "Discipline Band": {
+    "name": "Discipline Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-discipline-band.webp"
+  },
+  "Dog Pup": {
+    "name": "Pup Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dog-pup.webp"
+  },
+  "Doom Crescent": {
+    "name": "Doom Crescent",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-doom-crescent.webp"
+  },
+  "Doom Crown": {
+    "name": "Doom Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-doom-crown.webp"
+  },
+  "Doom Keg": {
+    "name": "Doom Keg",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-doom-keg.webp"
+  },
+  "Dragon Blizzard": {
+    "name": "Frost Wyvern Mount",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-blizzard.webp"
+  },
+  "Dragon Darkness": {
+    "name": "Shadow Wyvern Mount",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-darkness.webp"
+  },
+  "Dragon Dusk": {
+    "name": "Dusk Drake Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-dusk.webp"
+  },
+  "Dragon Hood": {
+    "name": "Dragon Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-hood.webp"
+  },
+  "Dragon Inferno": {
+    "name": "Inferno Wyvern Mount",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-inferno.webp"
+  },
+  "Dragon Spark": {
+    "name": "Spark Drake Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-spark.webp"
+  },
+  "Dragon Water": {
+    "name": "Aqua Drake Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragon-water.webp"
+  },
+  "Dragonfly Darner": {
+    "name": "Skimmer Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragonfly-darner.webp"
+  },
+  "Dragonic Spear": {
+    "name": "Dragonic Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragonic-spear.webp"
+  },
+  "Dragonspire Helm": {
+    "name": "Dragonspire Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dragonspire-helm.webp"
+  },
+  "Drooping Angel": {
+    "name": "Drooping Angel",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-angel.webp"
+  },
+  "Drooping Bat": {
+    "name": "Drooping Bat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-bat.webp"
+  },
+  "Drooping Burrow": {
+    "name": "Drooping Burrow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-burrow.webp"
+  },
+  "Drooping Cat": {
+    "name": "Drooping Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-cat.webp"
+  },
+  "Drooping Dragon": {
+    "name": "Drooping Dragon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-dragon.webp"
+  },
+  "Drooping Flora": {
+    "name": "Drooping Flora",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-flora.webp"
+  },
+  "Drooping Pup": {
+    "name": "Drooping Pup",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-pup.webp"
+  },
+  "Drooping Skeleton": {
+    "name": "Drooping Skeleton",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-skeleton.webp"
+  },
+  "Drooping Wraith": {
+    "name": "Drooping Wraith",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-drooping-wraith.webp"
+  },
+  "Dualblade Sheath": {
+    "name": "Dualblade Sheath",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dualblade-sheath.webp"
+  },
+  "Duskfang": {
+    "name": "Duskfang",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-duskfang.webp"
+  },
+  "Dustweaver Hat": {
+    "name": "Dustweaver Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-dustweaver-hat.webp"
+  },
+  "Earring_AquaBeads": {
+    "name": "Aqua Beads",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-aquabeads.webp"
+  },
+  "Earring_CrystalEarring": {
+    "name": "Crystal Earrings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-crystalearring.webp"
+  },
+  "Earring_Demonic": {
+    "name": "Demonic Earring",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-demonic.webp"
+  },
+  "Earring_Earbuds": {
+    "name": "Earbuds",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-earbuds.webp"
+  },
+  "Earring_FeatherBeads": {
+    "name": "Feather Beads",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-featherbeads.webp"
+  },
+  "Earring_MoonlitCrystal": {
+    "name": "Moonlit Crystal",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-moonlitcrystal.webp"
+  },
+  "Earring_ObsidianHeart": {
+    "name": "Obsidian Heart",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-obsidianheart.webp"
+  },
+  "Earring_PearlHeart": {
+    "name": "Pearl Heart",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-pearlheart.webp"
+  },
+  "Earring_Puddles": {
+    "name": "Puddles",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-puddles.webp"
+  },
+  "Earring_SeasilkPearl": {
+    "name": "Seasilk Pearl",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-seasilkpearl.webp"
+  },
+  "Earring_SunSigial": {
+    "name": "Sun Sigial",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-sunsigial.webp"
+  },
+  "Earring_SylvanSprout": {
+    "name": "Sylvan Sprout",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earring-sylvansprout.webp"
+  },
+  "Earth Shaker": {
+    "name": "Earth Shaker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earth-shaker.webp"
+  },
+  "Earth Shield": {
+    "name": "Obsidian Bulwark",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earth-shield.webp"
+  },
+  "Earthspire": {
+    "name": "Earthspire",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-earthspire.webp"
+  },
+  "EchoAxe": {
+    "name": "Duskbreaker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoaxe.webp"
+  },
+  "EchoBook": {
+    "name": "Dusktome",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echobook.webp"
+  },
+  "EchoChest_Atk": {
+    "name": "Dusk Armor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echochest-atk.webp"
+  },
+  "EchoChest_Matk": {
+    "name": "Dusk Robe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echochest-matk.webp"
+  },
+  "EchoFace_Force": {
+    "name": "Wing Ears of Force",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-force.webp"
+  },
+  "EchoFace_Life": {
+    "name": "Wing Ears of Life",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-life.webp"
+  },
+  "EchoFace_Magic": {
+    "name": "Wing Ears of Magic",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-magic.webp"
+  },
+  "EchoFace_Pierce": {
+    "name": "Wing Ears of Piercing",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-pierce.webp"
+  },
+  "EchoFace_Power": {
+    "name": "Wing Ears of Power",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-power.webp"
+  },
+  "EchoFace_Range": {
+    "name": "Wing Ears of Precision",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-range.webp"
+  },
+  "EchoFace_Recovery": {
+    "name": "Wing Ears of Recovery",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-recovery.webp"
+  },
+  "EchoFace_Speed": {
+    "name": "Wing Ears of Speed",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoface-speed.webp"
+  },
+  "EchoFeet_Atk": {
+    "name": "Dusk Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echofeet-atk.webp"
+  },
+  "EchoFeet_Matk": {
+    "name": "Dusk Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echofeet-matk.webp"
+  },
+  "EchoGatling": {
+    "name": "Duskbringer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echogatling.webp"
+  },
+  "EchoLauncher": {
+    "name": "Duskscourge",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echolauncher.webp"
+  },
+  "EchoLegs_Atk": {
+    "name": "Dusk Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echolegs-atk.webp"
+  },
+  "EchoLegs_Matk": {
+    "name": "Dusk Leggings",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echolegs-matk.webp"
+  },
+  "EchoScythe": {
+    "name": "Duskharvest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoscythe.webp"
+  },
+  "EchoShield": {
+    "name": "Duskbulwark",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoshield.webp"
+  },
+  "EchoShuriken": {
+    "name": "Duskedge",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echoshuriken.webp"
+  },
+  "EchoStaff": {
+    "name": "Duskmire",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-echostaff.webp"
+  },
+  "Eclipse Kunai": {
+    "name": "Eclipse Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eclipse-kunai.webp"
+  },
+  "Edge of Twilight": {
+    "name": "Edge of Twilight",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-edge-of-twilight.webp"
+  },
+  "Elixir Gourd": {
+    "name": "Elixir Gourd",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-elixir-gourd.webp"
+  },
+  "Emberhide Helm": {
+    "name": "Emberhide Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emberhide-helm.webp"
+  },
+  "Embershard": {
+    "name": "Embershard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-embershard.webp"
+  },
+  "Emerald Crown": {
+    "name": "Emerald Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emerald-crown.webp"
+  },
+  "Emote_Crown": {
+    "name": "Crown Emote",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emote-crown.webp"
+  },
+  "Emote_Flair": {
+    "name": "Flair Emote",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emote-flair.webp"
+  },
+  "Emote_Salsa": {
+    "name": "Salsa Emote",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emote-salsa.webp"
+  },
+  "Emote_Samba": {
+    "name": "Samba Emote",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emote-samba.webp"
+  },
+  "Emote_Twerk": {
+    "name": "Twerk Emote",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-emote-twerk.webp"
+  },
+  "Energy Sword Blue": {
+    "name": "Prism Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-energy-sword-blue.webp"
+  },
+  "Energy Sword Purple": {
+    "name": "Umbral Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-energy-sword-purple.webp"
+  },
+  "Energy Sword Yellow": {
+    "name": "Chromatic Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-energy-sword-yellow.webp"
+  },
+  "Everfrost Staff": {
+    "name": "Everfrost Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-everfrost-staff.webp"
+  },
+  "Executioner Axe": {
+    "name": "Executioner Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-executioner-axe.webp"
+  },
+  "Exorcist Bible": {
+    "name": "Exorcist Bible",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-exorcist-bible.webp"
+  },
+  "Exorcist Staff": {
+    "name": "Exorcist Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-exorcist-staff.webp"
+  },
+  "Explorer's Pack": {
+    "name": "Explorer's Pack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-explorer-s-pack.webp"
+  },
+  "Eye of Vigil": {
+    "name": "Eye of Vigil",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eye-of-vigil.webp"
+  },
+  "Eye_Demonic_F": {
+    "name": "Demonic Female Eye",
+    "kind": "Cosmetic"
+  },
+  "Eye_Demonic_M": {
+    "name": "Demonic Male Eye",
+    "kind": "Cosmetic"
+  },
+  "Eyeball Bat Red": {
+    "name": "Ruby Gazer Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eyeball-bat-red.webp"
+  },
+  "Eyepatch": {
+    "name": "Eyepatch",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eyepatch.webp"
+  },
+  "Eyewear_Cuervo_F": {
+    "name": "Cuervo Female Eyewear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eyewear-cuervo-f.webp"
+  },
+  "Eyewear_Cuervo_M": {
+    "name": "Cuervo Male Eyewear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eyewear-cuervo-m.webp"
+  },
+  "Eyewear_CyberRogue": {
+    "name": "Cyber Rogue Eyewear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-eyewear-cyberrogue.webp"
+  },
+  "Face_CrystalEars": {
+    "name": "Crystal Ears",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-crystalears.webp"
+  },
+  "Face_DeathMage": {
+    "name": "Death Mage Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-deathmage.webp"
+  },
+  "Face_Goggles": {
+    "name": "Goggles",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-goggles.webp"
+  },
+  "Face_KamenRed": {
+    "name": "Kamen Red",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-kamenred.webp"
+  },
+  "Face_KitsuneMask": {
+    "name": "Kitsune Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-kitsunemask.webp"
+  },
+  "Face_NecroSkull": {
+    "name": "Necro Skull",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-necroskull.webp"
+  },
+  "Face_OniMask": {
+    "name": "Oni Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-face-onimask.webp"
+  },
+  "Falcon Band": {
+    "name": "Falcon Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-falcon-band.webp"
+  },
+  "Falcon Hood": {
+    "name": "Falcon Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-falcon-hood.webp"
+  },
+  "Fang Clip": {
+    "name": "Fang Clip",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fang-clip.webp"
+  },
+  "Fang of the Moon": {
+    "name": "Fang of the Moon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fang-of-the-moon.webp"
+  },
+  "Feathered Crown": {
+    "name": "Feathered Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feathered-crown.webp"
+  },
+  "Feathered Scout Hat": {
+    "name": "Feathered Scout Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feathered-scout-hat.webp"
+  },
+  "Feet_Academy": {
+    "name": "Academy Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-academy.webp"
+  },
+  "Feet_Agi": {
+    "name": "Speed Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-agi.webp"
+  },
+  "Feet_Angel": {
+    "name": "Angel Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-angel.webp"
+  },
+  "Feet_ContentCreator": {
+    "name": "Content Creator Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-contentcreator.webp"
+  },
+  "Feet_Cuervo": {
+    "name": "Cuervo Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-cuervo.webp"
+  },
+  "Feet_CyberRogue": {
+    "name": "Cyber Rogue Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-cyberrogue.webp"
+  },
+  "Feet_Demonic_F": {
+    "name": "Demonic Female Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-demonic-f.webp"
+  },
+  "Feet_Demonic_M": {
+    "name": "Demonic Male Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-demonic-m.webp"
+  },
+  "Feet_Dex": {
+    "name": "Precision Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-dex.webp"
+  },
+  "Feet_Easter_F": {
+    "name": "Easter Female Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-easter-f.webp"
+  },
+  "Feet_Easter_M": {
+    "name": "Easter Male Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-easter-m.webp"
+  },
+  "Feet_FireFox": {
+    "name": "Fire Fox Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-firefox.webp"
+  },
+  "Feet_Gladys": {
+    "name": "Gladys Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-gladys.webp"
+  },
+  "Feet_GS": {
+    "name": "Gunslinger Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-gs.webp"
+  },
+  "Feet_IceFox": {
+    "name": "Ice Fox Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-icefox.webp"
+  },
+  "Feet_Int": {
+    "name": "Mind Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-int.webp"
+  },
+  "Feet_Kaeru": {
+    "name": "Kaeru Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-kaeru.webp"
+  },
+  "Feet_Luk": {
+    "name": "Fate Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-luk.webp"
+  },
+  "Feet_Priest_F": {
+    "name": "Priest Female Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-priest-f.webp"
+  },
+  "Feet_Priest_M": {
+    "name": "Priest Male Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-priest-m.webp"
+  },
+  "Feet_Shinobi": {
+    "name": "Shinobi Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-shinobi.webp"
+  },
+  "Feet_SpiritValer": {
+    "name": "Spirit Valer Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-spiritvaler.webp"
+  },
+  "Feet_Str": {
+    "name": "Power Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-str.webp"
+  },
+  "Feet_SukebanF": {
+    "name": "Sukeban Female Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-sukebanf.webp"
+  },
+  "Feet_SukebanM": {
+    "name": "Sukeban Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-sukebanm.webp"
+  },
+  "Feet_Sunken": {
+    "name": "Sunken Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-sunken.webp"
+  },
+  "Feet_Transparent": {
+    "name": "Transparent Shoes",
+    "kind": "Cosmetic"
+  },
+  "Feet_Umbra_Knight": {
+    "name": "Umbral Knight Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-umbra-knight.webp"
+  },
+  "Feet_Urban": {
+    "name": "Urban Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-urban.webp"
+  },
+  "Feet_Vit": {
+    "name": "Endurance Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-vit.webp"
+  },
+  "Feet_WhiteCatHoodie": {
+    "name": "White Cat Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-whitecathoodie.webp"
+  },
+  "Feet_Wizard_F": {
+    "name": "Wizard Female Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-wizard-f.webp"
+  },
+  "Feet_Wizard_M": {
+    "name": "Wizard Male Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-feet-wizard-m.webp"
+  },
+  "Ferncloak": {
+    "name": "Ferncloak",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ferncloak.webp"
+  },
+  "Festival Cap": {
+    "name": "Festival Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-festival-cap.webp"
+  },
+  "Festival Rockets": {
+    "name": "Festival Rockets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-festival-rockets.webp"
+  },
+  "Festival Turtle Cap": {
+    "name": "Festival Turtle Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-festival-turtle-cap.webp"
+  },
+  "Festive Gift Box": {
+    "name": "Festive Gift Box",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-festive-gift-box.webp"
+  },
+  "Fire Shield": {
+    "name": "Molten Core Heater",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fire-shield.webp"
+  },
+  "Fish Man Pink": {
+    "name": "Roseate Merling Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fish-man-pink.webp"
+  },
+  "Flame": {
+    "name": "Blaze Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-flame.webp"
+  },
+  "Flame Spirit": {
+    "name": "Flame Spirit",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-flame-spirit.webp"
+  },
+  "Flame Tongue Kunai": {
+    "name": "Flame Tongue Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-flame-tongue-kunai.webp"
+  },
+  "Flameburst Kunai": {
+    "name": "Flameburst Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-flameburst-kunai.webp"
+  },
+  "Fleetrunner": {
+    "name": "Fleetrunner",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fleetrunner.webp"
+  },
+  "Flintlock Pistol": {
+    "name": "Flintlock Pistol",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-flintlock-pistol.webp"
+  },
+  "Flora": {
+    "name": "Flora Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-flora.webp"
+  },
+  "Focus Band": {
+    "name": "Focus Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-focus-band.webp"
+  },
+  "Forest Friend Hat": {
+    "name": "Forest Friend Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-forest-friend-hat.webp"
+  },
+  "ForestChest": {
+    "name": "Forest Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-forestchest.webp"
+  },
+  "ForestFeet": {
+    "name": "Forest Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-forestfeet.webp"
+  },
+  "ForestLegs": {
+    "name": "Forest Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-forestlegs.webp"
+  },
+  "Fortified Guardwall": {
+    "name": "Fortified Guardwall",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fortified-guardwall.webp"
+  },
+  "Frost Mark": {
+    "name": "Frost Mark",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-frost-mark.webp"
+  },
+  "Frostfang": {
+    "name": "Frostfang",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-frostfang.webp"
+  },
+  "Frostscale Helm": {
+    "name": "Frostscale Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-frostscale-helm.webp"
+  },
+  "Frostshard": {
+    "name": "Frostshard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-frostshard.webp"
+  },
+  "Frostspire Kunai": {
+    "name": "Frostspire Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-frostspire-kunai.webp"
+  },
+  "Fruit Bowl": {
+    "name": "Fruit Bowl",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fruit-bowl.webp"
+  },
+  "Funny Glasses": {
+    "name": "Funny Glasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-funny-glasses.webp"
+  },
+  "Fur Hood": {
+    "name": "Fur Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-fur-hood.webp"
+  },
+  "Gatling Gun": {
+    "name": "Gatling Gun",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gatling-gun.webp"
+  },
+  "GatlingGun_Bonedragon": {
+    "name": "Bonedragon GatlingGun",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gatlinggun-bonedragon.webp"
+  },
+  "Gentleman's Hat": {
+    "name": "Gentleman's Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gentleman-s-hat.webp"
+  },
+  "Ghost": {
+    "name": "Ghost Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ghost.webp"
+  },
+  "Ghostly Hat": {
+    "name": "Ghostly Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ghostly-hat.webp"
+  },
+  "Glimmerthorn": {
+    "name": "Glimmerthorn",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glimmerthorn.webp"
+  },
+  "Gloom": {
+    "name": "Spectre Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gloom.webp"
+  },
+  "Glove_Agi": {
+    "name": "Speed Gauntlets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glove-agi.webp"
+  },
+  "Glove_Dex": {
+    "name": "Precision Gauntlets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glove-dex.webp"
+  },
+  "Glove_Int": {
+    "name": "Mind Gauntlets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glove-int.webp"
+  },
+  "Glove_Luk": {
+    "name": "Fate Gauntlets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glove-luk.webp"
+  },
+  "Glove_Str": {
+    "name": "Power Gauntlets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glove-str.webp"
+  },
+  "Glove_Vit": {
+    "name": "Endurance Gauntlets",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-glove-vit.webp"
+  },
+  "Goblin Minion": {
+    "name": "Goblin Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-goblin-minion.webp"
+  },
+  "Golden Aegis": {
+    "name": "Golden Aegis",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-golden-aegis.webp"
+  },
+  "Golden Axe": {
+    "name": "Golden Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-golden-axe.webp"
+  },
+  "Golden Crest": {
+    "name": "Golden Crest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-golden-crest.webp"
+  },
+  "Golden Crown": {
+    "name": "Golden Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-golden-crown.webp"
+  },
+  "Golden Hammer": {
+    "name": "Golden Hammer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-golden-hammer.webp"
+  },
+  "Golden Hoop": {
+    "name": "Golden Hoop",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-golden-hoop.webp"
+  },
+  "Grasping Eye Urn": {
+    "name": "Grasping Eye Urn",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-grasping-eye-urn.webp"
+  },
+  "Grave Helm": {
+    "name": "Grave Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-grave-helm.webp"
+  },
+  "GravemarrowChest": {
+    "name": "Gravemarrow Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gravemarrowchest.webp"
+  },
+  "GravemarrowFeet": {
+    "name": "Gravemarrow Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gravemarrowfeet.webp"
+  },
+  "GravemarrowLegs": {
+    "name": "Gravemarrow Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gravemarrowlegs.webp"
+  },
+  "Gravestone Breaker": {
+    "name": "Gravestone Breaker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-gravestone-breaker.webp"
+  },
+  "Green Shell": {
+    "name": "Green Shell",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-green-shell.webp"
+  },
+  "Grim Reaper Scythe": {
+    "name": "Life Drinker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-grim-reaper-scythe.webp"
+  },
+  "Guardblade": {
+    "name": "Guardblade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-guardblade.webp"
+  },
+  "Hands_Angel_F": {
+    "name": "Angel Female Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-angel-f.webp"
+  },
+  "Hands_Angel_M": {
+    "name": "Angel Male Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-angel-m.webp"
+  },
+  "Hands_Cuervo_F": {
+    "name": "Cuervo Female Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-cuervo-f.webp"
+  },
+  "Hands_Cuervo_M": {
+    "name": "Cuervo Male Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-cuervo-m.webp"
+  },
+  "Hands_CyberRogue": {
+    "name": "Cyber Rogue Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-cyberrogue.webp"
+  },
+  "Hands_Demonic_F": {
+    "name": "Demonic Female Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-demonic-f.webp"
+  },
+  "Hands_Demonic_M": {
+    "name": "Demonic Male Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-demonic-m.webp"
+  },
+  "Hands_Gladys": {
+    "name": "Gladys Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-gladys.webp"
+  },
+  "Hands_Transparent": {
+    "name": "Transparent Gloves",
+    "kind": "Cosmetic"
+  },
+  "Hands_Umbra_Knight": {
+    "name": "Umbral Knight Bracers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hands-umbra-knight.webp"
+  },
+  "Happy Chipper Hat": {
+    "name": "Happy Chipper Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-happy-chipper-hat.webp"
+  },
+  "Harbringer": {
+    "name": "Harbringer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-harbringer.webp"
+  },
+  "Harlequin's Hood": {
+    "name": "Harlequin's Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-harlequin-s-hood.webp"
+  },
+  "Harvester of Souls": {
+    "name": "Harvester of Souls",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-harvester-of-souls.webp"
+  },
+  "Haunt": {
+    "name": "Banshee Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-haunt.webp"
+  },
+  "Hawkeye Crossbow": {
+    "name": "Hawkeye Crossbow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hawkeye-crossbow.webp"
+  },
+  "Head_Angel": {
+    "name": "Angel Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-angel.webp"
+  },
+  "Head_AngelBand": {
+    "name": "Angel Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-angelband.webp"
+  },
+  "Head_AoA": {
+    "name": "Scout's Apple",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-aoa.webp"
+  },
+  "Head_Aviator": {
+    "name": "Aviator Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-aviator.webp"
+  },
+  "Head_BatLord": {
+    "name": "Bat Lord",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-batlord.webp"
+  },
+  "Head_BunnyEars": {
+    "name": "Bunny Ears",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-bunnyears.webp"
+  },
+  "Head_CactusKing": {
+    "name": "Cactus King",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-cactusking.webp"
+  },
+  "Head_CatBolt": {
+    "name": "Cat Bolt Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-catbolt.webp"
+  },
+  "Head_CatEars": {
+    "name": "Cat Ears",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-catears.webp"
+  },
+  "Head_ContentCreator": {
+    "name": "Content Creator Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-contentcreator.webp"
+  },
+  "Head_CosmicBand": {
+    "name": "Cosmic Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-cosmicband.webp"
+  },
+  "Head_CupidHalo": {
+    "name": "Halo",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-cupidhalo.webp"
+  },
+  "Head_Demonic": {
+    "name": "Demonic Headgear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-demonic.webp"
+  },
+  "Head_Easter_F": {
+    "name": "Easter Female Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-easter-f.webp"
+  },
+  "Head_Easter_M": {
+    "name": "Easter Male Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-easter-m.webp"
+  },
+  "Head_FeatheredCrown_Brown": {
+    "name": "Feathered Crown Brown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-featheredcrown-brown.webp"
+  },
+  "Head_FeatheredCrown_Rainbow": {
+    "name": "Feathered Crown Rainbow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-featheredcrown-rainbow.webp"
+  },
+  "Head_FireFox": {
+    "name": "Fire Fox Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-firefox.webp"
+  },
+  "Head_FlowerHat": {
+    "name": "Sunflora Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-flowerhat.webp"
+  },
+  "Head_FoxEars": {
+    "name": "Fox Ears",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-foxears.webp"
+  },
+  "Head_Froggie": {
+    "name": "Froggie Headband",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-froggie.webp"
+  },
+  "Head_Gladys": {
+    "name": "Gladys Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-gladys.webp"
+  },
+  "Head_HareHorns": {
+    "name": "Hare Horns",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-harehorns.webp"
+  },
+  "Head_HermitKing": {
+    "name": "Hermit Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-hermitking.webp"
+  },
+  "Head_IceCrown": {
+    "name": "Ice Mage Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-icecrown.webp"
+  },
+  "Head_IceFox": {
+    "name": "Ice Fox Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-icefox.webp"
+  },
+  "Head_IceGolem": {
+    "name": "Mega Ice Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-icegolem.webp"
+  },
+  "Head_ImpDevil": {
+    "name": "Imp Devil Headress",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-impdevil.webp"
+  },
+  "Head_Kaeru": {
+    "name": "Kaeru Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-kaeru.webp"
+  },
+  "Head_Kraken": {
+    "name": "Kraken",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-kraken.webp"
+  },
+  "Head_MajesticHorn": {
+    "name": "Majestic Horns",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-majestichorn.webp"
+  },
+  "Head_OrcKing": {
+    "name": "Orc King",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-orcking.webp"
+  },
+  "Head_Priest": {
+    "name": "Priest Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-priest.webp"
+  },
+  "Head_QueenWorm": {
+    "name": "Parasitic Worm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-queenworm.webp"
+  },
+  "Head_Ribbon_Red": {
+    "name": "Red Ribbon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-ribbon-red.webp"
+  },
+  "Head_Ribbon_Yellow": {
+    "name": "Yellow Ribbon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-ribbon-yellow.webp"
+  },
+  "Head_Sakkat": {
+    "name": "Sakkat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-sakkat.webp"
+  },
+  "Head_ScorpionKing": {
+    "name": "Scorpion Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-scorpionking.webp"
+  },
+  "Head_SeraphinArbiter": {
+    "name": "Arbiter",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-seraphinarbiter.webp"
+  },
+  "Head_Shinobi": {
+    "name": "Shinobi Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-shinobi.webp"
+  },
+  "Head_SnakeNaga": {
+    "name": "Snake Charmer Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-snakenaga.webp"
+  },
+  "Head_SpiderQueenRobot": {
+    "name": "Drooping Spider Queen",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-spiderqueenrobot.webp"
+  },
+  "Head_Sprout": {
+    "name": "Sprout",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-sprout.webp"
+  },
+  "Head_Sting": {
+    "name": "Bumble Bee Beanie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-sting.webp"
+  },
+  "Head_Sunken": {
+    "name": "Sunken Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-sunken.webp"
+  },
+  "Head_Transparent": {
+    "name": "Transparent Hat",
+    "kind": "Cosmetic"
+  },
+  "Head_TurtleChampion": {
+    "name": "Turtle Champion Visor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-turtlechampion.webp"
+  },
+  "Head_Umbra_Knight": {
+    "name": "Umbral Knight Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-umbra-knight.webp"
+  },
+  "Head_Urban": {
+    "name": "Urban Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-urban.webp"
+  },
+  "Head_Warchief": {
+    "name": "Warchief",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-warchief.webp"
+  },
+  "Head_Werewolf": {
+    "name": "Werewolf Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-werewolf.webp"
+  },
+  "Head_Wizard": {
+    "name": "Wizard Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-wizard.webp"
+  },
+  "Head_WormCreep": {
+    "name": "Whispering Worm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-wormcreep.webp"
+  },
+  "Head_Wraith": {
+    "name": "Wraith Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-wraith.webp"
+  },
+  "Head_Xmas_M_Blue": {
+    "name": "Blue Christmas Hat",
+    "kind": "Cosmetic"
+  },
+  "Head_Xmas_M_Red": {
+    "name": "Red Christmas Hat",
+    "kind": "Cosmetic"
+  },
+  "Head_ZombieOrc": {
+    "name": "Orc Zombie",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-head-zombieorc.webp"
+  },
+  "Heart Vessel": {
+    "name": "Heart Vessel",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-heart-vessel.webp"
+  },
+  "Heartgaze Shades": {
+    "name": "Heartgaze Shades",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-heartgaze-shades.webp"
+  },
+  "Heartloop Earring": {
+    "name": "Heartloop Earring",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-heartloop-earring.webp"
+  },
+  "Heaven's Orbit": {
+    "name": "Heaven's Orbit",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-heaven-s-orbit.webp"
+  },
+  "Hellfire Staff": {
+    "name": "Hellfire Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hellfire-staff.webp"
+  },
+  "Hellhorn Hood": {
+    "name": "Hellhorn Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hellhorn-hood.webp"
+  },
+  "Hermit Hood": {
+    "name": "Hermit Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hermit-hood.webp"
+  },
+  "Hexweaver Hat": {
+    "name": "Hexweaver Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hexweaver-hat.webp"
+  },
+  "Holy Shield": {
+    "name": "Holy Crest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-holy-shield.webp"
+  },
+  "Holy Staff": {
+    "name": "Holy Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-holy-staff.webp"
+  },
+  "Hornbrand": {
+    "name": "Hornbrand",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hornbrand.webp"
+  },
+  "Horned Crusader Helm": {
+    "name": "Horned Crusader Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-horned-crusader-helm.webp"
+  },
+  "Horned Vanguard": {
+    "name": "Horned Vanguard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-horned-vanguard.webp"
+  },
+  "Housefly Nom": {
+    "name": "Blowfly Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-housefly-nom.webp"
+  },
+  "Hunter's Hood": {
+    "name": "Hunter's Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hunter-s-hood.webp"
+  },
+  "Hunter's Roll": {
+    "name": "Hunter's Roll",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hunter-s-roll.webp"
+  },
+  "Hunting Knife": {
+    "name": "Hunting Knife",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hunting-knife.webp"
+  },
+  "Hunting Pike": {
+    "name": "Hunting Pike",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-hunting-pike.webp"
+  },
+  "Icicle": {
+    "name": "Icicle Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-icicle.webp"
+  },
+  "Imp Mischief": {
+    "name": "Gremlin Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-imp-mischief.webp"
+  },
+  "Insect Carapace": {
+    "name": "Insect Carapace",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-insect-carapace.webp"
+  },
+  "Iron Ankh": {
+    "name": "Iron Ankh",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-ankh.webp"
+  },
+  "Iron Bulwark": {
+    "name": "Iron Bulwark",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-bulwark.webp"
+  },
+  "Iron Fortitude": {
+    "name": "Iron Fortitude",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-fortitude.webp"
+  },
+  "Iron Guard Helm": {
+    "name": "Iron Guard Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-guard-helm.webp"
+  },
+  "Iron Halo": {
+    "name": "Iron Halo",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-halo.webp"
+  },
+  "Iron Morningstar": {
+    "name": "Iron Morningstar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-morningstar.webp"
+  },
+  "Iron Reaver": {
+    "name": "Iron Reaver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-reaver.webp"
+  },
+  "Iron Spear": {
+    "name": "Iron Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-spear.webp"
+  },
+  "Iron Spire": {
+    "name": "Iron Spire",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-iron-spire.webp"
+  },
+  "Ironhorn Cap": {
+    "name": "Ironhorn Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ironhorn-cap.webp"
+  },
+  "Ironshade Helm": {
+    "name": "Ironshade Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ironshade-helm.webp"
+  },
+  "IslandChest": {
+    "name": "Island Spirit Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-islandchest.webp"
+  },
+  "IslandFeet": {
+    "name": "Island Spirit Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-islandfeet.webp"
+  },
+  "IslandLegs": {
+    "name": "Island Spirit Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-islandlegs.webp"
+  },
+  "Jagtooth": {
+    "name": "Jagtooth",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-jagtooth.webp"
+  },
+  "Jellyfish Robot": {
+    "name": "Stormjelly Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-jellyfish-robot.webp"
+  },
+  "Jester Hat": {
+    "name": "Jester Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-jester-hat.webp"
+  },
+  "Knife": {
+    "name": "Knife",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-knife.webp"
+  },
+  "Knight's Glory": {
+    "name": "Royal Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-knight-s-glory.webp"
+  },
+  "KnightChest": {
+    "name": "Skystrider Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-knightchest.webp"
+  },
+  "KnightFeet": {
+    "name": "Skystrider Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-knightfeet.webp"
+  },
+  "KnightLegs": {
+    "name": "Skystrider Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-knightlegs.webp"
+  },
+  "Knuckleband": {
+    "name": "Knuckleband",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-knuckleband.webp"
+  },
+  "Kunai": {
+    "name": "Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-kunai.webp"
+  },
+  "Launcher": {
+    "name": "Launcher",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-launcher.webp"
+  },
+  "Launcher_Bonedragon": {
+    "name": "Bonedragon Launcher",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-launcher-bonedragon.webp"
+  },
+  "Leaf Mask": {
+    "name": "Leaf Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leaf-mask.webp"
+  },
+  "Leg_Agi": {
+    "name": "Speed Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leg-agi.webp"
+  },
+  "Leg_Dex": {
+    "name": "Precision Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leg-dex.webp"
+  },
+  "Leg_Int": {
+    "name": "Mind Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leg-int.webp"
+  },
+  "Leg_Luk": {
+    "name": "Fate Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leg-luk.webp"
+  },
+  "Leg_Str": {
+    "name": "Power Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leg-str.webp"
+  },
+  "Leg_Vit": {
+    "name": "Endurance Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leg-vit.webp"
+  },
+  "Legionnaire Helm": {
+    "name": "Legionnaire Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legionnaire-helm.webp"
+  },
+  "Legs_AcademyF": {
+    "name": "Academy Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-academyf.webp"
+  },
+  "Legs_AcademyM": {
+    "name": "Academy Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-academym.webp"
+  },
+  "Legs_Angel_F": {
+    "name": "Angel Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-angel-f.webp"
+  },
+  "Legs_Angel_M": {
+    "name": "Angel Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-angel-m.webp"
+  },
+  "Legs_ContentCreator": {
+    "name": "Content Creator Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-contentcreator.webp"
+  },
+  "Legs_Cuervo_F": {
+    "name": "Cuervo Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-cuervo-f.webp"
+  },
+  "Legs_Cuervo_M": {
+    "name": "Cuervo Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-cuervo-m.webp"
+  },
+  "Legs_CyberRogue": {
+    "name": "Cyber Rogue Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-cyberrogue.webp"
+  },
+  "Legs_Demonic_F": {
+    "name": "Demonic Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-demonic-f.webp"
+  },
+  "Legs_Demonic_M": {
+    "name": "Demonic Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-demonic-m.webp"
+  },
+  "Legs_Easter_F": {
+    "name": "Easter Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-easter-f.webp"
+  },
+  "Legs_Easter_M": {
+    "name": "Easter Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-easter-m.webp"
+  },
+  "Legs_FireFox": {
+    "name": "Fire Fox Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-firefox.webp"
+  },
+  "Legs_Gladys": {
+    "name": "Gladys Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-gladys.webp"
+  },
+  "Legs_GS": {
+    "name": "Gunslinger Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-gs.webp"
+  },
+  "Legs_IceFox": {
+    "name": "Ice Fox Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-icefox.webp"
+  },
+  "Legs_Priest_F": {
+    "name": "Priest Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-priest-f.webp"
+  },
+  "Legs_Priest_M": {
+    "name": "Priest Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-priest-m.webp"
+  },
+  "Legs_Shinobi": {
+    "name": "Shinobi Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-shinobi.webp"
+  },
+  "Legs_SpiritValer": {
+    "name": "Spirit Valer Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-spiritvaler.webp"
+  },
+  "Legs_SukebanF": {
+    "name": "Sukeban Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-sukebanf.webp"
+  },
+  "Legs_SukebanM": {
+    "name": "Sukeban Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-sukebanm.webp"
+  },
+  "Legs_Sunken": {
+    "name": "Sunken Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-sunken.webp"
+  },
+  "Legs_Transparent": {
+    "name": "Transparent Pants",
+    "kind": "Cosmetic"
+  },
+  "Legs_Umbra_Knight": {
+    "name": "Umbral Knight Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-umbra-knight.webp"
+  },
+  "Legs_Urban": {
+    "name": "Urban Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-urban.webp"
+  },
+  "Legs_Wizard_F": {
+    "name": "Wizard Female Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-wizard-f.webp"
+  },
+  "Legs_Wizard_M": {
+    "name": "Wizard Male Pants",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-legs-wizard-m.webp"
+  },
+  "Leviathan": {
+    "name": "Leviathan",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-leviathan.webp"
+  },
+  "Life Staff": {
+    "name": "Life Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-life-staff.webp"
+  },
+  "Lifebloom Shoes": {
+    "name": "Lifebloom Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-lifebloom-shoes.webp"
+  },
+  "Longbow": {
+    "name": "Longbow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-longbow.webp"
+  },
+  "Lucky Drops": {
+    "name": "Lucky Drops",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-lucky-drops.webp"
+  },
+  "Lurker": {
+    "name": "Lurker Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-lurker.webp"
+  },
+  "Luxbane": {
+    "name": "Luxbane",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-luxbane.webp"
+  },
+  "Luxspire": {
+    "name": "Luxspire",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-luxspire.webp"
+  },
+  "Mace": {
+    "name": "Mace",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mace.webp"
+  },
+  "Mace_FryingPan": {
+    "name": "Frying Pan",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mace-fryingpan.webp"
+  },
+  "Mace_GladysMace": {
+    "name": "Gladys Mace",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mace-gladysmace.webp"
+  },
+  "Mace_Umbra": {
+    "name": "Umbra Mace",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mace-umbra.webp"
+  },
+  "Mage Guard": {
+    "name": "Mage Guard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mage-guard.webp"
+  },
+  "Mage Plate": {
+    "name": "Mage Plate",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mage-plate.webp"
+  },
+  "MageChest": {
+    "name": "Spellthread Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-magechest.webp"
+  },
+  "MageFeet": {
+    "name": "Spellthread Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-magefeet.webp"
+  },
+  "MageLegs": {
+    "name": "Spellthread Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-magelegs.webp"
+  },
+  "Mana Cask": {
+    "name": "Mana Cask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mana-cask.webp"
+  },
+  "Mana Potion": {
+    "name": "Mana Potion",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mana-potion.webp"
+  },
+  "Master Axe": {
+    "name": "Master Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-axe.webp"
+  },
+  "Master Codex": {
+    "name": "Master Codex",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-codex.webp"
+  },
+  "Master Dagger": {
+    "name": "Master Dagger",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-dagger.webp"
+  },
+  "Master Hammer": {
+    "name": "Master Hammer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-hammer.webp"
+  },
+  "Master Katar": {
+    "name": "Master Katar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-katar.webp"
+  },
+  "Master Revolver": {
+    "name": "Master Pistol",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-revolver.webp"
+  },
+  "Master Scythe": {
+    "name": "Master Scythe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-scythe.webp"
+  },
+  "Master Slingshot": {
+    "name": "Master Bow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-slingshot.webp"
+  },
+  "Master Spear": {
+    "name": "Master Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-spear.webp"
+  },
+  "Master Sword": {
+    "name": "Master Sword",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-sword.webp"
+  },
+  "Master Wand": {
+    "name": "Master Wand",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-master-wand.webp"
+  },
+  "Mechanical Core": {
+    "name": "Mechanical Core",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mechanical-core.webp"
+  },
+  "Meteoric Staff": {
+    "name": "Meteoric Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-meteoric-staff.webp"
+  },
+  "Mimic Barrel": {
+    "name": "Barrel Mimic Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mimic-barrel.webp"
+  },
+  "Mimic Book": {
+    "name": "Book Mimic Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mimic-book.webp"
+  },
+  "Mimic Candle": {
+    "name": "Candle Mimic Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mimic-candle.webp"
+  },
+  "Mimic Living Trap": {
+    "name": "Trap Mimic Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mimic-living-trap.webp"
+  },
+  "Mimic Sword": {
+    "name": "Sword Mimic Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mimic-sword.webp"
+  },
+  "Mimic Treasure Chest": {
+    "name": "Chest Mimic Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mimic-treasure-chest.webp"
+  },
+  "Mindweave": {
+    "name": "Mindweave",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mindweave.webp"
+  },
+  "Mirage Cloak": {
+    "name": "Mirage Cloak",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mirage-cloak.webp"
+  },
+  "Mischief Gift Box": {
+    "name": "Mischief Gift Box",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mischief-gift-box.webp"
+  },
+  "Mitre of Sanctity": {
+    "name": "Mitre of Sanctity",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mitre-of-sanctity.webp"
+  },
+  "Molten Core": {
+    "name": "Molten Core",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-molten-core.webp"
+  },
+  "Monster Bat": {
+    "name": "Nightwing Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-monster-bat.webp"
+  },
+  "Moonfrost": {
+    "name": "Moonfrost",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-moonfrost.webp"
+  },
+  "Moonshadow Hat": {
+    "name": "Moonshadow Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-moonshadow-hat.webp"
+  },
+  "Moonweave Gloves": {
+    "name": "Moon Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-moonweave-gloves.webp"
+  },
+  "Mosquito Pester": {
+    "name": "Mosquito Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mosquito-pester.webp"
+  },
+  "Moth Moon": {
+    "name": "Moon Moth Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-moth-moon.webp"
+  },
+  "Mount_AngelDevilHands": {
+    "name": "Armonia",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-angeldevilhands.webp"
+  },
+  "Mount_AngelLion": {
+    "name": "Angel Lion",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-angellion.webp"
+  },
+  "Mount_AnimeChick": {
+    "name": "Mommy-Chan",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-animechick.webp"
+  },
+  "Mount_BananaDuck": {
+    "name": "Banana Duck",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-bananaduck.webp"
+  },
+  "Mount_Dahbees": {
+    "name": "Refubeespa",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-dahbees.webp"
+  },
+  "Mount_DemonDragon": {
+    "name": "Demon Dragon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-demondragon.webp"
+  },
+  "Mount_FireFox": {
+    "name": "Pyronyx",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-firefox.webp"
+  },
+  "Mount_FloraWhale": {
+    "name": "Flora Whale",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-florawhale.webp"
+  },
+  "Mount_GriffinBlack": {
+    "name": "Black Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffinblack.webp"
+  },
+  "Mount_GriffinBrown": {
+    "name": "Wild Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffinbrown.webp"
+  },
+  "Mount_GriffinEagle": {
+    "name": "Sky Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffineagle.webp"
+  },
+  "Mount_GriffinEmber": {
+    "name": "Ember Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffinember.webp"
+  },
+  "Mount_GriffinMountain": {
+    "name": "Mountain Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffinmountain.webp"
+  },
+  "Mount_GriffinPaladin": {
+    "name": "Flying Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffinpaladin.webp"
+  },
+  "Mount_GriffinSnow": {
+    "name": "Snow Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-griffinsnow.webp"
+  },
+  "Mount_HorseBlack": {
+    "name": "Black Horse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-horseblack.webp"
+  },
+  "Mount_HorseChineseNewYear": {
+    "name": "Lunar Flame Horse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-horsechinesenewyear.webp"
+  },
+  "Mount_HorsePalomino": {
+    "name": "Palomino Horse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-horsepalomino.webp"
+  },
+  "Mount_HorseRoan": {
+    "name": "Roan Horse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-horseroan.webp"
+  },
+  "Mount_HorseTobiano": {
+    "name": "Tobiano Horse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-horsetobiano.webp"
+  },
+  "Mount_HorseWhite": {
+    "name": "White Horse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-horsewhite.webp"
+  },
+  "Mount_IceFox": {
+    "name": "Polarian",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-icefox.webp"
+  },
+  "Mount_Island": {
+    "name": "Skyland Sanctuary",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-island.webp"
+  },
+  "Mount_Raijin": {
+    "name": "Raiga-The Stormbreaker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mount-raijin.webp"
+  },
+  "Mouth_Demonic_F": {
+    "name": "Demonic Female Mouth",
+    "kind": "Cosmetic"
+  },
+  "Mouth_Demonic_M": {
+    "name": "Demonic Male Mouth",
+    "kind": "Cosmetic"
+  },
+  "Mushroom": {
+    "name": "Shroom Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mushroom.webp"
+  },
+  "Mystic Hat": {
+    "name": "Mystic Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mystic-hat.webp"
+  },
+  "Mystic Hood": {
+    "name": "Mystic Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-mystic-hood.webp"
+  },
+  "Necronomicon": {
+    "name": "Necronomicon",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-necronomicon.webp"
+  },
+  "Neko Hood": {
+    "name": "Neko Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-neko-hood.webp"
+  },
+  "Night Chest": {
+    "name": "Night Armor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-night-chest.webp"
+  },
+  "Night Feet": {
+    "name": "Night Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-night-feet.webp"
+  },
+  "Night Helm": {
+    "name": "Night Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-night-helm.webp"
+  },
+  "Night Legs": {
+    "name": "Night Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-night-legs.webp"
+  },
+  "Night Shield": {
+    "name": "Compass of Dawn",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-night-shield.webp"
+  },
+  "Nightfang Stud": {
+    "name": "Nightfang Stud",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-nightfang-stud.webp"
+  },
+  "Ninja Hood": {
+    "name": "Ninja Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ninja-hood.webp"
+  },
+  "Nomad Hood": {
+    "name": "Nomad Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-nomad-hood.webp"
+  },
+  "NoviceChest": {
+    "name": "Novice Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-novicechest.webp"
+  },
+  "NoviceFeet": {
+    "name": "Novice Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-novicefeet.webp"
+  },
+  "NoviceLegs": {
+    "name": "Novice Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-novicelegs.webp"
+  },
+  "Nozzle Robot": {
+    "name": "Nozzle Robot Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-nozzle-robot.webp"
+  },
+  "Oak Bow": {
+    "name": "Oak Bow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-oak-bow.webp"
+  },
+  "Oathbound Helm": {
+    "name": "Oathbound Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-oathbound-helm.webp"
+  },
+  "Obsidian Band": {
+    "name": "Obsidian Band",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-obsidian-band.webp"
+  },
+  "Obsidian Edge": {
+    "name": "Obsidian Edge",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-obsidian-edge.webp"
+  },
+  "Obsidian Loop": {
+    "name": "Obsidian Loop",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-obsidian-loop.webp"
+  },
+  "Obsidian Pillar": {
+    "name": "Obsidian Pillar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-obsidian-pillar.webp"
+  },
+  "Ocular Grimoire": {
+    "name": "Ocular Grimoire",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ocular-grimoire.webp"
+  },
+  "Onyx Bolt": {
+    "name": "Onyx Bolt",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-onyx-bolt.webp"
+  },
+  "Ornamented Staff": {
+    "name": "Ornamented Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ornamented-staff.webp"
+  },
+  "Oxygen Tank": {
+    "name": "Oxygen Tank",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-oxygen-tank.webp"
+  },
+  "Paladin Crest": {
+    "name": "Paladin Crest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-paladin-crest.webp"
+  },
+  "Parrying Knife": {
+    "name": "Parrying Knife",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-parrying-knife.webp"
+  },
+  "Pet_Angeling": {
+    "name": "Angeling",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-angeling.webp"
+  },
+  "Pet_BabyGriffinBlack": {
+    "name": "Black Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-babygriffinblack.webp"
+  },
+  "Pet_BabyGriffinBlue": {
+    "name": "Blue Jay Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-babygriffinblue.webp"
+  },
+  "Pet_BabyGriffinBrown": {
+    "name": "Brown Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-babygriffinbrown.webp"
+  },
+  "Pet_BabyGriffinEagle": {
+    "name": "Eagle Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-babygriffineagle.webp"
+  },
+  "Pet_BabyGriffinMallard": {
+    "name": "Mallard Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-babygriffinmallard.webp"
+  },
+  "Pet_BabyGriffinWhite": {
+    "name": "White Griffin",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-babygriffinwhite.webp"
+  },
+  "Pet_CatBlackWhite": {
+    "name": "Persian Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-catblackwhite.webp"
+  },
+  "Pet_CatGinger": {
+    "name": "Ginger Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-catginger.webp"
+  },
+  "Pet_CatGrey": {
+    "name": "Grey Munchkin Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-catgrey.webp"
+  },
+  "Pet_CatWhiteGrey": {
+    "name": "Ragdoll Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-catwhitegrey.webp"
+  },
+  "Pet_CatWhiteHeart": {
+    "name": "British Shorthair Cat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-catwhiteheart.webp"
+  },
+  "Pet_Cubeman": {
+    "name": "Cubeman",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-cubeman.webp"
+  },
+  "Pet_DemonicImp": {
+    "name": "Demonic Imp",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-demonicimp.webp"
+  },
+  "Pet_DogBoxer": {
+    "name": "Boxer Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-dogboxer.webp"
+  },
+  "Pet_DogBullmastif": {
+    "name": "Bullmastif Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-dogbullmastif.webp"
+  },
+  "Pet_DogCorso": {
+    "name": "Cane Corso Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-dogcorso.webp"
+  },
+  "Pet_DogLabBlack": {
+    "name": "Black Labrador Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-doglabblack.webp"
+  },
+  "Pet_DogLabBrown": {
+    "name": "Brown Labrador Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-doglabbrown.webp"
+  },
+  "Pet_DogLabWhite": {
+    "name": "White Labrador Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-doglabwhite.webp"
+  },
+  "Pet_DogRottie": {
+    "name": "Rottweiler Dog",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-dogrottie.webp"
+  },
+  "Pet_Earth": {
+    "name": "Leafling",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-earth.webp"
+  },
+  "Pet_EasterBunny": {
+    "name": "Easter Bunny",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-easterbunny.webp"
+  },
+  "Pet_Fire": {
+    "name": "Dawnling",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-fire.webp"
+  },
+  "Pet_HybridBunny": {
+    "name": "Hybrid Bunny",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-hybridbunny.webp"
+  },
+  "Pet_MoneyMan": {
+    "name": "Bobby",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-moneyman.webp"
+  },
+  "Pet_Water": {
+    "name": "Aqualing",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-water.webp"
+  },
+  "Pet_Wind": {
+    "name": "Wildling",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pet-wind.webp"
+  },
+  "Phantom Kunai": {
+    "name": "Phantom Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-phantom-kunai.webp"
+  },
+  "Phantom Mask": {
+    "name": "Phantom Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-phantom-mask.webp"
+  },
+  "Piercer": {
+    "name": "Piercer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-piercer.webp"
+  },
+  "Pirate Hat": {
+    "name": "Pirate Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pirate-hat.webp"
+  },
+  "PirateChest": {
+    "name": "Pirate Coat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-piratechest.webp"
+  },
+  "PirateFeet": {
+    "name": "Pirate Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-piratefeet.webp"
+  },
+  "PirateGloves": {
+    "name": "Pirate Hook",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pirategloves.webp"
+  },
+  "PirateLegs": {
+    "name": "Pirate Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-piratelegs.webp"
+  },
+  "Pistol": {
+    "name": "Pistol",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pistol.webp"
+  },
+  "Plant Shooter": {
+    "name": "Spitter Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plant-shooter.webp"
+  },
+  "Plasma Helmet": {
+    "name": "Plasma Helmet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasma-helmet.webp"
+  },
+  "Plasma Shell": {
+    "name": "Plasma Shell",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasma-shell.webp"
+  },
+  "Plasma Sword Blue": {
+    "name": "Azure Flow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasma-sword-blue.webp"
+  },
+  "Plasma Sword Purple": {
+    "name": "Violet Arc",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasma-sword-purple.webp"
+  },
+  "Plasma Sword Yellow": {
+    "name": "Solar Pulse",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasma-sword-yellow.webp"
+  },
+  "PlasmaChest": {
+    "name": "Plasma Suit",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasmachest.webp"
+  },
+  "PlasmaFeet": {
+    "name": "Plasma Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasmafeet.webp"
+  },
+  "PlasmaLegs": {
+    "name": "Plasma Greaves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plasmalegs.webp"
+  },
+  "Plum Talisman": {
+    "name": "Plum Talisman",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-plum-talisman.webp"
+  },
+  "Pollen": {
+    "name": "Pollen Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pollen.webp"
+  },
+  "Potion Bowl": {
+    "name": "Potion Bowl",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-potion-bowl.webp"
+  },
+  "Potion Gourd": {
+    "name": "Potion Gourd",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-potion-gourd.webp"
+  },
+  "Potions": {
+    "name": "Potions",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-potions.webp"
+  },
+  "Pumpkin Head": {
+    "name": "Jack-o'-lantern",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-pumpkin-head.webp"
+  },
+  "Quillcap": {
+    "name": "Quillcap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-quillcap.webp"
+  },
+  "Quiver": {
+    "name": "Quiver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-quiver.webp"
+  },
+  "Quiver of Thorns": {
+    "name": "Quiver of Thorns",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-quiver-of-thorns.webp"
+  },
+  "Rabbit": {
+    "name": "Rabbit Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-rabbit.webp"
+  },
+  "Radiant Dagger": {
+    "name": "Radiant Dagger",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-radiant-dagger.webp"
+  },
+  "Radiant Wand": {
+    "name": "Radiant Wand",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-radiant-wand.webp"
+  },
+  "Ragebound Fury": {
+    "name": "Ragebound Fury",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ragebound-fury.webp"
+  },
+  "Raider Helm": {
+    "name": "Raider Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-raider-helm.webp"
+  },
+  "Ram Skull Mask": {
+    "name": "Ram Skull Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ram-skull-mask.webp"
+  },
+  "Ransack": {
+    "name": "Ransack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ransack.webp"
+  },
+  "Rat Grey": {
+    "name": "Plague Rat Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-rat-grey.webp"
+  },
+  "Razor Edge": {
+    "name": "Razor's Edge",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-razor-edge.webp"
+  },
+  "Razor Kunai": {
+    "name": "Razor Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-razor-kunai.webp"
+  },
+  "Razor Robot": {
+    "name": "Razor Robot Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-razor-robot.webp"
+  },
+  "Reaper Scythe": {
+    "name": "Grim Scythe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reaper-scythe.webp"
+  },
+  "Recurve Bow": {
+    "name": "Recurve Bow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-recurve-bow.webp"
+  },
+  "Red Maw": {
+    "name": "Red Maw",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-red-maw.webp"
+  },
+  "Red Shell": {
+    "name": "Red Shell",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-red-shell.webp"
+  },
+  "Regal Tricorne": {
+    "name": "Regal Tricorne",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-regal-tricorne.webp"
+  },
+  "Reindeer Headband": {
+    "name": "Reindeer Headband",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reindeer-headband.webp"
+  },
+  "Reindeer Hood": {
+    "name": "Reindeer Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reindeer-hood.webp"
+  },
+  "ReindeerChest": {
+    "name": "Reindeer Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reindeerchest.webp"
+  },
+  "ReindeerFeet": {
+    "name": "Reindeer Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reindeerfeet.webp"
+  },
+  "ReindeerGloves": {
+    "name": "Reindeer Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reindeergloves.webp"
+  },
+  "ReindeerLegs": {
+    "name": "Reindeer Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-reindeerlegs.webp"
+  },
+  "Relic Trident": {
+    "name": "Relic Trident",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-relic-trident.webp"
+  },
+  "Repeater Crossbow": {
+    "name": "Repeater Crossbow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-repeater-crossbow.webp"
+  },
+  "Resonant Headphones": {
+    "name": "Resonant Headphones",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-resonant-headphones.webp"
+  },
+  "Rifle": {
+    "name": "Rifle",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-rifle.webp"
+  },
+  "Riftbreaker": {
+    "name": "Riftbreaker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-riftbreaker.webp"
+  },
+  "Rod": {
+    "name": "Rod",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-rod.webp"
+  },
+  "Round Glasses": {
+    "name": "Round Glasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-round-glasses.webp"
+  },
+  "Royal Crest": {
+    "name": "Royal Crest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-royal-crest.webp"
+  },
+  "Royal Dagger": {
+    "name": "Royal Dagger",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-royal-dagger.webp"
+  },
+  "Royal Fang": {
+    "name": "Royal Fang",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-royal-fang.webp"
+  },
+  "Runeborn Visor": {
+    "name": "Runeborn Visor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-runeborn-visor.webp"
+  },
+  "Runecall": {
+    "name": "Runecall",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-runecall.webp"
+  },
+  "Runesmasher": {
+    "name": "Runesmasher",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-runesmasher.webp"
+  },
+  "Rusted Binocs": {
+    "name": "Rusted Binocs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-rusted-binocs.webp"
+  },
+  "Safety Helmet": {
+    "name": "Safety Helmet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-safety-helmet.webp"
+  },
+  "SafetyChest": {
+    "name": "Safety Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-safetychest.webp"
+  },
+  "SafetyFeet": {
+    "name": "Safety Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-safetyfeet.webp"
+  },
+  "SafetyGloves": {
+    "name": "Safety Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-safetygloves.webp"
+  },
+  "SafetyLegs": {
+    "name": "Safety Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-safetylegs.webp"
+  },
+  "Sailor Cap": {
+    "name": "Sailor Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sailor-cap.webp"
+  },
+  "SanctifiedChest": {
+    "name": "Sanctified Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sanctifiedchest.webp"
+  },
+  "SanctifiedFeet": {
+    "name": "Sanctified Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sanctifiedfeet.webp"
+  },
+  "SanctifiedLegs": {
+    "name": "Sanctified Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sanctifiedlegs.webp"
+  },
+  "Sanctum Gloves": {
+    "name": "Sanctum Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sanctum-gloves.webp"
+  },
+  "Sanctum Guard": {
+    "name": "Sanctum Guard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sanctum-guard.webp"
+  },
+  "SantaChest": {
+    "name": "Santa Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-santachest.webp"
+  },
+  "SantaFeet": {
+    "name": "Santa Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-santafeet.webp"
+  },
+  "SantaGloves": {
+    "name": "Santa Gloves",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-santagloves.webp"
+  },
+  "SantaHat": {
+    "name": "Santa Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-santahat.webp"
+  },
+  "SantaLegs": {
+    "name": "Santa Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-santalegs.webp"
+  },
+  "Sapphire Crown": {
+    "name": "Sapphire Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sapphire-crown.webp"
+  },
+  "Sapphire Guard": {
+    "name": "Stormplate Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sapphire-guard.webp"
+  },
+  "Satchel of Embers": {
+    "name": "Satchel of Embers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-satchel-of-embers.webp"
+  },
+  "Scalpel": {
+    "name": "Scalpel",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scalpel.webp"
+  },
+  "Scholar Glasses": {
+    "name": "Scholar Glasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scholar-glasses.webp"
+  },
+  "Scholar's Cap": {
+    "name": "Scholar's Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scholar-s-cap.webp"
+  },
+  "Scorpling": {
+    "name": "Scorpling Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scorpling.webp"
+  },
+  "Scrapfang": {
+    "name": "Scrapfang",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scrapfang.webp"
+  },
+  "Scroll Case": {
+    "name": "Scroll Case",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scroll-case.webp"
+  },
+  "Scroll Charm": {
+    "name": "Scroll Charm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scroll-charm.webp"
+  },
+  "Scythe": {
+    "name": "Scythe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scythe.webp"
+  },
+  "Scythe_Umbra": {
+    "name": "Umbra Scythe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-scythe-umbra.webp"
+  },
+  "Seedling Satchel": {
+    "name": "Seedling Satchel",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-seedling-satchel.webp"
+  },
+  "Seer's Hood": {
+    "name": "Seer's Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-seer-s-hood.webp"
+  },
+  "Serpent Ring": {
+    "name": "Serpent Ring",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-serpent-ring.webp"
+  },
+  "Shade": {
+    "name": "Shade Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shade.webp"
+  },
+  "Shadow Dancers": {
+    "name": "Shadow Dancers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shadow-dancers.webp"
+  },
+  "Shadow Shield": {
+    "name": "Shadowsteel Guard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shadow-shield.webp"
+  },
+  "Shady Specs": {
+    "name": "Shady Specs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shady-specs.webp"
+  },
+  "Sharkbite Hood": {
+    "name": "Sharkbite Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sharkbite-hood.webp"
+  },
+  "Sharpened Visor": {
+    "name": "Sharpened Visor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sharpened-visor.webp"
+  },
+  "Shell": {
+    "name": "Conch Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shell.webp"
+  },
+  "Shield_GladysShield": {
+    "name": "Gladys Shield",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shield-gladysshield.webp"
+  },
+  "Shield_Murphy": {
+    "name": "Shield of Faith",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shield-murphy.webp"
+  },
+  "Shield_SterlightSilverguard": {
+    "name": "Sterlight Silver Guard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shield-sterlightsilverguard.webp"
+  },
+  "Shield_Talapat": {
+    "name": "Talapat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shield-talapat.webp"
+  },
+  "Shield_Umbra": {
+    "name": "Umbra Shield",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shield-umbra.webp"
+  },
+  "Shotgun": {
+    "name": "Shotgun",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shotgun.webp"
+  },
+  "Shuriken": {
+    "name": "Fuma Shuriken",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-shuriken.webp"
+  },
+  "Silence of Night": {
+    "name": "Silence of Night",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-silence-of-night.webp"
+  },
+  "Skull Emblem": {
+    "name": "Skull Emblem",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-skull-emblem.webp"
+  },
+  "Skull Lord Totem": {
+    "name": "Skull Lord Totem",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-skull-lord-totem.webp"
+  },
+  "Skull Pendant": {
+    "name": "Skull Pendant",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-skull-pendant.webp"
+  },
+  "Skullhacker": {
+    "name": "Skullhacker",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-skullhacker.webp"
+  },
+  "Sky Raider Hat": {
+    "name": "Sky Raider Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sky-raider-hat.webp"
+  },
+  "Skybreaker Staff": {
+    "name": "Skybreaker Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-skybreaker-staff.webp"
+  },
+  "Skywing Mask": {
+    "name": "Skywing Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-skywing-mask.webp"
+  },
+  "Slime": {
+    "name": "Slime Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-slime.webp"
+  },
+  "Slingshot": {
+    "name": "Slingshot",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-slingshot.webp"
+  },
+  "Smith's Tools": {
+    "name": "Smith's Tools",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-smith-s-tools.webp"
+  },
+  "Snake": {
+    "name": "Viper Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-snake.webp"
+  },
+  "Sniper Rifle": {
+    "name": "Sniper Rifle",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sniper-rifle.webp"
+  },
+  "Snowbun Earmuffs": {
+    "name": "Snowbun Earmuffs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-snowbun-earmuffs.webp"
+  },
+  "Snowman Head": {
+    "name": "Snowman Head",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-snowman-head.webp"
+  },
+  "Solar Relic": {
+    "name": "Solar Relic",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-solar-relic.webp"
+  },
+  "Solar Spear": {
+    "name": "Solar Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-solar-spear.webp"
+  },
+  "Solaris Blade": {
+    "name": "Solaris Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-solaris-blade.webp"
+  },
+  "Sonic Shoes": {
+    "name": "Sonic Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sonic-shoes.webp"
+  },
+  "Soul Reaper Scythe": {
+    "name": "Blight Reaver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-soul-reaper-scythe.webp"
+  },
+  "SoulbinderChest": {
+    "name": "Soulbinder Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-soulbinderchest.webp"
+  },
+  "SoulbinderFeet": {
+    "name": "Soulbinder Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-soulbinderfeet.webp"
+  },
+  "SoulbinderLegs": {
+    "name": "Soulbinder Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-soulbinderlegs.webp"
+  },
+  "Spear_GladysSpear": {
+    "name": "Gladys Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spear-gladysspear.webp"
+  },
+  "Spear_Umbra": {
+    "name": "Umbra Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spear-umbra.webp"
+  },
+  "Spider Toxin": {
+    "name": "Widow Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spider-toxin.webp"
+  },
+  "Spiderling Robot": {
+    "name": "Spiderling Robot Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spiderling-robot.webp"
+  },
+  "Spiked Club": {
+    "name": "Spiked Club",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spiked-club.webp"
+  },
+  "Spiked Familiar": {
+    "name": "Spiked Familiar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spiked-familiar.webp"
+  },
+  "Spiked Helm": {
+    "name": "Spiked Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spiked-helm.webp"
+  },
+  "Spikesteel Helm": {
+    "name": "Spikesteel Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spikesteel-helm.webp"
+  },
+  "Spined Aegis": {
+    "name": "Spined Aegis",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spined-aegis.webp"
+  },
+  "Spineshard": {
+    "name": "Spineshard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spineshard.webp"
+  },
+  "Spirit Familiar": {
+    "name": "Spirit Familiar",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spirit-familiar.webp"
+  },
+  "Spirit Ward": {
+    "name": "Spirit Ward",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spirit-ward.webp"
+  },
+  "Spooky Spell Hat": {
+    "name": "Spooky Spell Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spooky-spell-hat.webp"
+  },
+  "Spore": {
+    "name": "Spore Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-spore.webp"
+  },
+  "Springram Horns": {
+    "name": "Springram Horns",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-springram-horns.webp"
+  },
+  "Sprout": {
+    "name": "Sprout Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sprout.webp"
+  },
+  "Squid Baby": {
+    "name": "Squidling Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-squid-baby.webp"
+  },
+  "Staff of Eternis": {
+    "name": "Staff of Eternis",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-staff-of-eternis.webp"
+  },
+  "Staff_SkullStaff": {
+    "name": "Skull Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-staff-skullstaff.webp"
+  },
+  "Staff_Umbra": {
+    "name": "Umbra Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-staff-umbra.webp"
+  },
+  "Staff_Xier": {
+    "name": "Lunar Demon Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-staff-xier.webp"
+  },
+  "Stall_Oriental": {
+    "name": "Oriental Vending Stall",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stall-oriental.webp"
+  },
+  "Stall_SpiritValer": {
+    "name": "Spirit Valer Vending Stall",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stall-spiritvaler.webp"
+  },
+  "Star": {
+    "name": "Star",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-star.webp"
+  },
+  "Starbound Hat": {
+    "name": "Starbound Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-starbound-hat.webp"
+  },
+  "Starshine Glasses": {
+    "name": "Starshine Glasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-starshine-glasses.webp"
+  },
+  "Stiletto": {
+    "name": "Stiletto",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stiletto.webp"
+  },
+  "Stonebound Boots": {
+    "name": "Stonebound Boots",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stonebound-boots.webp"
+  },
+  "Stoneguard": {
+    "name": "Stoneguard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stoneguard.webp"
+  },
+  "Stonepoint Spear": {
+    "name": "Stonepoint Spear",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stonepoint-spear.webp"
+  },
+  "Stormburst Crossbow": {
+    "name": "Stormburst Crossbow",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormburst-crossbow.webp"
+  },
+  "Stormcall Kunai": {
+    "name": "Stormcall Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormcall-kunai.webp"
+  },
+  "Stormcaller Totem": {
+    "name": "Stormcaller Totem",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormcaller-totem.webp"
+  },
+  "Stormfeather Kunai": {
+    "name": "Stormfeather Kunai",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormfeather-kunai.webp"
+  },
+  "Stormpiercer": {
+    "name": "Stormpiercer",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormpiercer.webp"
+  },
+  "StormplateChest": {
+    "name": "Stormplate Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormplatechest.webp"
+  },
+  "StormplateFeet": {
+    "name": "Stormplate Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormplatefeet.webp"
+  },
+  "StormplateLegs": {
+    "name": "Stormplate Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stormplatelegs.webp"
+  },
+  "Straw Hat": {
+    "name": "Straw Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-straw-hat.webp"
+  },
+  "Stylish Shades": {
+    "name": "Stylish Shades",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-stylish-shades.webp"
+  },
+  "Sun Disc": {
+    "name": "Sun Disc",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sun-disc.webp"
+  },
+  "Sun Emblem": {
+    "name": "Sun Emblem",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sun-emblem.webp"
+  },
+  "Sun Emblem Helm": {
+    "name": "Sun Emblem Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sun-emblem-helm.webp"
+  },
+  "Sun Lion Crest": {
+    "name": "Sun Lion Crest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sun-lion-crest.webp"
+  },
+  "Sunbound Mitts": {
+    "name": "Sunbound Mitts",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sunbound-mitts.webp"
+  },
+  "Suncrest Mace": {
+    "name": "Suncrest Mace",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-suncrest-mace.webp"
+  },
+  "Sunflare": {
+    "name": "Sunflare",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sunflare.webp"
+  },
+  "Sunflower Clip": {
+    "name": "Sunflower Clip",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sunflower-clip.webp"
+  },
+  "Sunflower Fairy": {
+    "name": "Sylvie Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sunflower-fairy.webp"
+  },
+  "Sunglasses": {
+    "name": "Sunglasses",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sunglasses.webp"
+  },
+  "Sunset Shutters": {
+    "name": "Sunset Shutters",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sunset-shutters.webp"
+  },
+  "Swampy Hat": {
+    "name": "Swampy Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-swampy-hat.webp"
+  },
+  "Swift Fang": {
+    "name": "Serpent Fang",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-swift-fang.webp"
+  },
+  "Sword": {
+    "name": "Sword",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword.webp"
+  },
+  "Sword2H_GladysSword2H": {
+    "name": "Gladys Sword2H",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword2h-gladyssword2h.webp"
+  },
+  "Sword2H_Umbra": {
+    "name": "Umbra Sword2H",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword2h-umbra.webp"
+  },
+  "Sword_BaguetteJambon-Beurre": {
+    "name": "Baguette Jambon-Beurre",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword-baguettejambon-beurre.webp"
+  },
+  "Sword_GladysSword": {
+    "name": "Gladys Sword",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword-gladyssword.webp"
+  },
+  "Sword_SterlightSilverblade": {
+    "name": "Sterlight Silver Blade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword-sterlightsilverblade.webp"
+  },
+  "Sword_TheDragonThrone": {
+    "name": "The Dragon Throne",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword-thedragonthrone.webp"
+  },
+  "Sword_TwinFlameRakshasa": {
+    "name": "Twin Flame Rakshasa",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword-twinflamerakshasa.webp"
+  },
+  "Sword_Umbra": {
+    "name": "Umbra Sword",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-sword-umbra.webp"
+  },
+  "Teapot Spirit": {
+    "name": "Teapot Spirit",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-teapot-spirit.webp"
+  },
+  "Tempest Robes": {
+    "name": "Tempest Robes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tempest-robes.webp"
+  },
+  "Tempest Staff": {
+    "name": "Tempest Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tempest-staff.webp"
+  },
+  "Temporal Codex": {
+    "name": "Temporal Codex",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-temporal-codex.webp"
+  },
+  "Thief Mask": {
+    "name": "Thief Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-thief-mask.webp"
+  },
+  "ThiefChest": {
+    "name": "Ashwalker Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-thiefchest.webp"
+  },
+  "ThiefFeet": {
+    "name": "Ashwalker Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-thieffeet.webp"
+  },
+  "ThiefLegs": {
+    "name": "Ashwalker Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-thieflegs.webp"
+  },
+  "Thundercoil": {
+    "name": "Thundercoil",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-thundercoil.webp"
+  },
+  "Tiger Hat": {
+    "name": "Tiger Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tiger-hat.webp"
+  },
+  "Tinker Goggles": {
+    "name": "Tinker Goggles",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tinker-goggles.webp"
+  },
+  "Tinker Mask": {
+    "name": "Tinker Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tinker-mask.webp"
+  },
+  "Tinkerer's Tools": {
+    "name": "Tinkerer's Tools",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tinkerer-s-tools.webp"
+  },
+  "Title_Backer": {
+    "name": "Backer",
+    "kind": "Cosmetic"
+  },
+  "Title_ContentCreator": {
+    "name": "Content Creator",
+    "kind": "Cosmetic"
+  },
+  "Title_Duo": {
+    "name": "Duo",
+    "kind": "Cosmetic"
+  },
+  "Title_EarlyBird": {
+    "name": "Early Bird",
+    "kind": "Cosmetic"
+  },
+  "Title_Founder": {
+    "name": "Founder",
+    "kind": "Cosmetic"
+  },
+  "Title_GameMaster": {
+    "name": "Game Master",
+    "kind": "Cosmetic"
+  },
+  "Title_LeadArtist": {
+    "name": "Lead Artist",
+    "kind": "Cosmetic"
+  },
+  "Title_MountDesigner": {
+    "name": "Mount Designer",
+    "kind": "Cosmetic"
+  },
+  "Title_NPCDesigner": {
+    "name": "NPC Designer",
+    "kind": "Cosmetic"
+  },
+  "Title_PetDesigner": {
+    "name": "Pet Designer",
+    "kind": "Cosmetic"
+  },
+  "Title_Playtester": {
+    "name": "Playtester",
+    "kind": "Cosmetic"
+  },
+  "Title_Speedrunner": {
+    "name": "Speedrunner",
+    "kind": "Cosmetic"
+  },
+  "Title_SpiritValer": {
+    "name": "SpiritValer",
+    "kind": "Cosmetic"
+  },
+  "Title_UltimateFounder": {
+    "name": "Ultimate Founder",
+    "kind": "Cosmetic"
+  },
+  "Title_WeaponDesigner": {
+    "name": "Weapon Designer",
+    "kind": "Cosmetic"
+  },
+  "Tomahawk": {
+    "name": "Tomahawk",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tomahawk.webp"
+  },
+  "Tome of Ages": {
+    "name": "Tome of Ages",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tome-of-ages.webp"
+  },
+  "Top Hat": {
+    "name": "Top Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-top-hat.webp"
+  },
+  "Totem Banner": {
+    "name": "Totem Banner",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-totem-banner.webp"
+  },
+  "Totem Mask": {
+    "name": "Totem Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-totem-mask.webp"
+  },
+  "Totem Skull Headdress": {
+    "name": "Totem Skull Headdress",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-totem-skull-headdress.webp"
+  },
+  "Trail_Angel": {
+    "name": "Angelic Trail",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-trail-angel.webp"
+  },
+  "Trail_Demon": {
+    "name": "Demonic Trail",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-trail-demon.webp"
+  },
+  "Traveler's Trunk": {
+    "name": "Traveler's Trunk",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-traveler-s-trunk.webp"
+  },
+  "Treant Minion Evergreen": {
+    "name": "Pine Sapling Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-treant-minion-evergreen.webp"
+  },
+  "Treasure Box": {
+    "name": "Treasure Box",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-treasure-box.webp"
+  },
+  "Treasure Chest": {
+    "name": "Treasure Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-treasure-chest.webp"
+  },
+  "Tribal Mask": {
+    "name": "Tribal Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-tribal-mask.webp"
+  },
+  "Trickster Horns": {
+    "name": "Trickster Horns",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-trickster-horns.webp"
+  },
+  "Trident of Tides": {
+    "name": "Trident of Tides",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-trident-of-tides.webp"
+  },
+  "Triple Barrel Revolver": {
+    "name": "Triple Barrel Revolver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-triple-barrel-revolver.webp"
+  },
+  "Turtle": {
+    "name": "Turtle Baby Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-turtle.webp"
+  },
+  "TurtleShell": {
+    "name": "Turtle Shell",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-turtleshell.webp"
+  },
+  "Twinblade": {
+    "name": "Twinblade",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-twinblade.webp"
+  },
+  "Valiant Crown": {
+    "name": "Valiant Crown",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-valiant-crown.webp"
+  },
+  "Valor Helm": {
+    "name": "Valor Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-valor-helm.webp"
+  },
+  "Ventilator Mask": {
+    "name": "Ventilator Mask",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-ventilator-mask.webp"
+  },
+  "Verdant Antlers": {
+    "name": "Verdant Antlers",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-verdant-antlers.webp"
+  },
+  "Verdant Core": {
+    "name": "Verdant Core",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-verdant-core.webp"
+  },
+  "Verdant Striders": {
+    "name": "Verdant Striders",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-verdant-striders.webp"
+  },
+  "Violet Heart Charm": {
+    "name": "Violet Heart Charm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-violet-heart-charm.webp"
+  },
+  "Void Urn": {
+    "name": "Void Urn",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-void-urn.webp"
+  },
+  "Voidspike Helm": {
+    "name": "Voidspike Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-voidspike-helm.webp"
+  },
+  "Voidthreads": {
+    "name": "Voidthreads",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-voidthreads.webp"
+  },
+  "War Axe": {
+    "name": "War Axe",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-war-axe.webp"
+  },
+  "War Banner": {
+    "name": "War Banner",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-war-banner.webp"
+  },
+  "Warborn Aegis": {
+    "name": "Warborn Aegis",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-warborn-aegis.webp"
+  },
+  "Warlord Emblem Shield": {
+    "name": "Warlord Emblem Shield",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-warlord-emblem-shield.webp"
+  },
+  "Wasteland Cleaver": {
+    "name": "Wasteland Cleaver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wasteland-cleaver.webp"
+  },
+  "Watch_1": {
+    "name": "Digital Watch",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-watch-1.webp"
+  },
+  "Watch_2": {
+    "name": "Hipster Watch",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-watch-2.webp"
+  },
+  "Watch_3": {
+    "name": "Wrist Compass",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-watch-3.webp"
+  },
+  "Watch_4": {
+    "name": "Wrist Hour Glass",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-watch-4.webp"
+  },
+  "Watch_5": {
+    "name": "Wrist Receiver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-watch-5.webp"
+  },
+  "Water Shield": {
+    "name": "Frostspire Guard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-water-shield.webp"
+  },
+  "WeaverChest": {
+    "name": "Weaver Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-weaverchest.webp"
+  },
+  "WeaverFeet": {
+    "name": "Weaver Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-weaverfeet.webp"
+  },
+  "WeaverLegs": {
+    "name": "Weaver Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-weaverlegs.webp"
+  },
+  "Whale Backpack": {
+    "name": "Whale Backpack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-whale-backpack.webp"
+  },
+  "Whirlwind": {
+    "name": "Breeze Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-whirlwind.webp"
+  },
+  "Whisper of Thorns": {
+    "name": "Whisper of Thorns",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-whisper-of-thorns.webp"
+  },
+  "White Bishop's Hood": {
+    "name": "White Bishop's Hood",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-white-bishop-s-hood.webp"
+  },
+  "Wilderness Pack": {
+    "name": "Wilderness Pack",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wilderness-pack.webp"
+  },
+  "Wildroot Veil": {
+    "name": "Wildroot Veil",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wildroot-veil.webp"
+  },
+  "Willow Staff": {
+    "name": "Willow Staff",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-willow-staff.webp"
+  },
+  "Wind Shield": {
+    "name": "Zephyr Cross",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wind-shield.webp"
+  },
+  "Windcarver": {
+    "name": "Windcarver",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-windcarver.webp"
+  },
+  "Windroot": {
+    "name": "Windroot",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-windroot.webp"
+  },
+  "WindstriderChest": {
+    "name": "Windstrider Chest",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-windstriderchest.webp"
+  },
+  "WindstriderFeet": {
+    "name": "Windstrider Shoes",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-windstriderfeet.webp"
+  },
+  "WindstriderLegs": {
+    "name": "Windstrider Legs",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-windstriderlegs.webp"
+  },
+  "Winged Helm": {
+    "name": "Winged Helm",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-winged-helm.webp"
+  },
+  "Wings of Valor": {
+    "name": "Wings of Valor",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wings-of-valor.webp"
+  },
+  "Wisp Red": {
+    "name": "Fire Wisp Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wisp-red.webp"
+  },
+  "Witch's Whisk": {
+    "name": "Witch's Whisk",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-witch-s-whisk.webp"
+  },
+  "Witchsteps": {
+    "name": "Witchsteps",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-witchsteps.webp"
+  },
+  "Wizardry Hat": {
+    "name": "Wizardry Hat",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wizardry-hat.webp"
+  },
+  "Wolf Pup": {
+    "name": "Wolf Cub Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wolf-pup.webp"
+  },
+  "Wolfcrest Shield": {
+    "name": "Wolfcrest Shield",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wolfcrest-shield.webp"
+  },
+  "Wooden Guard": {
+    "name": "Wooden Guard",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wooden-guard.webp"
+  },
+  "Worker's Cap": {
+    "name": "Worker's Cap",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-worker-s-cap.webp"
+  },
+  "Worldsplitter": {
+    "name": "Worldsplitter",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-worldsplitter.webp"
+  },
+  "Worm": {
+    "name": "Worm Pet",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-worm.webp"
+  },
+  "Wraith of Dawn": {
+    "name": "Wraith of Dawn",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wraith-of-dawn.webp"
+  },
+  "Wraithlight": {
+    "name": "Wraithlight",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-wraithlight.webp"
+  },
+  "Zephyrlight": {
+    "name": "Zephyrlight",
+    "kind": "Cosmetic",
+    "icon": "icons/cosmetic-zephyrlight.webp"
+  }
+}
