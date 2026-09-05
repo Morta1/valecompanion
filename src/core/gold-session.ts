@@ -25,8 +25,13 @@ type PersistedActiveSession = {
   monsterKills: number;
   confirmedMonsterKills?: number;
   lastMonsterKillCount?: number;
+  activeMs?: number;
+  activeSince?: number;
+  activeIntervals?: ActiveInterval[];
   events: GoldEvent[];
 };
+
+type ActiveInterval = { from: number; to: number };
 
 export interface PersistedGoldState {
   schema: 1;
@@ -49,6 +54,11 @@ export class GoldSession {
   #monsterKills = 0;
   #confirmedMonsterKills = 0;
   #lastMonsterKillCount: number | undefined;
+  // Rates divide by played time, not wall-clock. Intervals keep the last hour of stretches so the
+  // recent-window rate can exclude pauses.
+  #activeMs = 0;
+  #activeSince: number | null = null;
+  readonly #activeIntervals: ActiveInterval[] = [];
 
   static restore(value: unknown): GoldSession {
     const state = parsePersistedState(value);
@@ -69,8 +79,21 @@ export class GoldSession {
         ?? (state.active.earned > 0 ? state.active.monsterKills : 0);
       session.#lastMonsterKillCount = state.active.lastMonsterKillCount;
       session.#events.push(...state.active.events);
+      // Restore starts paused. An in-progress stretch is closed at the last balance change, the
+      // latest moment the game is known to have been running. Saves without activeMs predate
+      // pausing and are treated as one stretch from the start.
+      const { activeMs, activeSince, activeIntervals, startedAt, lastChangeAt } = state.active;
+      session.#activeMs = activeMs ?? 0;
+      session.#activeSince = activeMs === undefined ? startedAt : activeSince ?? null;
+      session.#activeIntervals.push(...(activeIntervals ?? []));
+      session.#pause(lastChangeAt ?? startedAt);
     }
     return session;
+  }
+
+  setGameActive(active: boolean, at = Date.now()): void {
+    if (active) this.#markActive(at);
+    else this.#pause(at);
   }
 
   persisted(): PersistedGoldState {
@@ -83,6 +106,9 @@ export class GoldSession {
             startingBalance: this.#startingBalance,
             startedAt: this.#startedAt,
             lastChangeAt: this.#lastChangeAt,
+            activeMs: this.#activeMs,
+            ...(this.#activeSince === null ? {} : { activeSince: this.#activeSince }),
+            activeIntervals: this.#activeIntervals.map((interval) => ({ ...interval })),
             earned: this.#earned,
             spent: this.#spent,
             earningEvents: this.#earningEvents,
@@ -119,6 +145,8 @@ export class GoldSession {
       this.#start(balance, observedAt, this.#playerObjectId);
       return;
     }
+    // A balance update is proof the game is running, whatever the collector last said.
+    this.#markActive(observedAt);
 
     const delta = balance - this.#balance;
     this.#balance = balance;
@@ -155,26 +183,17 @@ export class GoldSession {
     const balance = this.#balance;
     const playerObjectId = this.#playerObjectId;
     const lastMonsterKillCount = this.#lastMonsterKillCount;
+    // The next session inherits the pause state: finishing while the game is closed must not start
+    // a clock that only a balance update or game detection should resume.
+    const active = this.#activeSince !== null;
     this.#archiveCurrent(observedAt);
-    this.#start(balance, observedAt, playerObjectId);
+    this.#start(balance, observedAt, playerObjectId, active);
     this.#lastMonsterKillCount = lastMonsterKillCount;
   }
 
   end(observedAt = Date.now()): void {
     this.#archiveCurrent(observedAt);
-    this.#balance = null;
-    this.#startingBalance = null;
-    this.#playerObjectId = undefined;
-    this.#startedAt = null;
-    this.#lastChangeAt = null;
-    this.#events.length = 0;
-    this.#earned = 0;
-    this.#spent = 0;
-    this.#earningEvents = 0;
-    this.#spendingEvents = 0;
-    this.#monsterKills = 0;
-    this.#confirmedMonsterKills = 0;
-    this.#lastMonsterKillCount = undefined;
+    this.#clearSession();
   }
 
   clearHistory(): void {
@@ -215,17 +234,17 @@ export class GoldSession {
       };
     }
 
-    const elapsedMs = Math.max(0, observedAt - this.#startedAt);
+    const elapsedMs = this.#activeElapsed(observedAt);
     const elapsedHours = elapsedMs / HOUR_MS;
     const recentStart = Math.max(this.#startedAt, observedAt - RECENT_WINDOW_MS);
-    const recentElapsedHours = Math.max(0, observedAt - recentStart) / HOUR_MS;
+    const recentElapsedHours = this.#activeWithin(recentStart, observedAt) / HOUR_MS;
     const recentEarned = this.#events.reduce(
       (total, event) => event.at >= recentStart && event.delta > 0 ? total + event.delta : total,
       0,
     );
 
     return {
-      status: "tracking",
+      status: this.#activeSince === null ? "paused" : "tracking",
       balance: this.#balance,
       startedAt: new Date(this.#startedAt).toISOString(),
       elapsedSeconds: Math.floor(elapsedMs / 1_000),
@@ -249,11 +268,20 @@ export class GoldSession {
     };
   }
 
-  #start(balance: number, observedAt: number, playerObjectId: number | undefined): void {
+  #start(balance: number, observedAt: number, playerObjectId: number | undefined, active = true): void {
+    this.#clearSession();
     this.#balance = balance;
     this.#startingBalance = balance;
     this.#playerObjectId = playerObjectId;
     this.#startedAt = observedAt;
+    this.#activeSince = active ? observedAt : null;
+  }
+
+  #clearSession(): void {
+    this.#balance = null;
+    this.#startingBalance = null;
+    this.#playerObjectId = undefined;
+    this.#startedAt = null;
     this.#lastChangeAt = null;
     this.#events.length = 0;
     this.#earned = 0;
@@ -263,11 +291,40 @@ export class GoldSession {
     this.#monsterKills = 0;
     this.#confirmedMonsterKills = 0;
     this.#lastMonsterKillCount = undefined;
+    this.#activeMs = 0;
+    this.#activeSince = null;
+    this.#activeIntervals.length = 0;
+  }
+
+  #markActive(at: number): void {
+    if (this.#activeSince === null) this.#activeSince = at;
+  }
+
+  #pause(at: number): void {
+    if (this.#activeSince === null) return;
+    const from = this.#activeSince;
+    const to = Math.max(from, at);
+    this.#activeMs += to - from;
+    this.#activeIntervals.push({ from, to });
+    this.#activeSince = null;
+    // Only the recent-window rate reads intervals, so nothing older than that window is kept.
+    dropBefore(this.#activeIntervals, at - RECENT_WINDOW_MS, (interval) => interval.to);
+  }
+
+  #activeElapsed(at: number): number {
+    return this.#activeMs + (this.#activeSince === null ? 0 : Math.max(0, at - this.#activeSince));
+  }
+
+  #activeWithin(from: number, to: number): number {
+    const overlap = (interval: ActiveInterval) => Math.max(0, Math.min(interval.to, to) - Math.max(interval.from, from));
+    let total = this.#activeIntervals.reduce((sum, interval) => sum + overlap(interval), 0);
+    if (this.#activeSince !== null) total += overlap({ from: this.#activeSince, to });
+    return total;
   }
 
   #archiveCurrent(observedAt: number): void {
     if (this.#balance === null || this.#startingBalance === null || this.#startedAt === null) return;
-    const elapsedMs = Math.max(0, observedAt - this.#startedAt);
+    const elapsedMs = this.#activeElapsed(observedAt);
     if (this.#earned === 0 && this.#spent === 0) return;
     const elapsedHours = elapsedMs / HOUR_MS;
     this.#previousSessions.unshift({
@@ -292,11 +349,8 @@ export class GoldSession {
   }
 
   #pruneEvents(observedAt: number): void {
-    const cutoff = observedAt - EVENT_RETENTION_MS;
-    let remove = 0;
-    while (remove < this.#events.length && this.#events[remove]!.at < cutoff) remove++;
-    if (this.#events.length - remove > MAX_EVENTS) remove = this.#events.length - MAX_EVENTS;
-    if (remove > 0) this.#events.splice(0, remove);
+    dropBefore(this.#events, observedAt - EVENT_RETENTION_MS, (event) => event.at);
+    if (this.#events.length > MAX_EVENTS) this.#events.splice(0, this.#events.length - MAX_EVENTS);
   }
 
   #buckets(observedAt: number): GoldBucketView[] {
@@ -349,6 +403,19 @@ function parsePersistedState(value: unknown): PersistedGoldState {
   if (value.active.lastMonsterKillCount !== undefined) {
     active.lastMonsterKillCount = safeInteger(value.active.lastMonsterKillCount, "lastMonsterKillCount");
   }
+  if (value.active.activeMs !== undefined) {
+    active.activeMs = safeInteger(value.active.activeMs, "activeMs");
+  }
+  if (value.active.activeSince !== undefined) {
+    active.activeSince = safeInteger(value.active.activeSince, "activeSince");
+  }
+  if (value.active.activeIntervals !== undefined) {
+    if (!Array.isArray(value.active.activeIntervals)) throw new Error("gold analytics active intervals are invalid");
+    active.activeIntervals = value.active.activeIntervals.map((interval) => {
+      if (!isRecord(interval)) throw new Error("gold analytics active interval is invalid");
+      return { from: safeInteger(interval.from, "interval.from"), to: safeInteger(interval.to, "interval.to") };
+    });
+  }
   return { schema: 1, active, previousSessions };
 }
 
@@ -385,6 +452,13 @@ function numericField(packet: CapturedFishNetPacket, name: string): number | und
 
 function rate(value: number, duration: number): number {
   return duration <= 0 ? 0 : value / duration;
+}
+
+/** Drops the leading entries of a chronologically ordered list whose timestamp is before `cutoff`. */
+function dropBefore<T>(list: T[], cutoff: number, at: (entry: T) => number): void {
+  let remove = 0;
+  while (remove < list.length && at(list[remove]!) < cutoff) remove++;
+  if (remove > 0) list.splice(0, remove);
 }
 
 function safeInteger(value: unknown, field: string): number {

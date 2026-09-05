@@ -126,7 +126,7 @@ export interface GoldSessionSummaryView {
 }
 
 export interface GoldAnalyticsView {
-  status: "waiting" | "tracking";
+  status: "waiting" | "tracking" | "paused";
   balance: number | null;
   startedAt: string | null;
   lastChangeAt?: string;

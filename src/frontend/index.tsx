@@ -1,15 +1,17 @@
 import { ChartNoAxesCombined, Command, Coins, Radio, Settings, Store, X } from "lucide-preact";
 import { render } from "preact";
-import { useCallback, useEffect, useState } from "preact/hooks";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import {
   type CaptureDevice,
   type DesktopSettingsUpdate,
   type DesktopState,
   type LinuxCaptureMode,
+  type LootItemView,
 } from "../shared/contracts.ts";
 import { LootWorkspace } from "./loot-workspace.tsx";
 import { GoldWorkspace } from "./gold-workspace.tsx";
 import { MarketWorkspace } from "./market-workspace.tsx";
+import { bagSignature, marketOpenRequest, type MarketBridgeMessage } from "./market-bridge.ts";
 import { companionModules, isModuleId, type ModuleId } from "./modules.ts";
 import { UpdateNotice, UpdateSettings, useUpdates, type UpdatesModel } from "./updates.tsx";
 
@@ -28,6 +30,9 @@ function App() {
   const [switcherOpen, setSwitcherOpen] = useState(false);
   const [settingsBusy, setSettingsBusy] = useState(false);
   const [settingsError, setSettingsError] = useState<string>();
+  const marketFrame = useRef<HTMLIFrameElement>(null);
+  const sentBag = useRef<string>();
+  const [marketLoads, setMarketLoads] = useState(0);
 
   const loadState = useCallback(async () => {
     try {
@@ -142,6 +147,23 @@ function App() {
     setSwitcherOpen(false);
   };
 
+  const postToMarket = (message: MarketBridgeMessage) => {
+    marketFrame.current?.contentWindow?.postMessage(message, window.location.origin);
+  };
+
+  const findInMarket = (item: LootItemView) => {
+    activateModule("market");
+    postToMarket(marketOpenRequest(item));
+  };
+
+  useEffect(() => {
+    if (activeModule !== "market" || !state) return;
+    const signature = `${marketLoads}:${bagSignature(state.bag)}`;
+    if (signature === sentBag.current) return;
+    sentBag.current = signature;
+    postToMarket({ type: "valecompanion:bag", bag: state.bag });
+  }, [activeModule, marketLoads, state?.bag]);
+
   return (
     <div class="suite-shell">
       <aside class="suite-dock" aria-label="Vale Companion modules">
@@ -160,10 +182,10 @@ function App() {
 
       <div class="module-stage">
         <section class={`module-pane ${activeModule === "loot" ? "active" : ""}`} aria-hidden={activeModule !== "loot"}>
-          <LootWorkspace state={state} connectionError={connectionError} refreshState={loadState} />
+          <LootWorkspace state={state} connectionError={connectionError} refreshState={loadState} onFindInMarket={findInMarket} />
         </section>
         <section class={`module-pane ${activeModule === "market" ? "active" : ""}`} aria-hidden={activeModule !== "market"}>
-          <MarketWorkspace />
+          <MarketWorkspace frameRef={marketFrame} onLoad={() => setMarketLoads((count) => count + 1)} />
         </section>
         <section class={`module-pane ${activeModule === "gold" ? "active" : ""}`} aria-hidden={activeModule !== "gold"}>
           <GoldWorkspace state={state} connectionError={connectionError} refreshState={loadState} />
