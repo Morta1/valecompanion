@@ -15,9 +15,10 @@ export interface LootWorkspaceProps {
   state: DesktopState | undefined;
   connectionError: string | undefined;
   refreshState(): Promise<void>;
+  onFindInMarket(item: LootItemView): void;
 }
 
-export function LootWorkspace({ state, connectionError, refreshState }: LootWorkspaceProps) {
+export function LootWorkspace({ state, connectionError, refreshState, onFindInMarket }: LootWorkspaceProps) {
   const [surface, setSurface] = useState<Surface>("filters");
   const [actionError, setActionError] = useState<string>();
   const [busy, setBusy] = useState<string>();
@@ -147,9 +148,10 @@ export function LootWorkspace({ state, connectionError, refreshState }: LootWork
       <main class="loot-workspace">
         {actionError && <div class="notice error" role="alert"><span>{actionError}</span><button type="button" onClick={() => setActionError(undefined)} aria-label="Dismiss error">×</button></div>}
         {state?.warning && <div class="notice warning" role="status">{state.warning}</div>}
-        {surface === "bag" && <BagSurface state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} onSelect={setSelectedUid} onRetry={() => void refreshState()} onClose={() => setSelectedUid(undefined)} />}
-        {surface === "filters" && <FiltersSurface state={state} text={filterText} dirty={filterDirty} scroll={editorScroll} lineNumbers={lineNumbers} profileName={profileName} selected={selected} busy={busy} onText={(value) => { setFilterText(value); setFilterDirty(true); }} onScroll={setEditorScroll} onSave={() => void saveFilter()} onProfileName={setProfileName} onProfile={profile} onSelect={setSelectedUid} onClose={() => setSelectedUid(undefined)} />}
+        {surface === "bag" && <BagSurface state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
+        {surface === "filters" && <FiltersSurface state={state} text={filterText} dirty={filterDirty} scroll={editorScroll} lineNumbers={lineNumbers} profileName={profileName} selected={selected} busy={busy} onText={(value) => { setFilterText(value); setFilterDirty(true); }} onScroll={setEditorScroll} onSave={() => void saveFilter()} onProfileName={setProfileName} onProfile={profile} onSelect={setSelectedUid} />}
         {surface === "history" && <HistorySurface history={history} loading={!state && !connectionError} busy={busy} onClear={() => void clearHistory()} onReload={() => void loadHistory()} />}
+        {surface !== "history" && selected && <ItemInspector item={selected} onClose={() => setSelectedUid(undefined)} onFindInMarket={onFindInMarket} />}
       </main>
     </div>
   );
@@ -159,8 +161,8 @@ function NavButton({ current, value, label, detail, onSelect }: { current: Surfa
   return <button class={`module-tab ${current === value ? "active" : ""}`} type="button" aria-current={current === value ? "page" : undefined} onClick={() => onSelect(value)}><span>{label}</span>{detail && <small>{detail}</small>}</button>;
 }
 
-function BagSurface({ state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, onSelect, onRetry, onClose }: {
-  state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; onSelect(uid: string): void; onRetry(): void; onClose(): void;
+function BagSurface({ state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, onSelect, onRetry }: {
+  state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; onSelect(uid: string): void; onRetry(): void;
 }) {
   const heading = state?.phase === "capturing" ? "Live bag" : "Bag ledger";
   return <>
@@ -180,7 +182,6 @@ function BagSurface({ state, error, query, matchesOnly, items, selected, busy, o
         : items.length === 0 ? <Empty title="No items match this view" detail={matchesOnly ? "No current item matches your active filter. Switch to All to inspect the bag." : "Try a shorter search term or clear the search."} action={matchesOnly && !query ? "Show all" : "Clear search"} onAction={() => { if (matchesOnly && !query) onMatchesOnly(false); else onQuery(""); }} />
         : <div class="ledger-body">{items.map((item) => <ItemRow key={item.uid} item={item} selected={selected?.uid === item.uid} onSelect={onSelect} />)}</div>}
     </section>
-    {selected && <ItemInspector item={selected} onClose={onClose} />}
     {busy && <div class="busy-note" role="status">{busy}</div>}
   </>;
 }
@@ -201,18 +202,19 @@ function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: b
   </button>;
 }
 
-function ItemInspector({ item, onClose }: { item: LootItemView; onClose(): void }) {
+function ItemInspector({ item, onClose, onFindInMarket }: { item: LootItemView; onClose(): void; onFindInMarket(item: LootItemView): void }) {
   return <aside class="inspector" aria-label="Selected item" style={item.match ? { "--rule-color": item.match.color } as JSX.CSSProperties : undefined}>
     <header>{item.icon && <img class="inspector-icon" src={iconUrl(item.icon)} alt="" />}<div><div class="eyebrow">{item.kind} · {item.itemId}</div><h2>{item.name || item.itemId}</h2><p>{item.type}{item.refine > 0 ? ` · Refine +${item.refine}` : ""}</p></div><button type="button" class="close-button" onClick={onClose} aria-label="Close item inspector">×</button></header>
     <section class="inspector-summary"><div><small>Average roll</small><strong>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</strong></div><div><small>High rolls</small><strong>{item.highRolls}</strong></div><div><small>Chaos</small><strong>{item.hasChaos ? "Yes" : "No"}</strong></div></section>
     <section class="inspector-section"><div class="section-kicker">Observed stats</div><dl class="stat-list">{item.lines.length ? item.lines.map((line) => <div key={`${line.stat}:${line.printed ?? ""}`} class={line.over ? "over" : ""}><dt title={`${line.stat} in rules`}>{statLabel(line.stat)}{line.isChaos && <span> Chaos</span>}</dt><dd>{line.printed === null ? "—" : line.printed}<b>{formatPct(line.rollPct)}</b></dd></div>) : <p class="muted">No stat lines were decoded for this item.</p>}</dl></section>
     <section class="inspector-section"><div class="section-kicker">Filter result</div>{item.match ? <div class="match-detail"><span class="match-swatch" /><strong>{item.match.rule}</strong><p><b>{item.match.tag || "Untagged"}</b> · {item.match.highlight} {item.match.background}{item.match.border ? " border" : ""}{item.match.sound ? ` · ${item.match.sound} sound` : " · no sound"}</p></div> : <p class="muted">This item does not match an active rule.</p>}</section>
     <section class="inspector-section item-meta"><div><span>UID</span><code>{item.uid}</code></div><div><span>Favorite</span><b>{item.favorite ? "Yes" : "No"}</b></div></section>
+    <section class="inspector-section inspector-actions"><button class="quiet-action" type="button" onClick={() => onFindInMarket(item)}>Find in market</button><small>Opens ValeMarket on this item, filtered to rolls at least as good as yours.</small></section>
   </aside>;
 }
 
-function FiltersSurface({ state, text, dirty, scroll, lineNumbers, profileName, selected, busy, onText, onScroll, onSave, onProfileName, onProfile, onSelect, onClose }: {
-  state: DesktopState | undefined; text: string; dirty: boolean; scroll: number; lineNumbers: string[]; profileName: string; selected: LootItemView | undefined; busy: string | undefined; onText(value: string): void; onScroll(value: number): void; onSave(): void; onProfileName(value: string): void; onProfile(command: ProfileCommand): void; onSelect(uid: string): void; onClose(): void;
+function FiltersSurface({ state, text, dirty, scroll, lineNumbers, profileName, selected, busy, onText, onScroll, onSave, onProfileName, onProfile, onSelect }: {
+  state: DesktopState | undefined; text: string; dirty: boolean; scroll: number; lineNumbers: string[]; profileName: string; selected: LootItemView | undefined; busy: string | undefined; onText(value: string): void; onScroll(value: number): void; onSave(): void; onProfileName(value: string): void; onProfile(command: ProfileCommand): void; onSelect(uid: string): void;
 }) {
   const active = state?.profiles.find((profile) => profile.active);
   const activeName = active?.name ?? "";
@@ -239,7 +241,6 @@ function FiltersSurface({ state, text, dirty, scroll, lineNumbers, profileName, 
         <section class="side-section"><div class="section-kicker">Profiles</div><div class="profile-list">{state?.profiles.map((entry) => <button key={entry.name} type="button" class={entry.active ? "active-profile" : ""} aria-pressed={entry.active} disabled={busy !== undefined || entry.active || dirty} title={dirty && !entry.active ? "Save or discard the current edits before switching profiles" : undefined} onClick={() => onProfile({ action: "activate", name: entry.name })}><span>{entry.name}</span>{entry.active && <small>Active</small>}</button>)}</div><label class="profile-field"><span>New profile name</span><input value={profileName} placeholder="Profile name" onInput={(event) => onProfileName(event.currentTarget.value)} /></label><div class="profile-actions"><button type="button" disabled={!validName || busy !== undefined} onClick={() => onProfile({ action: "create", name: validName, text })}>Create</button><button type="button" disabled={!validName || !activeName || busy !== undefined} onClick={() => onProfile({ action: "duplicate", name: validName, source: activeName })}>Duplicate</button><button type="button" disabled={!validName || !activeName || busy !== undefined} onClick={() => onProfile({ action: "rename", name: validName, source: activeName })}>Rename</button></div></section>
       </aside>
     </div>
-    {selected && <ItemInspector item={selected} onClose={onClose} />}
   </>;
 }
 

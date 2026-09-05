@@ -333,6 +333,14 @@ header{
 .capture-warning{margin:10px 0 0;color:var(--warn);font-size:11px}
 .capture-note{margin:12px 0 0;color:var(--faint);font-size:10.5px;line-height:1.5}
 @media(max-width:700px){.collector-toggle #collector-brief{display:none}.capture-panel{top:104px}}
+.own{color:var(--gold);font-weight:700}
+.bag-section{border-bottom:1px solid var(--line)}
+.bag-section .history-head{padding:12px 16px 2px}
+.bag-section .vlist{padding:2px 12px 10px}
+.bag-section .vrow{border-color:rgba(217,178,74,.28)}
+.bag-section .vmeta .p{color:var(--gold)}
+.bag-section .vmeta .p.approx{color:var(--dim);font-weight:500}
+.bag-section .bag-empty{padding:4px 16px 12px;color:var(--faint);font-size:11px}
 #collector-toggle,#collector-panel{display:none!important}
 .logo{cursor:default}
 </style>
@@ -1022,6 +1030,105 @@ $("collector-export").addEventListener("click", () => {
 });
 
 
+// ---- Vale Companion bag bridge (messages from the desktop shell) ----
+let bagByItem = new Map();
+let pendingOpen = null;
+
+function receiveBag(bag) {
+  bagByItem = new Map();
+  for (const item of bag) {
+    const group = bagByItem.get(item.itemId) || [];
+    group.push(item);
+    bagByItem.set(item.itemId, group);
+  }
+  if (state.items.length) {
+    renderList();
+    renderInspector();
+  }
+}
+
+function unitsOf(copies) {
+  let units = 0;
+  for (const copy of copies) units += copy.count > 0 ? copy.count : 1;
+  return units;
+}
+
+// Listings comparable to one set of stat lines, strictest tier first. Each tier also
+// carries the pill filters that express it, so opening the market and pricing a bag
+// copy agree on what "comparable" means.
+function comparableTiers(item, slot, lines) {
+  const pool = slot === null ? item.variants : item.variants.filter((variant) => ART_SLOTS[variant.artifactSlot] === slot);
+  const key = lines.map((line) => statLabel(line.stat)).sort().join(" · ") || "no stats";
+  const family = pool.filter((variant) => familyKey(variant) === key);
+  const filters = lines.map((line) => ({ name: line.stat, min: line.printed }));
+  const atLeast = family.filter((variant) => filters.every((filter) => variantHasFilter(variant, filter)));
+  return [
+    { variants: atLeast, filters, label: "comparable", detail: "cheapest ask for a roll at least as good as yours" },
+    { variants: family, filters: filters.map((filter) => ({ name: filter.name, min: null })), label: "same lines", detail: "cheapest ask with the same stat lines but different values" },
+    { variants: pool, filters: [], label: "other lines", detail: "cheapest ask for this item with different stat lines" },
+  ];
+}
+
+function bagCopyRow(item, copy) {
+  const lines = copy.lines || [];
+  const stats = lines.map((line) =>
+    formatStat({ name: line.stat, valueText: line.printed == null ? "—" : String(line.printed) })
+    + (line.isChaos ? ' <span class="chaos">chaos</span>' : "")).join("");
+  const slot = copy.kind === "artifact" ? copy.type : null;
+  const tier = comparableTiers(item, slot, lines.filter((line) => !line.isChaos)).find((entry) => entry.variants.length);
+  let low = Infinity;
+  for (const variant of tier?.variants || []) if (variant.low < low) low = variant.low;
+  const approx = tier !== undefined && tier.label !== "comparable";
+  const price = tier ? `${approx ? "~" : ""}${money(low)}` : "—";
+  const basis = tier ? `${tier.label} · ${tier.variants.length} listing${tier.variants.length === 1 ? "" : "s"}` : "no listing of this item";
+  const detail = tier ? `${tier.detail} (${tier.variants.length})` : "Nothing of this item is listed right now";
+  return `<div class="vrow">
+    ${stats || copy.refine > 0 ? `<div class="stats${lines.length === 1 ? " single-stat" : ""}">${stats}${enhancementHTML({ refine: copy.refine })}</div>` : ""}
+    <div class="vmeta" title="${escapeHtml(detail)}"><span class="p${approx ? " approx" : ""}">${price}</span><span class="s">${escapeHtml(basis)}</span></div>
+  </div>`;
+}
+
+function bagSection(item, view) {
+  const copies = bagByItem.get(item.id) || [];
+  if (copies.length === 0) return "";
+  if (item.fungible) {
+    const units = unitsOf(copies);
+    const unit = view ? (view.quartiles?.p25 ?? view.median) : null;
+    const worth = unit === null ? "" : ` · ≈ ${moneyShort(unit * units)} at P25`;
+    return `<section class="bag-section"><div class="history-head"><div><h2>In your bag</h2><p>${units.toLocaleString()} unit${units === 1 ? "" : "s"}${worth}</p></div></div></section>`;
+  }
+  return `<section class="bag-section"><div class="history-head"><div><h2>In your bag</h2><p>${copies.length} cop${copies.length === 1 ? "y" : "ies"} · asking prices of comparable listings, not sales</p></div></div>
+    <div class="vlist">${copies.map((copy) => bagCopyRow(item, copy)).join("")}</div></section>`;
+}
+
+function openFromCompanion(message) {
+  Object.assign(state, readUrl(new URLSearchParams(message.search)), { sort: state.sort });
+  const item = state.byId.get(state.open);
+  if (item) {
+    const slot = ART_SLOT_IDS.includes(state.slot) ? state.slot : null;
+    const lines = state.stats.map((filter) => ({ stat: filter.name, printed: filter.min }));
+    const tier = comparableTiers(item, slot, lines).find((entry) => entry.variants.length);
+    state.stats = tier ? tier.filters : [];
+  } else {
+    state.open = null;
+    state.query = message.name;
+  }
+  $("q").value = state.query;
+  openItem(state.open);
+  $("list").querySelector(".row.on")?.scrollIntoView({ block: "center" });
+}
+
+window.addEventListener("message", (event) => {
+  if (event.origin !== window.location.origin || event.source !== window.parent) return;
+  const message = event.data;
+  if (message?.type === "valecompanion:bag") {
+    receiveBag(Array.isArray(message.bag) ? message.bag : []);
+  } else if (message?.type === "valecompanion:market-open" && typeof message.search === "string") {
+    if (state.items.length) openFromCompanion(message);
+    else pendingOpen = message;
+  }
+});
+
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (ch) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -1270,8 +1377,7 @@ function countBy(items, keyFn) {
   return counts;
 }
 
-function readUrl() {
-  const params = new URLSearchParams(location.search);
+function readUrl(params = new URLSearchParams(location.search)) {
   const kind = KINDS.some((entry) => entry.id === params.get("kind")) ? params.get("kind") : "All";
   const sort = SORTS.some((entry) => entry.id === params.get("sort")) ? params.get("sort") : "seen";
   const section = SECTIONS.includes(params.get("section")) ? params.get("section") : null;
@@ -1496,12 +1602,13 @@ function renderList() {
     const count = item.fungible
       ? `${view.listingCount} listings · ${view.unitCount.toLocaleString()} units`
       : `${view.listingCount} seen`;
+    const owned = unitsOf(bagByItem.get(item.id) || []);
     return `
       <button type="button" class="row${state.open === item.id ? " on" : ""}" data-id="${escapeHtml(item.id)}">
         <div class="ic">${iconHTML(item)}</div>
         <div class="name">
           <span class="cn">${escapeHtml(item.name)}</span>
-          <span class="cm">${escapeHtml(item.kind)}${escapeHtml(piece)} · ${count} · ${ageLine(view)} · ${mark}</span>
+          <span class="cm">${escapeHtml(item.kind)}${escapeHtml(piece)} · ${count} · ${ageLine(view)} · ${mark}${owned ? ` · <span class="own">in bag ×${owned.toLocaleString()}</span>` : ""}</span>
         </div>
         <div class="ask">${price}</div>
       </button>`;
@@ -1609,6 +1716,7 @@ function renderInspector() {
     <div class="summary">${summary}${filteredBySearch ? " · filtered rolls" : ""}
       <span class="age">oldest listing ${ageHTML(view?.firstSeenAt)} · newest listing ${ageHTML(view?.lastSeenAt)}</span>
     </div>
+    ${bagSection(item, view)}
     ${quartileStrip(view?.quartiles)}
     ${statFingerprintSection(item, rows)}
     ${item.fungible && view ? priceHistorySection(item, view) : ""}
@@ -1957,6 +2065,11 @@ async function load() {
     if (state.open && !state.byId.has(state.open)) state.open = null;
     renderMeta();
     render();
+    if (pendingOpen) {
+      const message = pendingOpen;
+      pendingOpen = null;
+      openFromCompanion(message);
+    }
   } catch (error) {
     logClientEvent("frontend.market.load_failed", error);
     if (previousManifest) {
