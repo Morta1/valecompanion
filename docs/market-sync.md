@@ -1,7 +1,7 @@
 # Incremental market sync (issue #6)
 
-Status: Worker deployed to production on 2026-09-05; desktop change remains a draft
-and has not been released. The matching Worker changes are in the sibling
+Status: Worker deployed to production on 2026-09-05; desktop changes are included
+in the v0.3.0 release. The matching Worker changes are in the sibling
 `valemarket/server` source. That server directory
 was already untracked in its parent repository; do not mistake a companion commit
 for a published or versioned API deployment.
@@ -96,8 +96,11 @@ version, checks, and rollback command. Before releasing the companion:
 3. Exercise publication failures, missed polls, removals, and full recovery.
 4. Deploy the backward-compatible API first and allow a scheduled publication.
    Verify old full-snapshot clients still work and new clients acquire revisions.
-5. Release the companion only after validation. No desktop version tag or release
-   has been created.
+5. Release the companion after validation. v0.3.0 includes the companion changes.
+
+The owner authorized release after local tests and live client checks. Broader
+representative Cloudflare CPU, cache-hit, and storage-cost measurements remain
+unmeasured; the synthetic byte comparison is not evidence of production savings.
 
 References: [R2 Workers API](https://developers.cloudflare.com/r2/api/workers/workers-api-reference/),
 [Workers best practices](https://developers.cloudflare.com/workers/best-practices/workers-best-practices/).
