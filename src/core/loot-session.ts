@@ -1,5 +1,5 @@
 import type { AlertHistoryView, LootItemView, LootMatchView } from "../shared/contracts.ts";
-import { artifactFacts, cardFacts, equipmentFacts, gemFacts } from "./catalog.ts";
+import { artifactFacts, cardFacts, equipmentFacts, gemFacts, storageStackFacts, cosmeticFacts } from "./catalog.ts";
 import { matchLoot, type LootContext, type LootMatch } from "./filter/loot-filter.ts";
 import { parseLootFilter, type ParsedFilter } from "./filter/loot-dsl.ts";
 import type { OwnedGear } from "./filter/types.ts";
@@ -7,6 +7,8 @@ import type { SaviInventory, SaviSnapshot } from "./types.ts";
 
 export interface LootSessionOptions {
   historyLimit?: number;
+  includeStorageItems?: boolean;
+  silent?: boolean;
   soundsEnabled?: () => boolean;
   onSound?: (sound: string) => boolean | Promise<boolean>;
 }
@@ -32,7 +34,7 @@ export class LootSession {
   #sequence = 0;
   #parsed: ParsedFilter = parseLootFilter("");
 
-  constructor(options: LootSessionOptions = {}) {
+  constructor(private readonly options: LootSessionOptions = {}) {
     this.#limit = options.historyLimit ?? 200;
     this.#soundsEnabled = options.soundsEnabled ?? (() => false);
     this.#onSound = options.onSound ?? (() => false);
@@ -78,7 +80,7 @@ export class LootSession {
     return this.consumeInventory(inventory, snapshot.partial);
   }
 
-  consumeInventory(inventory: SaviInventory, partial = false): SnapshotResult {
+  consumeInventory(inventory: SaviInventory, partial = false, silent = this.options.silent ?? false): SnapshotResult {
     const threshold = this.#parsed.threshold ?? 90;
     const next = new Map<string, Entry>();
     for (const item of inventory.equips) {
@@ -98,8 +100,23 @@ export class LootSession {
       next.set(fact.view.uid, { owned: fact, view: fact.view });
     }
 
+    if (this.options.includeStorageItems) {
+      for (const item of inventory.junks) {
+        const fact = storageStackFacts(item, "material");
+        next.set(fact.view.uid, { owned: fact, view: fact.view });
+      }
+      for (const item of inventory.consumables) {
+        const fact = storageStackFacts(item, "consumable");
+        next.set(fact.view.uid, { owned: fact, view: fact.view });
+      }
+      for (const item of inventory.cosmetics ?? []) {
+        const fact = cosmeticFacts(item);
+        next.set(fact.view.uid, { owned: fact, view: fact.view });
+      }
+    }
+
     const baseline = !this.#baseline;
-    const added = baseline
+    const added = baseline || silent
       ? []
       : [...next]
         .filter(([uid, entry]) => entry.view.count > (this.#entries.get(uid)?.view.count ?? 0))

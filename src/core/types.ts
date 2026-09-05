@@ -60,6 +60,7 @@ export interface SaviInventory {
   gems: SaviGem[];
   junks: SaviStack[];
   consumables: SaviStack[];
+  cosmetics?: SaviGem[];
 }
 
 export interface SaviSkill {

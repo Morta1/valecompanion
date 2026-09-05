@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { decodeCharacterData, decodePersonalStorageBatchPayload } from "../src/core/character-data.ts";
+import { decodeCharacterData, decodePersonalStorageBatch, decodePersonalStorageBatchPayload } from "../src/core/character-data.ts";
 import { Writer } from "../src/core/wire.ts";
 
 test("current CharacterState return fields keep inventory aligned", () => {
@@ -81,3 +81,30 @@ function writeCardInventory(writer: Writer, count: number): void {
     .dict([], () => undefined)
     .dict([], () => undefined);
 }
+
+
+test("storage completion retains both inventories and rejects truncated updates", () => {
+  const writer = new Writer();
+  writer.string("storage-request").packed(300).packed(600).string(null);
+  writeCardInventory(writer, 2);
+  writer.packed(17);
+  writeCardInventory(writer, 5);
+  const bytes = writer.bytes();
+  const batch = decodePersonalStorageBatch(bytes)!;
+  expect(batch.inventory.cards[0]?.count).toBe(2);
+  expect(batch.storage.cards[0]?.count).toBe(5);
+  expect(decodePersonalStorageBatch(bytes.slice(0, -1))).toBeNull();
+});
+
+test("empty bag and storage still form an authoritative update", () => {
+  const writer = new Writer();
+  writer.string("x").packed(300).packed(600).string(null);
+  for (let inventory = 0; inventory < 2; inventory++) {
+    writer.objectRef(true);
+    for (let field = 0; field < 7; field++) writer.dict([], () => undefined);
+    if (inventory === 0) writer.packed(17);
+  }
+  const batch = decodePersonalStorageBatch(writer.bytes());
+  expect(batch?.inventory.cards).toEqual([]);
+  expect(batch?.storage.cards).toEqual([]);
+});

@@ -11,7 +11,7 @@ import { statLabel } from "../shared/stat-labels.ts";
 import { exactMoney, shortMoney } from "./format.ts";
 
 const apiRoot = window.location.origin;
-type Surface = "bag" | "filters" | "history";
+type Surface = "bag" | "storage" | "filters" | "history";
 type BagOrder = "name" | "value";
 
 export interface LootWorkspaceProps {
@@ -76,10 +76,12 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
     });
   }, []);
 
-  const selected = state?.bag.find((item) => item.uid === selectedUid);
+  const inventory = surface === "storage" ? state?.storage : state?.bag;
+  const selected = inventory?.find((item) => item.uid === selectedUid);
+  useEffect(() => { setSelectedUid(undefined); }, [surface]);
   const filteredBag = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
-    const items = (state?.bag ?? []).filter((item) => {
+    const items = (inventory ?? []).filter((item) => {
       // Both spellings are searchable: "Attack Speed" as displayed, "AtkSpd" as written in rules.
       const searchable = [item.name, item.type, item.itemId, ...item.lines.flatMap((line) => [line.stat, statLabel(line.stat)]), item.match?.rule, item.match?.tag]
         .filter((part): part is string => Boolean(part))
@@ -87,7 +89,7 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
       return (!matchesOnly || item.match !== null) && (!needle || searchable.includes(needle));
     });
     return order === "value" ? items.sort((left, right) => (right.value?.low ?? -1) - (left.value?.low ?? -1)) : items;
-  }, [matchesOnly, order, query, state?.bag]);
+  }, [matchesOnly, order, query, inventory]);
 
   const invoke = async (label: string, request: () => Promise<Response>) => {
     setBusy(label);
@@ -143,6 +145,7 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
         <nav class="module-tabs" aria-label="Loot workspace sections">
           <NavButton current={surface} value="filters" label="Rules" detail={state ? String(state.filter.errors.length) : ""} onSelect={setSurface} />
           <NavButton current={surface} value="bag" label="Bag" detail={String(state?.bag.length ?? 0)} onSelect={setSurface} />
+          <NavButton current={surface} value="storage" label="Storage" detail={state?.storageGeneratedAt ? String(state.storage.length) : ""} onSelect={setSurface} />
           <NavButton current={surface} value="history" label="History" detail={String(history.length || state?.history.length || 0)} onSelect={setSurface} />
         </nav>
         <div class="module-status" title={state?.detail ?? "Connecting to local collector"}>
@@ -153,7 +156,7 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
       <main class="loot-workspace">
         {actionError && <div class="notice error" role="alert"><span>{actionError}</span><button type="button" onClick={() => setActionError(undefined)} aria-label="Dismiss error">×</button></div>}
         {state?.warning && <div class="notice warning" role="status">{state.warning}</div>}
-        {surface === "bag" && <BagSurface state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} order={order} onOrder={setOrder} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
+        {(surface === "bag" || surface === "storage") && <BagSurface storage={surface === "storage"} state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} order={order} onOrder={setOrder} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
         {surface === "filters" && <FiltersSurface state={state} text={filterText} dirty={filterDirty} scroll={editorScroll} lineNumbers={lineNumbers} profileName={profileName} selected={selected} busy={busy} onText={(value) => { setFilterText(value); setFilterDirty(true); }} onScroll={setEditorScroll} onSave={() => void saveFilter()} onProfileName={setProfileName} onProfile={profile} onSelect={setSelectedUid} />}
         {surface === "history" && <HistorySurface history={history} loading={!state && !connectionError} busy={busy} onClear={() => void clearHistory()} onReload={() => void loadHistory()} />}
         {surface !== "history" && selected && <ItemInspector item={selected} onClose={() => setSelectedUid(undefined)} onFindInMarket={onFindInMarket} />}
@@ -166,30 +169,36 @@ function NavButton({ current, value, label, detail, onSelect }: { current: Surfa
   return <button class={`module-tab ${current === value ? "active" : ""}`} type="button" aria-current={current === value ? "page" : undefined} onClick={() => onSelect(value)}><span>{label}</span>{detail && <small>{detail}</small>}</button>;
 }
 
-function BagSurface({ state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, order, onOrder, onSelect, onRetry }: {
-  state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; order: BagOrder; onOrder(value: BagOrder): void; onSelect(uid: string): void; onRetry(): void;
+function BagSurface({ storage = false, state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, order, onOrder, onSelect, onRetry }: {
+  storage?: boolean; state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; order: BagOrder; onOrder(value: BagOrder): void; onSelect(uid: string): void; onRetry(): void;
 }) {
-  const heading = state?.phase === "capturing" ? "Live bag" : "Bag ledger";
-  const bagTotal = (state?.bag ?? []).reduce((sum, item) => sum + (item.value?.low ?? 0), 0);
+  const inventory = (storage ? state?.storage : state?.bag) ?? [];
+  const generatedAt = storage ? state?.storageGeneratedAt : state?.bagGeneratedAt;
+  const label = storage ? "storage" : "bag";
+  const coverage = storage ? (generatedAt ? "Last observed storage; open storage in-game to refresh" : "Storage has not been observed this session") : state?.bagCoverage;
+  const heading = storage ? "Storage" : state?.phase === "capturing" ? "Live bag" : "Bag ledger";
+  const bagTotal = inventory.reduce((sum, item) => sum + (item.value?.low ?? 0), 0);
   const prices = state?.marketPrices.generatedAt
-    ? <span class="bag-total" title={state.marketPrices.warning ?? state.marketPrices.cacheWarning ?? `${state.marketPrices.listings.toLocaleString()} ValeMarket listings, asking prices`}>· bag ≈ {shortMoney(bagTotal)} · prices {relativeTime(state.marketPrices.generatedAt)}{state.marketPrices.warning ? " (stale)" : ""}</span>
+    ? <span class="bag-total" title={state.marketPrices.warning ?? state.marketPrices.cacheWarning ?? `${state.marketPrices.listings.toLocaleString()} ValeMarket listings, asking prices`}>{label}{" \u2248 "}{shortMoney(bagTotal)}{storage ? " (priced items)" : ""}{" \u00b7 "}prices {relativeTime(state.marketPrices.generatedAt)}{state.marketPrices.warning ? " (stale)" : ""}</span>
     : undefined;
   return <>
-    <SurfaceHeader eyebrow="Inventory · passive observation" title={heading} freshness={state?.bagGeneratedAt ? `Snapshot ${relativeTime(state.bagGeneratedAt)}` : state ? state.bagCoverage : "Local collector"} live={state?.phase === "capturing"}>{prices}</SurfaceHeader>
+    <SurfaceHeader eyebrow="Inventory · passive observation" title={heading} freshness={generatedAt ? `Last observed ${relativeTime(generatedAt)}` : coverage ?? "Local collector"} live={!storage && state?.phase === "capturing"}>{prices}</SurfaceHeader>
     <div class="ledger-tools">
-      <label class="search-field"><span class="visually-hidden">Search bag</span><span aria-hidden="true">⌕</span><input type="search" value={query} placeholder="Search item, trait, rule, or tag" onInput={(event) => onQuery(event.currentTarget.value)} />{query && <button type="button" onClick={() => onQuery("")} aria-label="Clear bag search">×</button>}</label>
-      <div class="segmented order" aria-label="Bag order"><button class={order === "name" ? "selected" : ""} type="button" aria-pressed={order === "name"} onClick={() => onOrder("name")}>Name</button><button class={order === "value" ? "selected" : ""} type="button" aria-pressed={order === "value"} onClick={() => onOrder("value")}>Value</button></div>
-      <div class="segmented" aria-label="Bag scope"><button class={!matchesOnly ? "selected" : ""} type="button" aria-pressed={!matchesOnly} onClick={() => onMatchesOnly(false)}>All <span>{state?.bag.length ?? 0}</span></button><button class={matchesOnly ? "selected" : ""} type="button" aria-pressed={matchesOnly} onClick={() => onMatchesOnly(true)}>Matches <span>{state?.bag.filter((item) => item.match).length ?? 0}</span></button></div>
-      <span class="coverage">{state?.bagCoverage ?? "Waiting for a local snapshot"}</span>
+      <label class="search-field"><span class="visually-hidden">Search {label}</span><span aria-hidden="true">⌕</span><input type="search" value={query} placeholder="Search item, trait, rule, or tag" onInput={(event) => onQuery(event.currentTarget.value)} />{query && <button type="button" onClick={() => onQuery("")} aria-label={`Clear ${label} search`}>×</button>}</label>
+      <div class="segmented order" aria-label={`${label} order`}><button class={order === "name" ? "selected" : ""} type="button" aria-pressed={order === "name"} onClick={() => onOrder("name")}>Name</button><button class={order === "value" ? "selected" : ""} type="button" aria-pressed={order === "value"} onClick={() => onOrder("value")}>Value</button></div>
+      <div class="segmented" aria-label={`${label} scope`}><button class={!matchesOnly ? "selected" : ""} type="button" aria-pressed={!matchesOnly} onClick={() => onMatchesOnly(false)}>All <span>{inventory.length}</span></button><button class={matchesOnly ? "selected" : ""} type="button" aria-pressed={matchesOnly} onClick={() => onMatchesOnly(true)}>Matches <span>{inventory.filter((item) => item.match).length ?? 0}</span></button></div>
+      <span class="coverage">{coverage ?? "Waiting for a local snapshot"}</span>
     </div>
-    <section class="ledger" aria-label="Observed bag" aria-live="polite">
+    <section class="ledger" aria-label={`Observed ${label}`} aria-live="polite">
       <div class="ledger-head"><span>Item</span><span>Notable rolls</span><span>Rule</span><span>Rolls</span></div>
       {error && !state ? <Empty title="Collector unavailable" detail={`ValeLoot could not reach its local service. ${error}`} action="Reconnect" onAction={onRetry} />
         : !state ? <Empty title="Connecting to collector" detail="Waiting for the local capture service to report its inventory state." />
-        : state.phase === "capture-unavailable" ? <Empty title={`${state.capture.backend} is needed to observe the bag`} detail={`Open Settings to review the ${state.capture.backend} status, then install or repair the capture backend before restarting capture.`} />
-        : state.phase === "disabled" ? <Empty title="Capture is paused" detail="Enable passive capture in Settings to watch the next bag snapshot." />
-        : state.bag.length === 0 ? <Empty title="Waiting for the first bag snapshot" detail={state.phase === "waiting-for-game" ? "Launch Spirit Vale, enter a character, then switch maps once to trigger a complete inventory snapshot." : "Switch maps once to trigger a complete inventory snapshot. Changing inventory can also make the game send one."} />
-        : items.length === 0 ? <Empty title="No items match this view" detail={matchesOnly ? "No current item matches your active filter. Switch to All to inspect the bag." : "Try a shorter search term or clear the search."} action={matchesOnly && !query ? "Show all" : "Clear search"} onAction={() => { if (matchesOnly && !query) onMatchesOnly(false); else onQuery(""); }} />
+        : storage && !generatedAt ? <Empty title="Waiting for storage" detail="Open personal storage in the game. If no contents appear, move an item between your bag and storage to send a complete update. Capture must be enabled." />
+        : storage && inventory.length === 0 ? <Empty title="Storage is empty" detail="The last complete storage snapshot contained no items." />
+        : !storage && state.phase === "capture-unavailable" ? <Empty title={`${state.capture.backend} is needed to observe the bag`} detail={`Open Settings to review the ${state.capture.backend} status, then install or repair the capture backend before restarting capture.`} />
+        : !storage && state.phase === "disabled" ? <Empty title="Capture is paused" detail="Enable passive capture in Settings to watch the next bag snapshot." />
+        : inventory.length === 0 ? <Empty title="Waiting for the first bag snapshot" detail={state.phase === "waiting-for-game" ? "Launch Spirit Vale, enter a character, then switch maps once to trigger a complete inventory snapshot." : "Switch maps once to trigger a complete inventory snapshot. Changing inventory can also make the game send one."} />
+        : items.length === 0 ? <Empty title="No items match this view" detail={matchesOnly ? "No current item matches your active filter. Switch to All to inspect these items." : "Try a shorter search term or clear the search."} action={matchesOnly && !query ? "Show all" : "Clear search"} onAction={() => { if (matchesOnly && !query) onMatchesOnly(false); else onQuery(""); }} />
         : <div class="ledger-body">{items.map((item) => <ItemRow key={item.uid} item={item} selected={selected?.uid === item.uid} onSelect={onSelect} />)}</div>}
     </section>
     {busy && <div class="busy-note" role="status">{busy}</div>}
@@ -223,7 +232,7 @@ function ItemInspector({ item, onClose, onFindInMarket }: { item: LootItemView; 
     <section class="inspector-section"><div class="section-kicker">Filter result</div>{item.match ? <div class="match-detail"><span class="match-swatch" /><strong>{item.match.rule}</strong><p><b>{item.match.tag || "Untagged"}</b> · {item.match.highlight} {item.match.background}{item.match.border ? " border" : ""}{item.match.sound ? ` · ${item.match.sound} sound` : " · no sound"}</p></div> : <p class="muted">This item does not match an active rule.</p>}</section>
     <section class="inspector-section"><div class="section-kicker">Market value</div>{item.value
       ? <div class="market-value"><strong class={approx ? "approx" : ""}>{approx ? "~" : ""}{item.value.tier === "unit" ? `${shortMoney(item.value.low)} stack value` : valueRange(item.value)}</strong><p>{valueDetail(item.value, item.count)}</p></div>
-      : <p class="muted">Nothing of this item is listed on ValeMarket right now.</p>}</section>
+      : <p class="muted">{["material", "consumable", "cosmetic"].includes(item.kind) ? "Market estimates are not available for this item category." : "Nothing of this item is listed on ValeMarket right now."}</p>}</section>
     <section class="inspector-section item-meta"><div><span>UID</span><code>{item.uid}</code></div><div><span>Favorite</span><b>{item.favorite ? "Yes" : "No"}</b></div></section>
     <section class="inspector-section inspector-actions"><button class="quiet-action" type="button" onClick={() => onFindInMarket(item)}>Find in market</button><small>Opens ValeMarket on this item, filtered to rolls at least as good as yours.</small></section>
   </aside>;

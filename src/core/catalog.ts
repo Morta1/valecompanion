@@ -254,3 +254,17 @@ export function cardFacts(item: SaviStack): Facts {
     },
   };
 }
+
+export function storageStackFacts(item: SaviStack, kind: "material" | "consumable"): Facts {
+  const facts = cardFacts(item);
+  const type = kind === "material" ? "Material" : "Consumable";
+  const uid = `${item.itemId}:${kind}`;
+  return { ...facts, uid, slotType: type, view: { ...facts.view, uid, kind, type } };
+}
+
+export function cosmeticFacts(item: SaviGem): Facts {
+  const facts = gemFacts(item);
+  const exact = exactCatalog[item.itemId];
+  const name = exact?.name ?? item.itemId;
+  return { ...facts, name, slotType: "Cosmetic", view: { ...facts.view, name, kind: "cosmetic", type: "Cosmetic" } };
+}

@@ -88,6 +88,8 @@ header{
   border-left:1px solid rgba(223,255,232,.28);padding-left:6px;
   color:#b7e7c8;font-weight:500;
 }
+.pill .line-count{display:flex;align-items:center;gap:5px;border-left:1px solid var(--line);padding-left:8px;font-size:11px;color:var(--dim)}
+.pill .line-count select{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:3px;min-height:26px}
 .pill .mag i{font-style:normal;font-size:11px;opacity:.8}
 .pill .mag input{
   width:3.4em;background:transparent;border:0;color:inherit;
@@ -508,13 +510,14 @@ function statSearchText(name) {
 }
 
 function parseStatFilter(token) {
-  const match = /^([A-Za-z][A-Za-z0-9]*)(?:(?::|>=)(-?\d+(?:\.\d+)?))?$/.exec(String(token).trim());
+  const match = /^([A-Za-z][A-Za-z0-9]*)(?:(?::|>=)(-?\d+(?:\.\d+)?))?(?:~([123]))?$/.exec(String(token).trim());
   if (!match) return null;
-  return { name: match[1], min: match[2] == null ? null : Number(match[2]) };
+  return { name: match[1], min: match[2] == null ? null : Number(match[2]), count: Number(match[3] || 1) };
 }
 
 function encodeStatFilter(filter) {
-  return filter.min == null ? filter.name : `${filter.name}:${filter.min}`;
+  const base = filter.min == null ? filter.name : `${filter.name}:${filter.min}`;
+  return (filter.count || 1) > 1 ? `${base}~${filter.count}` : base;
 }
 
 function hasStatFilter(name) {
@@ -526,13 +529,13 @@ function statNumeric(stat) {
 }
 
 function variantHasFilter(variant, filter) {
-  const hits = (variant.stats || []).filter((stat) => stat.name === filter.name);
-  if (hits.length === 0) return false;
-  if (filter.min == null) return true;
-  return hits.some((stat) => {
+  const hits = (variant.stats || []).filter((stat) => {
+    if (stat.name !== filter.name) return false;
+    if (filter.min == null) return true;
     const value = statNumeric(stat);
     return value != null && value >= filter.min;
   });
+  return hits.length >= (filter.count || 1);
 }
 
 function percentileDisc(sorted, p) {
@@ -1559,6 +1562,7 @@ function renderToolbar(rows) {
       + state.stats.map((filter) =>
         `<span class="pill" data-stat="${escapeHtml(filter.name)}">${escapeHtml(statLabel(filter.name))}`
         + `<span class="mag"><i>≥</i><input type="number" inputmode="decimal" step="1" placeholder="any" aria-label="${escapeHtml(statLabel(filter.name))} at least" value="${filter.min == null ? "" : escapeHtml(String(filter.min))}"></span>`
+        + `<label class="line-count" title="Each matching line must meet the minimum; lines are not added together.">Lines <select aria-label="${escapeHtml(statLabel(filter.name))} minimum matching lines" data-line-count="1">${[1, 2, 3].map((count) => `<option value="${count}"${(filter.count || 1) === count ? " selected" : ""}>${count}+</option>`).join("")}</select></label>`
         + `<button type="button" class="x" data-remove-stat="${escapeHtml(filter.name)}" aria-label="Remove ${escapeHtml(statLabel(filter.name))}">×</button></span>`
       ).join("");
   }
@@ -1808,7 +1812,7 @@ $("f-sort").addEventListener("change", (event) => {
 });
 
 $("toolbar").addEventListener("click", (event) => {
-  if (event.target.closest(".pill .mag")) return;
+  if (event.target.closest(".pill .mag, .pill .line-count")) return;
   const add = event.target.closest("[data-add]");
   if (add) { addFilter(add.dataset.add); return; }
   const dropStat = event.target.closest("[data-remove-stat]");
@@ -1823,6 +1827,16 @@ $("toolbar").addEventListener("click", (event) => {
     state.shown = PAGE;
     render();
   }
+});
+
+$("toolbar").addEventListener("change", (event) => {
+  const field = event.target.closest("[data-line-count]");
+  if (!field) return;
+  const filter = state.stats.find((entry) => entry.name === field.closest("[data-stat]")?.dataset.stat);
+  if (!filter) return;
+  filter.count = Number(field.value);
+  state.shown = PAGE;
+  render();
 });
 
 $("toolbar").addEventListener("input", (event) => {

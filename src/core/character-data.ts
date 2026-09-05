@@ -190,7 +190,10 @@ export function identifyInventoryPayload(payload: Uint8Array): SaviInventory | n
  * hash 62 with its older `PlayerCallback_Storage` name, so validation must follow the wire shape.
  */
 export function decodePersonalStorageBatchPayload(payload: Uint8Array): SaviInventory | null {
-  if (payload.length < 64) return null;
+  return decodePersonalStorageBatch(payload)?.inventory ?? null;
+}
+
+export function decodePersonalStorageBatch(payload: Uint8Array): { inventory: SaviInventory; storage: SaviInventory } | null {
   try {
     const r = new Reader(payload);
     const requestId = r.string(ID_MAX);
@@ -203,9 +206,7 @@ export function decodePersonalStorageBatchPayload(payload: Uint8Array): SaviInve
     if (!requestId || bagCapacity < 0 || storageCapacity < 0 || version < 0 || !inventory || !storage || r.remaining !== 0) {
       return null;
     }
-    const totalItems = (value: SaviInventory): number => value.equips.length + value.artifacts.length
-      + value.cards.length + value.gems.length + value.junks.length + value.consumables.length;
-    return totalItems(inventory) + totalItems(storage) > 0 ? inventory : null;
+    return { inventory, storage };
   } catch {
     return null;
   }
@@ -330,9 +331,14 @@ function readStack(r: Reader): SaviStack | undefined {
 }
 
 /** CosmeticData { Rarity, Shiny } : RefinableItemData : InventoryItemData. */
-function skipCosmetic(r: Reader): void {
+function readCosmetic(r: Reader): SaviGem | undefined {
   if (!r.objectRef()) return;
-  r.packed(); r.bool(); r.string(UID_MAX); r.packed(); r.string(ID_MAX); r.bool();
+  r.packed(); r.bool();
+  const uid = r.string(UID_MAX);
+  const refine = r.packed();
+  const itemId = r.string(ID_MAX);
+  const favorite = r.bool();
+  return itemId ? { uid, refine, itemId, favorite } : undefined;
 }
 
 /** SkillSystemData { Skills, Assigned, SkillCopy, Reanimations }. */
@@ -373,6 +379,6 @@ function readInventory(r: Reader): SaviInventory | undefined {
   const gems = r.dict(() => readGem(r)).filter(isPresent);
   const junks = r.dict(() => readStack(r)).filter(isPresent);
   const consumables = r.dict(() => readStack(r)).filter(isPresent);
-  r.dict(() => skipCosmetic(r));
-  return { equips, artifacts, cards, gems, junks, consumables };
+  const cosmetics = r.dict(() => readCosmetic(r)).filter(isPresent);
+  return { equips, artifacts, cards, gems, junks, consumables, cosmetics };
 }

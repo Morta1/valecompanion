@@ -146,7 +146,9 @@ const session = new LootSession({
     }
   },
 });
+const storageSession = new LootSession({ includeStorageItems: true, silent: true });
 session.setFilter(persisted.filter);
+storageSession.setFilter(persisted.filter);
 const goldStatePath = path.join(dataDirectory, "gold-sessions.json");
 const goldSession = await loadJson(
   goldStatePath,
@@ -179,6 +181,7 @@ let snapshotsDecoded = 0;
 let partialSnapshots = 0;
 let duplicateSnapshots = 0;
 let bagGeneratedAt: string | null = null;
+let storageGeneratedAt: string | null = null;
 let bagCoverage = "No inventory snapshot yet";
 let resolvedCaptureDevice: CaptureDeviceRecord | undefined;
 let captureHealthWarning: string | undefined;
@@ -235,6 +238,10 @@ const fishNetDecoder = new FishNetCaptureDecoder({
     if (goldSession.consumePacket(packet)) scheduleGoldSave();
     packetsObserved++;
     const result = consumeFishNetPacket(packet);
+    if (result.storage) {
+      storageSession.consumeInventory(result.storage);
+      storageGeneratedAt = new Date().toISOString();
+    }
     if (!result.snapshot && !result.inventory) return;
     snapshotsDecoded++;
     if (result.snapshot?.partial) partialSnapshots++;
@@ -242,7 +249,7 @@ const fishNetDecoder = new FishNetCaptureDecoder({
       if (goldSession.consumeSnapshot(result.snapshot)) scheduleGoldSave();
       session.consume(result.snapshot);
     } else {
-      session.consumeInventory(result.inventory!);
+      session.consumeInventory(result.inventory!, false, true);
     }
     bagGeneratedAt = new Date().toISOString();
     bagCoverage = result.snapshot?.partial
@@ -401,6 +408,8 @@ async function restartCapture(
       if (event.state === "opened") {
         if (activeConnectionId !== event.connectionId) {
           session.resetCharacter();
+          storageSession.resetCharacter();
+          storageGeneratedAt = null;
         }
         activeConnectionId = event.connectionId;
         detail = `Spirit Vale connection observed on ${adapterLabel()}`;
@@ -581,6 +590,8 @@ function currentState(): DesktopState {
     marketPrices: marketSnapshot.view(),
     gold: goldSession.snapshot(),
     bag: priceBag(session.bag(), (itemId) => marketSnapshot.listingsFor(itemId)),
+    storage: storageSession.bag().map((item) => ["material", "consumable", "cosmetic"].includes(item.kind) ? item : priceBag([item], (itemId) => marketSnapshot.listingsFor(itemId))[0]!),
+    storageGeneratedAt,
     bagGeneratedAt,
     bagCoverage,
     filter: {
@@ -800,6 +811,7 @@ async function routeRequest(request: Request): Promise<Response> {
     persisted.filter = filter;
     persisted.profiles[persisted.active] = filter;
     session.setFilter(filter);
+    storageSession.setFilter(filter);
     saveSettings(persisted);
     return Response.json(currentState().filter);
   }
@@ -829,6 +841,7 @@ async function routeRequest(request: Request): Promise<Response> {
       persisted.active = name;
       persisted.filter = persisted.profiles[name]!;
       session.setFilter(persisted.filter);
+      storageSession.setFilter(persisted.filter);
     } else {
       const source = normalizedProfileName(command.source);
       if (!source || !Object.hasOwn(persisted.profiles, source)) return errorResponse("source profile not found", 404);
@@ -840,6 +853,7 @@ async function routeRequest(request: Request): Promise<Response> {
           persisted.active = name;
           persisted.filter = persisted.profiles[name]!;
           session.setFilter(persisted.filter);
+          storageSession.setFilter(persisted.filter);
         }
       }
     }

@@ -1,5 +1,5 @@
 export type CollectorPhase = "disabled" | "capture-unavailable" | "waiting-for-game" | "capturing" | "error";
-export type LootKind = "equipment" | "artifact" | "gem" | "card";
+export type LootKind = "equipment" | "artifact" | "gem" | "card" | "material" | "consumable" | "cosmetic";
 export type LootHighlight = "dot" | "mark" | "glow";
 export type LootBackground = "border" | "fill" | "holo";
 
@@ -183,6 +183,8 @@ export interface DesktopState {
   gold: GoldAnalyticsView;
   bag: LootItemView[];
   bagGeneratedAt: string | null;
+  storage: LootItemView[];
+  storageGeneratedAt: string | null;
   bagCoverage: string;
   filter: {
     text: string;
