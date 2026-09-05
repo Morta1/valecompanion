@@ -1918,8 +1918,9 @@ window.addEventListener("popstate", () => {
 
 
 async function fetchAllListings() {
-  const response = await fetch(`${API}/v2/markets/global/snapshot`);
-  if (!response.ok) throw new Error(`market API ${response.status}`);
+  // The desktop collector owns the snapshot download and cache; the frame reads its copy.
+  const response = await fetch(`${DESKTOP_API}/v1/market/snapshot`, { cache: "no-store" });
+  if (!response.ok) throw new Error(`market snapshot ${response.status}`);
   const body = await response.json();
   if (body?.marketId !== "global" || !Array.isArray(body.listings)
       || typeof body.generatedAt !== "string" || !Number.isFinite(Date.parse(body.generatedAt))) {
@@ -2089,7 +2090,7 @@ async function load() {
   }
 }
 
-const MARKET_REFRESH_MS = 30 * 60 * 1_000;
+const MARKET_REFRESH_MS = 15 * 60 * 1_000;
 $("refresh-data").addEventListener("click", () => void load());
 setInterval(() => {
   if (!document.hidden) void load();

@@ -4,12 +4,15 @@ import {
   type AlertHistoryView,
   type DesktopState,
   type LootItemView,
+  type MarketValueView,
   type ProfileCommand,
 } from "../shared/contracts.ts";
 import { statLabel } from "../shared/stat-labels.ts";
+import { exactMoney, shortMoney } from "./format.ts";
 
 const apiRoot = window.location.origin;
 type Surface = "bag" | "filters" | "history";
+type BagOrder = "name" | "value";
 
 export interface LootWorkspaceProps {
   state: DesktopState | undefined;
@@ -24,6 +27,7 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
   const [busy, setBusy] = useState<string>();
   const [query, setQuery] = useState("");
   const [matchesOnly, setMatchesOnly] = useState(false);
+  const [order, setOrder] = useState<BagOrder>("name");
   const [selectedUid, setSelectedUid] = useState<string>();
   const [filterText, setFilterText] = useState("");
   const [filterDirty, setFilterDirty] = useState(false);
@@ -75,14 +79,15 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
   const selected = state?.bag.find((item) => item.uid === selectedUid);
   const filteredBag = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
-    return (state?.bag ?? []).filter((item) => {
+    const items = (state?.bag ?? []).filter((item) => {
       // Both spellings are searchable: "Attack Speed" as displayed, "AtkSpd" as written in rules.
       const searchable = [item.name, item.type, item.itemId, ...item.lines.flatMap((line) => [line.stat, statLabel(line.stat)]), item.match?.rule, item.match?.tag]
         .filter((part): part is string => Boolean(part))
         .join(" ").toLocaleLowerCase();
       return (!matchesOnly || item.match !== null) && (!needle || searchable.includes(needle));
     });
-  }, [matchesOnly, query, state?.bag]);
+    return order === "value" ? items.sort((left, right) => (right.value?.low ?? -1) - (left.value?.low ?? -1)) : items;
+  }, [matchesOnly, order, query, state?.bag]);
 
   const invoke = async (label: string, request: () => Promise<Response>) => {
     setBusy(label);
@@ -148,7 +153,7 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
       <main class="loot-workspace">
         {actionError && <div class="notice error" role="alert"><span>{actionError}</span><button type="button" onClick={() => setActionError(undefined)} aria-label="Dismiss error">×</button></div>}
         {state?.warning && <div class="notice warning" role="status">{state.warning}</div>}
-        {surface === "bag" && <BagSurface state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
+        {surface === "bag" && <BagSurface state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} order={order} onOrder={setOrder} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
         {surface === "filters" && <FiltersSurface state={state} text={filterText} dirty={filterDirty} scroll={editorScroll} lineNumbers={lineNumbers} profileName={profileName} selected={selected} busy={busy} onText={(value) => { setFilterText(value); setFilterDirty(true); }} onScroll={setEditorScroll} onSave={() => void saveFilter()} onProfileName={setProfileName} onProfile={profile} onSelect={setSelectedUid} />}
         {surface === "history" && <HistorySurface history={history} loading={!state && !connectionError} busy={busy} onClear={() => void clearHistory()} onReload={() => void loadHistory()} />}
         {surface !== "history" && selected && <ItemInspector item={selected} onClose={() => setSelectedUid(undefined)} onFindInMarket={onFindInMarket} />}
@@ -161,14 +166,19 @@ function NavButton({ current, value, label, detail, onSelect }: { current: Surfa
   return <button class={`module-tab ${current === value ? "active" : ""}`} type="button" aria-current={current === value ? "page" : undefined} onClick={() => onSelect(value)}><span>{label}</span>{detail && <small>{detail}</small>}</button>;
 }
 
-function BagSurface({ state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, onSelect, onRetry }: {
-  state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; onSelect(uid: string): void; onRetry(): void;
+function BagSurface({ state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, order, onOrder, onSelect, onRetry }: {
+  state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; order: BagOrder; onOrder(value: BagOrder): void; onSelect(uid: string): void; onRetry(): void;
 }) {
   const heading = state?.phase === "capturing" ? "Live bag" : "Bag ledger";
+  const bagTotal = (state?.bag ?? []).reduce((sum, item) => sum + (item.value?.low ?? 0), 0);
+  const prices = state?.marketPrices.generatedAt
+    ? <span class="bag-total" title={state.marketPrices.warning ?? state.marketPrices.cacheWarning ?? `${state.marketPrices.listings.toLocaleString()} ValeMarket listings, asking prices`}>· bag ≈ {shortMoney(bagTotal)} · prices {relativeTime(state.marketPrices.generatedAt)}{state.marketPrices.warning ? " (stale)" : ""}</span>
+    : undefined;
   return <>
-    <SurfaceHeader eyebrow="Inventory · passive observation" title={heading} freshness={state?.bagGeneratedAt ? `Snapshot ${relativeTime(state.bagGeneratedAt)}` : state ? state.bagCoverage : "Local collector"} live={state?.phase === "capturing"} />
+    <SurfaceHeader eyebrow="Inventory · passive observation" title={heading} freshness={state?.bagGeneratedAt ? `Snapshot ${relativeTime(state.bagGeneratedAt)}` : state ? state.bagCoverage : "Local collector"} live={state?.phase === "capturing"}>{prices}</SurfaceHeader>
     <div class="ledger-tools">
       <label class="search-field"><span class="visually-hidden">Search bag</span><span aria-hidden="true">⌕</span><input type="search" value={query} placeholder="Search item, trait, rule, or tag" onInput={(event) => onQuery(event.currentTarget.value)} />{query && <button type="button" onClick={() => onQuery("")} aria-label="Clear bag search">×</button>}</label>
+      <div class="segmented order" aria-label="Bag order"><button class={order === "name" ? "selected" : ""} type="button" aria-pressed={order === "name"} onClick={() => onOrder("name")}>Name</button><button class={order === "value" ? "selected" : ""} type="button" aria-pressed={order === "value"} onClick={() => onOrder("value")}>Value</button></div>
       <div class="segmented" aria-label="Bag scope"><button class={!matchesOnly ? "selected" : ""} type="button" aria-pressed={!matchesOnly} onClick={() => onMatchesOnly(false)}>All <span>{state?.bag.length ?? 0}</span></button><button class={matchesOnly ? "selected" : ""} type="button" aria-pressed={matchesOnly} onClick={() => onMatchesOnly(true)}>Matches <span>{state?.bag.filter((item) => item.match).length ?? 0}</span></button></div>
       <span class="coverage">{state?.bagCoverage ?? "Waiting for a local snapshot"}</span>
     </div>
@@ -186,11 +196,12 @@ function BagSurface({ state, error, query, matchesOnly, items, selected, busy, o
   </>;
 }
 
-function SurfaceHeader({ eyebrow, title, freshness, live = false, children }: { eyebrow: string; title: string; freshness: string; live?: boolean; children?: JSX.Element }) {
+function SurfaceHeader({ eyebrow, title, freshness, live = false, children }: { eyebrow: string; title: string; freshness: string; live?: boolean; children?: JSX.Element | undefined }) {
   return <header class="surface-header"><div><div class="eyebrow">{eyebrow}</div><h1>{title}</h1></div><div class="header-detail"><span class={`capture-pulse ${live ? "live" : ""}`} aria-hidden="true" /><span>{freshness}</span>{children}</div></header>;
 }
 
 function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: boolean; onSelect(uid: string): void }) {
+  const approx = item.value !== undefined && approximate(item.value);
   const bestLines = item.lines.filter((line) => line.over || line.rollPct >= 90).slice(0, 2);
   const style = item.match ? { "--rule-color": item.match.color } as JSX.CSSProperties : undefined;
   const treatment = item.match ? `matched highlight-${item.match.highlight} background-${item.match.background} ${item.match.border ? "" : "border-off"}` : "";
@@ -198,16 +209,20 @@ function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: b
     <span class="item-cell">{item.icon ? <img class="item-icon" src={iconUrl(item.icon)} alt="" loading="lazy" decoding="async" /> : <span class={`item-sigil ${item.kind}`}>{item.kind.charAt(0).toUpperCase()}</span>}<span><strong>{item.name || item.itemId}</strong><small>{item.type} · {item.refine > 0 ? `+${item.refine}` : item.itemId}{item.count > 1 ? ` · ×${item.count}` : ""}{item.favorite ? " · favorited" : ""}</small></span></span>
     <span class="roll-summary">{bestLines.length ? bestLines.map((line) => <span key={line.stat} title={line.stat}>{statLabel(line.stat)} <b>{formatPct(line.rollPct)}</b></span>) : <em>{item.kind === "card" ? `${item.count} owned` : item.hasChaos ? "Chaos item" : "No high roll"}</em>}</span>
     <span class="rule-cell">{item.match ? <><i /><span>{item.match.tag || item.match.rule}</span></> : <em>—</em>}</span>
-    <span class="roll-count">{item.topRolls ? `${item.topRolls} top` : ""}{item.highRolls ? `${item.highRolls} high` : ""}<small>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</small></span>
+    <span class="roll-count">{item.topRolls ? `${item.topRolls} top` : ""}{item.highRolls ? `${item.highRolls} high` : ""}{item.value ? <small class={`value ${approx ? "approx" : ""}`} title={valueDetail(item.value, item.count)}>{approx ? "~" : ""}{shortMoney(item.value.low)}</small> : <small>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</small>}</span>
   </button>;
 }
 
 function ItemInspector({ item, onClose, onFindInMarket }: { item: LootItemView; onClose(): void; onFindInMarket(item: LootItemView): void }) {
+  const approx = item.value !== undefined && approximate(item.value);
   return <aside class="inspector" aria-label="Selected item" style={item.match ? { "--rule-color": item.match.color } as JSX.CSSProperties : undefined}>
     <header>{item.icon && <img class="inspector-icon" src={iconUrl(item.icon)} alt="" />}<div><div class="eyebrow">{item.kind} · {item.itemId}</div><h2>{item.name || item.itemId}</h2><p>{item.type}{item.refine > 0 ? ` · Refine +${item.refine}` : ""}</p></div><button type="button" class="close-button" onClick={onClose} aria-label="Close item inspector">×</button></header>
     <section class="inspector-summary"><div><small>Average roll</small><strong>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</strong></div><div><small>High rolls</small><strong>{item.highRolls}</strong></div><div><small>Chaos</small><strong>{item.hasChaos ? "Yes" : "No"}</strong></div></section>
     <section class="inspector-section"><div class="section-kicker">Observed stats</div><dl class="stat-list">{item.lines.length ? item.lines.map((line) => <div key={`${line.stat}:${line.printed ?? ""}`} class={line.over ? "over" : ""}><dt title={`${line.stat} in rules`}>{statLabel(line.stat)}{line.isChaos && <span> Chaos</span>}</dt><dd>{line.printed === null ? "—" : line.printed}<b>{formatPct(line.rollPct)}</b></dd></div>) : <p class="muted">No stat lines were decoded for this item.</p>}</dl></section>
     <section class="inspector-section"><div class="section-kicker">Filter result</div>{item.match ? <div class="match-detail"><span class="match-swatch" /><strong>{item.match.rule}</strong><p><b>{item.match.tag || "Untagged"}</b> · {item.match.highlight} {item.match.background}{item.match.border ? " border" : ""}{item.match.sound ? ` · ${item.match.sound} sound` : " · no sound"}</p></div> : <p class="muted">This item does not match an active rule.</p>}</section>
+    <section class="inspector-section"><div class="section-kicker">Market value</div>{item.value
+      ? <div class="market-value"><strong class={approx ? "approx" : ""}>{approx ? "~" : ""}{valueRange(item.value)}</strong><p>{valueDetail(item.value, item.count)}</p></div>
+      : <p class="muted">Nothing of this item is listed on ValeMarket right now.</p>}</section>
     <section class="inspector-section item-meta"><div><span>UID</span><code>{item.uid}</code></div><div><span>Favorite</span><b>{item.favorite ? "Yes" : "No"}</b></div></section>
     <section class="inspector-section inspector-actions"><button class="quiet-action" type="button" onClick={() => onFindInMarket(item)}>Find in market</button><small>Opens ValeMarket on this item, filtered to rolls at least as good as yours.</small></section>
   </aside>;
@@ -260,6 +275,19 @@ function Empty({ title, detail, action, onAction }: { title: string; detail: str
 
 function iconUrl(name: string): string { return `${apiRoot}/v1/icons/${encodeURIComponent(name)}`; }
 function formatPct(value: number): string { return `${Math.round(value)}%`; }
+function valueRange(value: MarketValueView): string {
+  return value.listings >= 3 && value.median > value.low ? `${exactMoney(value.low)} – ${exactMoney(value.median)}` : exactMoney(value.low);
+}
+function approximate(value: MarketValueView): boolean { return value.tier === "same-lines" || value.tier === "other-lines"; }
+function valueDetail(value: MarketValueView, count: number): string {
+  const listings = `${value.listings} listing${value.listings === 1 ? "" : "s"}`;
+  switch (value.tier) {
+    case "comparable": return `Asks for rolls at least as good as yours, cheapest to median · ${listings}`;
+    case "same-lines": return `Asks with the same stat lines, values differ · ${listings}`;
+    case "other-lines": return `Asks for this item, stat lines differ · ${listings}`;
+    case "unit": return `P25 to median unit ask × ${count} · ${listings}`;
+  }
+}
 function relativeTime(value: string): string {
   const seconds = Math.max(0, Math.round((Date.now() - Date.parse(value)) / 1_000));
   if (seconds < 10) return "just now";

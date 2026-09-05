@@ -1,0 +1,185 @@
+import type { MarketListing } from "../core/market-value.ts";
+import type { MarketPricesView } from "../shared/contracts.ts";
+import { MARKET_API_URL } from "./market-contracts.ts";
+import { errorLogFields, type AppLogger } from "./market-logger.ts";
+import { errorMessage, isRecord, loadJson, writeJsonAtomic } from "./market-storage.ts";
+
+const REFRESH_INTERVAL_MS = 15 * 60 * 1_000;
+const RETRY_INTERVAL_MS = 2 * 60 * 1_000;
+
+interface SnapshotState {
+  fetchedAt: number;
+  generatedAt: string;
+  body: Record<string, unknown>;
+  listings: MarketListing[];
+}
+
+export interface MarketSnapshotOptions {
+  cachePath: string;
+  endpoint?: string;
+  fetch?: (url: string, init?: RequestInit) => Promise<Response>;
+  now?: () => Date;
+  logger?: AppLogger;
+}
+
+// The one place the collector and the Market frame get the public ValeMarket snapshot from.
+// Serves the cached body while it is under 15 minutes old, refreshes otherwise with concurrent
+// callers sharing a single download, and keeps stale data across failures so bag pricing
+// degrades to old numbers rather than none. The cache stores the API body untouched.
+export class MarketSnapshot {
+  private byItem = new Map<string, MarketListing[]>();
+  private refreshTimer: ReturnType<typeof setTimeout> | undefined;
+  private inflight: Promise<boolean> | undefined;
+  private nextRetryAt = 0;
+  private readonly lifetime = new AbortController();
+  private fetchWarning: string | undefined;
+  private cacheWarning: string | undefined;
+  private readonly endpoint: string;
+  private readonly fetch: NonNullable<MarketSnapshotOptions["fetch"]>;
+  private readonly now: () => Date;
+
+  private constructor(private readonly options: MarketSnapshotOptions, private state: SnapshotState | null) {
+    this.endpoint = (options.endpoint ?? MARKET_API_URL).replace(/\/$/, "");
+    this.fetch = options.fetch ?? globalThis.fetch;
+    this.now = options.now ?? (() => new Date());
+    this.index();
+  }
+
+  static async load(options: MarketSnapshotOptions): Promise<MarketSnapshot> {
+    const now = (options.now ?? (() => new Date()))().getTime();
+    const state = await loadJson<SnapshotState | null>(options.cachePath, () => null, (value) => parseCache(value, now), (error) => {
+      options.logger?.warn("state.load.invalid", { state: "market-snapshot", ...errorLogFields(error) });
+    });
+    return new MarketSnapshot(options, state);
+  }
+
+  listingsFor(itemId: string): MarketListing[] {
+    return this.byItem.get(itemId) ?? [];
+  }
+
+  view(): MarketPricesView {
+    return {
+      generatedAt: this.state?.generatedAt ?? null,
+      listings: this.state?.listings.length ?? 0,
+      ...(this.fetchWarning === undefined ? {} : { warning: this.fetchWarning }),
+      ...(this.cacheWarning === undefined ? {} : { cacheWarning: this.cacheWarning }),
+    };
+  }
+
+  // The API body as last downloaded, refreshed first when it is due. Null only when nothing
+  // has ever been fetched and the download fails.
+  async body(): Promise<Record<string, unknown> | null> {
+    await this.ensureFresh();
+    return this.state?.body ?? null;
+  }
+
+  async ensureFresh(): Promise<boolean> {
+    if (this.dueIn() > 0) return true;
+    return this.refresh();
+  }
+
+  refresh(): Promise<boolean> {
+    // Cache reads and the background timer share the same failure cooldown.
+    if (this.now().getTime() < this.nextRetryAt) return Promise.resolve(false);
+    this.inflight ??= this.download().finally(() => { this.inflight = undefined; });
+    return this.inflight;
+  }
+
+  start(): void {
+    this.schedule(this.dueIn());
+  }
+
+  stop(): void {
+    clearTimeout(this.refreshTimer);
+    this.lifetime.abort();
+  }
+
+  private dueIn(): number {
+    return this.state ? Math.max(0, REFRESH_INTERVAL_MS - (this.now().getTime() - this.state.fetchedAt)) : 0;
+  }
+
+  private async download(): Promise<boolean> {
+    let next: SnapshotState;
+    try {
+      const response = await this.fetch(`${this.endpoint}/v2/markets/global/snapshot`, {
+        redirect: "error",
+        signal: AbortSignal.any([this.lifetime.signal, AbortSignal.timeout(20_000)]),
+      });
+      if (!response.ok) throw new Error(`market snapshot returned HTTP ${response.status}`);
+      const fetchedAt = this.now().getTime();
+      const parsed = parseBody(await response.json(), fetchedAt);
+      if (!parsed) throw new Error("market snapshot returned an invalid response");
+      next = { fetchedAt, ...parsed };
+    } catch (error) {
+      this.nextRetryAt = this.now().getTime() + RETRY_INTERVAL_MS;
+      this.fetchWarning = `Market prices ${this.state ? "may be stale" : "are unavailable"}: ${errorMessage(error)}`;
+      this.options.logger?.warn("market_snapshot.refresh_failed", errorLogFields(error));
+      return false;
+    }
+    this.state = next;
+    this.nextRetryAt = 0;
+    this.fetchWarning = undefined;
+    this.index();
+    this.options.logger?.info("market_snapshot.refreshed", { generatedAt: next.generatedAt, listings: next.listings.length });
+    try {
+      await writeJsonAtomic(this.options.cachePath, { fetchedAt: new Date(next.fetchedAt).toISOString(), body: next.body });
+      this.cacheWarning = undefined;
+    } catch (error) {
+      this.cacheWarning = `Market snapshot could not be cached: ${errorMessage(error)}`;
+      this.options.logger?.warn("market_snapshot.cache_failed", errorLogFields(error));
+    }
+    return true;
+  }
+
+  private schedule(delayMs: number): void {
+    if (this.lifetime.signal.aborted) return;
+    this.refreshTimer = setTimeout(() => {
+      void this.ensureFresh().then((ok) => this.schedule(ok ? Math.max(this.dueIn(), RETRY_INTERVAL_MS) : RETRY_INTERVAL_MS));
+    }, delayMs);
+  }
+
+  private index(): void {
+    this.byItem = new Map();
+    for (const listing of this.state?.listings ?? []) {
+      const group = this.byItem.get(listing.itemId) ?? [];
+      group.push(listing);
+      this.byItem.set(listing.itemId, group);
+    }
+  }
+}
+
+function parseCache(value: unknown, now: number): SnapshotState | null {
+  if (!isRecord(value) || typeof value.fetchedAt !== "string") return null;
+  const fetchedAt = Date.parse(value.fetchedAt);
+  if (!Number.isFinite(fetchedAt)) return null;
+  const parsed = parseBody(value.body, now);
+  return parsed ? { fetchedAt, ...parsed } : null;
+}
+
+function parseBody(value: unknown, now: number): Omit<SnapshotState, "fetchedAt"> | null {
+  if (!isRecord(value) || typeof value.generatedAt !== "string" || !Number.isFinite(Date.parse(value.generatedAt))
+    || !Array.isArray(value.listings)) return null;
+  const listings: MarketListing[] = [];
+  for (const entry of value.listings) {
+    const listing = parseListing(entry, now);
+    if (listing) listings.push(listing);
+  }
+  return { generatedAt: value.generatedAt, body: value, listings };
+}
+
+function parseListing(value: unknown, now: number): MarketListing | null {
+  if (!isRecord(value) || typeof value.itemId !== "string" || typeof value.unitPrice !== "number" || !Array.isArray(value.stats)) return null;
+  if (typeof value.expiresAt === "string" && Date.parse(value.expiresAt) <= now) return null;
+  const stats: MarketListing["stats"] = [];
+  for (const stat of value.stats) {
+    if (isRecord(stat) && typeof stat.name === "string" && typeof stat.value === "number") stats.push({ name: stat.name, value: stat.value });
+  }
+  const enhancements = isRecord(value.enhancements) ? value.enhancements : {};
+  return {
+    itemId: value.itemId,
+    unitPrice: value.unitPrice,
+    stats,
+    refine: typeof enhancements.refine === "number" ? enhancements.refine : 0,
+    artifactSlot: typeof enhancements.artifactSlot === "number" ? enhancements.artifactSlot : null,
+  };
+}

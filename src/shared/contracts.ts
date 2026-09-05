@@ -29,6 +29,15 @@ export interface LootMatchView {
   sound: string | null;
 }
 
+export type MarketValueTier = "comparable" | "same-lines" | "other-lines" | "unit";
+
+export interface MarketValueView {
+  low: number;
+  median: number;
+  tier: MarketValueTier;
+  listings: number;
+}
+
 export interface LootItemView {
   uid: string;
   itemId: string;
@@ -45,6 +54,7 @@ export interface LootItemView {
   avgRollPct: number | null;
   lines: LootLine[];
   match: LootMatchView | null;
+  value?: MarketValueView;
 }
 
 export interface FilterErrorView {
@@ -73,6 +83,13 @@ export interface AlertHistoryView {
 }
 
 export type LinuxCaptureMode = "auto" | "libpcap" | "dumpcap";
+export interface MarketPricesView {
+  generatedAt: string | null;
+  listings: number;
+  warning?: string;
+  cacheWarning?: string;
+}
+
 export interface MarketContributorView {
   prepared: number;
   uploaded: number;
@@ -162,6 +179,7 @@ export interface DesktopState {
   partialSnapshots: number;
   duplicateSnapshots: number;
   market: MarketContributorView;
+  marketPrices: MarketPricesView;
   gold: GoldAnalyticsView;
   bag: LootItemView[];
   bagGeneratedAt: string | null;

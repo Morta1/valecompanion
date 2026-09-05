@@ -11,7 +11,9 @@ import { parseLootFilter } from "../core/filter/loot-dsl.ts";
 import { consumeFishNetPacket } from "../core/packet-consumer.ts";
 import { FishNetCaptureDecoder } from "./fishnet-capture-decoder.ts";
 import { MarketContributor } from "./market-contributor.ts";
+import { MarketSnapshot } from "./market-snapshot.ts";
 import { loadJson, writeJsonAtomic } from "./market-storage.ts";
+import { priceBag } from "../core/market-value.ts";
 import {
   automaticCaptureRouteChanged,
   captureBackendName,
@@ -157,6 +159,8 @@ const marketContributor = await MarketContributor.load({
   collectorVersion: applicationVersion,
 });
 marketContributor.setEnabled(persisted.contributionEnabled);
+const marketSnapshot = await MarketSnapshot.load({ cachePath: path.join(dataDirectory, "market-snapshot.json") });
+marketSnapshot.start();
 
 
 let captureStatus: DesktopState["capture"] = {
@@ -574,8 +578,9 @@ function currentState(): DesktopState {
     partialSnapshots,
     duplicateSnapshots,
     market: marketContributor.snapshot(),
+    marketPrices: marketSnapshot.view(),
     gold: goldSession.snapshot(),
-    bag: session.bag(),
+    bag: priceBag(session.bag(), (itemId) => marketSnapshot.listingsFor(itemId)),
     bagGeneratedAt,
     bagCoverage,
     filter: {
@@ -663,6 +668,10 @@ async function routeRequest(request: Request): Promise<Response> {
 
 
   if (method === "GET" && route === "/v1/state") return Response.json(currentState());
+  if (method === "GET" && route === "/v1/market/snapshot") {
+    const body = await marketSnapshot.body();
+    return body ? Response.json(body) : errorResponse(marketSnapshot.view().warning ?? "market snapshot unavailable", 503);
+  }
   if (method === "POST" && route === "/v1/gold/reset") {
     goldSession.reset();
     scheduleGoldSave();
@@ -893,6 +902,7 @@ async function shutdown(): Promise<void> {
     routeMonitor = undefined;
   }
   await capture?.stop().catch((error) => diagnostics.warn("Packet capture did not stop cleanly during shutdown", { error: formatError(error) }));
+  marketSnapshot.stop();
   await marketContributor.shutdown().catch((error) => diagnostics.warn("Market contributor did not stop cleanly during shutdown", { error: formatError(error) }));
   try { await flushGoldSave(true); }
   catch (error) {
