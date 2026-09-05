@@ -1,14 +1,22 @@
+import { applySnapshotDelta, snapshotRevision, validateSyncListings } from "./market-sync.ts";
 import type { MarketListing } from "../core/market-value.ts";
 import type { MarketPricesView } from "../shared/contracts.ts";
 import { MARKET_API_URL } from "./market-contracts.ts";
 import { errorLogFields, type AppLogger } from "./market-logger.ts";
 import { errorMessage, isRecord, loadJson, writeJsonAtomic } from "./market-storage.ts";
 
-const REFRESH_INTERVAL_MS = 15 * 60 * 1_000;
+const REFRESH_INTERVAL_MS = 10 * 60 * 1_000;
 const RETRY_INTERVAL_MS = 2 * 60 * 1_000;
+
+// Allow publication to finish, then spread clients across a 30-second window.
+export function nextMarketCheckAt(fetchedAt: number, staggerMs = 0): number {
+  const offset = 60_000 + staggerMs;
+  return (Math.floor((fetchedAt - offset) / REFRESH_INTERVAL_MS) + 1) * REFRESH_INTERVAL_MS + offset;
+}
 
 interface SnapshotState {
   fetchedAt: number;
+  etag?: string;
   generatedAt: string;
   body: Record<string, unknown>;
   listings: MarketListing[];
@@ -20,10 +28,11 @@ export interface MarketSnapshotOptions {
   fetch?: (url: string, init?: RequestInit) => Promise<Response>;
   now?: () => Date;
   logger?: AppLogger;
+  staggerMs?: number;
 }
 
 // The one place the collector and the Market frame get the public ValeMarket snapshot from.
-// Serves the cached body while it is under 15 minutes old, refreshes otherwise with concurrent
+// Checks shortly after ten-minute publication boundaries, with concurrent
 // callers sharing a single download, and keeps stale data across failures so bag pricing
 // degrades to old numbers rather than none. The cache stores the API body untouched.
 export class MarketSnapshot {
@@ -31,9 +40,11 @@ export class MarketSnapshot {
   private refreshTimer: ReturnType<typeof setTimeout> | undefined;
   private inflight: Promise<boolean> | undefined;
   private nextRetryAt = 0;
+  private fullResync = false;
   private readonly lifetime = new AbortController();
   private fetchWarning: string | undefined;
   private cacheWarning: string | undefined;
+  private readonly staggerMs: number;
   private readonly endpoint: string;
   private readonly fetch: NonNullable<MarketSnapshotOptions["fetch"]>;
   private readonly now: () => Date;
@@ -42,6 +53,7 @@ export class MarketSnapshot {
     this.endpoint = (options.endpoint ?? MARKET_API_URL).replace(/\/$/, "");
     this.fetch = options.fetch ?? globalThis.fetch;
     this.now = options.now ?? (() => new Date());
+    this.staggerMs = options.staggerMs ?? Math.floor(Math.random() * 30_000);
     this.index();
   }
 
@@ -68,8 +80,8 @@ export class MarketSnapshot {
 
   // The API body as last downloaded, refreshed first when it is due. Null only when nothing
   // has ever been fetched and the download fails.
-  async body(): Promise<Record<string, unknown> | null> {
-    await this.ensureFresh();
+  async body(refresh = false): Promise<Record<string, unknown> | null> {
+    await (refresh ? this.refresh() : this.ensureFresh());
     return this.state?.body ?? null;
   }
 
@@ -95,34 +107,73 @@ export class MarketSnapshot {
   }
 
   private dueIn(): number {
-    return this.state ? Math.max(0, REFRESH_INTERVAL_MS - (this.now().getTime() - this.state.fetchedAt)) : 0;
+    return this.state ? Math.max(0, nextMarketCheckAt(this.state.fetchedAt, this.staggerMs) - this.now().getTime()) : 0;
   }
 
   private async download(): Promise<boolean> {
     let next: SnapshotState;
+    let mode = "full";
+    const revision = !this.fullResync && this.state ? snapshotRevision(this.state.body) : undefined;
+    const etag = !this.fullResync ? this.state?.etag : undefined;
     try {
-      const response = await this.fetch(`${this.endpoint}/v2/markets/global/snapshot`, {
-        redirect: "error",
+      const route = revision ? `changes?since=${encodeURIComponent(revision)}` : "snapshot";
+      const response = await this.fetch(`${this.endpoint}/v2/markets/global/${route}`, {
+        headers: { "Cache-Control": "no-cache", ...(etag ? { "If-None-Match": etag } : {}) },
+        // Bun treats 304 as a redirect with "error". Manual still refuses to
+        // follow redirects, while allowing unchanged responses through.
+        redirect: "manual",
         signal: AbortSignal.any([this.lifetime.signal, AbortSignal.timeout(20_000)]),
       });
-      if (!response.ok) throw new Error(`market snapshot returned HTTP ${response.status}`);
+      if (!response.ok && response.status !== 304) {
+        const retry = response.headers.get("retry-after");
+        const seconds = retry !== null && /^\d+$/.test(retry) ? Number(retry) * 1_000 : Date.parse(retry ?? "") - this.now().getTime();
+        if (Number.isFinite(seconds)) this.nextRetryAt = this.now().getTime() + Math.max(0, seconds);
+        if (revision && (response.status === 400 || response.status === 404 || response.status === 410)) this.fullResync = true;
+        throw new Error(`market snapshot returned HTTP ${response.status}`);
+      }
       const fetchedAt = this.now().getTime();
-      const parsed = parseBody(await response.json(), fetchedAt);
-      if (!parsed) throw new Error("market snapshot returned an invalid response");
-      next = { fetchedAt, ...parsed };
+      let body: unknown;
+      if (response.status === 304) {
+        if (!this.state || (!revision && !etag)) throw new Error("unexpected unchanged snapshot response");
+        body = this.state.body;
+        mode = "unchanged";
+      } else {
+        try {
+          const payload: unknown = await response.json();
+          if (isRecord(payload) && "deltas" in payload) {
+            if (!this.state) throw new Error("delta without a cached snapshot");
+            body = applySnapshotDelta(this.state.body, payload);
+            mode = "delta";
+          } else body = payload;
+        } catch (error) {
+          if (revision) this.fullResync = true;
+          throw error;
+        }
+      }
+      let parsed: ReturnType<typeof parseBody>;
+      try {
+        parsed = parseBody(body, fetchedAt);
+        if (!parsed) throw new Error("market snapshot returned an invalid response");
+      } catch (error) {
+        if (revision) this.fullResync = true;
+        throw error;
+      }
+      const nextEtag = response.headers.get("etag") ?? (response.status === 304 ? etag : undefined);
+      next = { fetchedAt, ...parsed, ...(nextEtag ? { etag: nextEtag } : {}) };
     } catch (error) {
-      this.nextRetryAt = this.now().getTime() + RETRY_INTERVAL_MS;
+      this.nextRetryAt = Math.max(this.nextRetryAt, this.now().getTime() + RETRY_INTERVAL_MS);
       this.fetchWarning = `Market prices ${this.state ? "may be stale" : "are unavailable"}: ${errorMessage(error)}`;
       this.options.logger?.warn("market_snapshot.refresh_failed", errorLogFields(error));
       return false;
     }
     this.state = next;
     this.nextRetryAt = 0;
+    this.fullResync = false;
     this.fetchWarning = undefined;
     this.index();
-    this.options.logger?.info("market_snapshot.refreshed", { generatedAt: next.generatedAt, listings: next.listings.length });
+    this.options.logger?.info("market_snapshot.refreshed", { generatedAt: next.generatedAt, listings: next.listings.length, mode });
     try {
-      await writeJsonAtomic(this.options.cachePath, { fetchedAt: new Date(next.fetchedAt).toISOString(), body: next.body });
+      await writeJsonAtomic(this.options.cachePath, { fetchedAt: new Date(next.fetchedAt).toISOString(), body: next.body, ...(next.etag ? { etag: next.etag } : {}) });
       this.cacheWarning = undefined;
     } catch (error) {
       this.cacheWarning = `Market snapshot could not be cached: ${errorMessage(error)}`;
@@ -153,12 +204,16 @@ function parseCache(value: unknown, now: number): SnapshotState | null {
   const fetchedAt = Date.parse(value.fetchedAt);
   if (!Number.isFinite(fetchedAt)) return null;
   const parsed = parseBody(value.body, now);
-  return parsed ? { fetchedAt, ...parsed } : null;
+  return parsed ? { fetchedAt, ...parsed, ...(typeof value.etag === "string" ? { etag: value.etag } : {}) } : null;
 }
 
 function parseBody(value: unknown, now: number): Omit<SnapshotState, "fetchedAt"> | null {
-  if (!isRecord(value) || typeof value.generatedAt !== "string" || !Number.isFinite(Date.parse(value.generatedAt))
+  if (!isRecord(value) || value.marketId !== "global" || typeof value.generatedAt !== "string" || !Number.isFinite(Date.parse(value.generatedAt))
     || !Array.isArray(value.listings)) return null;
+  if (value.revision !== undefined) {
+    if (!snapshotRevision(value)) return null;
+    validateSyncListings(value.listings);
+  }
   const listings: MarketListing[] = [];
   for (const entry of value.listings) {
     const listing = parseListing(entry, now);
