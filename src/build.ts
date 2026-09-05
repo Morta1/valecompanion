@@ -23,7 +23,7 @@ await Promise.all([
 await Promise.all([
   bundle(path.join(root, "src", "frontend", "index.tsx"), rendererOutput, "browser", "esm", "index.[ext]"),
   bundle(path.join(root, "src", "backend", "index.ts"), collectorOutput, "bun", "esm", "index.[ext]"),
-  bundle(path.join(root, "src", "electron", "main.ts"), electronOutput, "node", "esm", "main.[ext]", ["electron"]),
+  bundle(path.join(root, "src", "electron", "main.ts"), electronOutput, "node", "esm", "main.[ext]", ["electron", "electron-updater"]),
   bundle(path.join(root, "src", "electron", "preload.ts"), electronOutput, "node", "cjs", "preload.cjs", ["electron"]),
 ]);
 

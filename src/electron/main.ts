@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import { app, BrowserWindow, dialog } from "electron";
 import { parseCollectorMessage } from "../shared/collector-protocol.ts";
 import { createDiagnosticLogger, formatError } from "../shared/diagnostics.ts";
+import { setupUpdates } from "./updates.ts";
+import type { UpdateController } from "./update-controller.ts";
 
 const COLLECTOR_START_TIMEOUT_MS = 20_000;
 const packagedSmokeTest = process.env.VALECOMPANION_SMOKE_TEST === "1";
@@ -16,6 +18,8 @@ let quitAfterCollectorStops = false;
 let collectorStopping = false;
 let collectorReady = false;
 let diagnostics = createDiagnosticLogger("desktop");
+let updates: UpdateController | undefined;
+let applicationUrl = "";
 
 app.setName("Vale Companion");
 if (!app.requestSingleInstanceLock()) app.quit();
@@ -33,6 +37,18 @@ else {
     try {
       const port = await startCollector();
       createMainWindow(port);
+      updates = setupUpdates({
+        data: runtimePaths().data,
+        window: () => mainWindow,
+        smokeTest: packagedSmokeTest,
+        prepareInstall: () => stopCollector(true),
+        async recover() {
+          if (collector) await stopCollector();
+          const port = await startCollector();
+          applicationUrl = `http://127.0.0.1:${port}/`;
+          await mainWindow?.loadURL(applicationUrl);
+        },
+      });
     } catch (error) {
       diagnostics.error("Desktop startup failed", { error: formatError(error) });
       await stopCollector();
@@ -52,6 +68,7 @@ app.on("window-all-closed", () => {
   app.quit();
 });
 app.on("before-quit", (event) => {
+  updates?.stop();
   diagnostics.debug("Before-quit received", { collectorRunning: Boolean(collector), collectorStopping, quitAfterCollectorStops });
   if (quitAfterCollectorStops || !collector) return;
   event.preventDefault();
@@ -151,7 +168,7 @@ function createMainWindow(port: number): void {
       sandbox: true,
     },
   });
-  const applicationUrl = `http://127.0.0.1:${port}/`;
+  applicationUrl = `http://127.0.0.1:${port}/`;
   diagnostics.info("Desktop window created", { port, url: applicationUrl });
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     diagnostics.warn("Blocked renderer window request", { url });
@@ -196,6 +213,14 @@ async function finishPackagedSmoke(applicationUrl: string, failure?: unknown): P
       if (!response.ok) throw new Error(`Collector state request failed with HTTP ${response.status}`);
       const rendererReady = await mainWindow?.webContents.executeJavaScript("document.readyState === 'complete'");
       if (!rendererReady) throw new Error("Renderer document did not reach the complete state");
+      const updatesReady = await mainWindow?.webContents.executeJavaScript(`(async () => {
+        const state = await window.valeCompanion?.updates.getState();
+        if (state?.phase !== 'disabled') return false;
+        document.querySelector('button[aria-label="Settings"]')?.click();
+        await new Promise(resolve => setTimeout(resolve, 100));
+        return [...document.querySelectorAll('.settings-drawer button')].some(button => button.textContent === 'Check for updates' && button.disabled);
+      })()`);
+      if (!updatesReady) throw new Error("Packaged update bridge or settings UI failed its smoke test");
       diagnostics.info("Packaged smoke test passed", { url: applicationUrl });
     } catch (cause) {
       error = cause;
@@ -208,22 +233,27 @@ async function finishPackagedSmoke(applicationUrl: string, failure?: unknown): P
   app.quit();
 }
 
-async function stopCollector(): Promise<void> {
+async function stopCollector(requireCleanExit = false): Promise<void> {
   const child = collector;
   if (!child) return;
   collectorStopping = true;
   diagnostics.info("Stopping collector", { pid: child.pid });
   child.stdin.end();
-  await new Promise<void>((resolve) => {
+  await new Promise<void>((resolve, reject) => {
     const timeout = setTimeout(() => {
+      if (requireCleanExit) {
+        reject(new Error("The capture collector did not finish saving. Update cancelled; please retry after restarting Vale Companion."));
+        return;
+      }
       diagnostics.warn("Collector did not stop within two seconds; killing process", { pid: child.pid });
       child.kill();
       resolve();
-    }, 2_000);
-    child.once("exit", () => {
+    }, requireCleanExit ? 15_000 : 2_000);
+    child.once("exit", (code) => {
       clearTimeout(timeout);
       diagnostics.debug("Collector acknowledged shutdown", { pid: child.pid });
-      resolve();
+      if (requireCleanExit && code !== 0) reject(new Error("The collector did not shut down cleanly. Update cancelled."));
+      else resolve();
     });
   });
 }

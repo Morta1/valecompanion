@@ -420,6 +420,15 @@ h1, h2, h3 { font-family: var(--ui); font-weight: 600; }
   .gold-history { width: calc(100% - 36px); margin-bottom: 18px; }
 }
 
+.update-notice { position: fixed; bottom: 18px; right: 20px; z-index: 40; max-width: calc(100vw - 100px); display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 14px 18px; background: #191f25; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 30px #0005; font-size: 13px; }
+.update-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+.update-actions button, .update-notice button { padding: 7px 10px; border: 1px solid var(--line); border-radius: 5px; background: #252d34; color: inherit; cursor: pointer; }
+.update-actions button:disabled { opacity: .5; cursor: default; }
+.update-progress { width: 100%; accent-color: #35e87a; }
+.update-notes { margin-top: 14px; font-size: 12px; }
+.update-notes summary { cursor: pointer; }
+.update-notes pre { white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; line-height: 1.6; max-height: 260px; overflow: auto; }
+
 @media (max-width: 620px) {
   .suite-shell { grid-template-columns: 58px minmax(0, 1fr); }
   .suite-dock { padding-right: 5px; padding-left: 5px; }
@@ -433,4 +442,3 @@ h1, h2, h3 { font-family: var(--ui); font-weight: 600; }
   .gold-session-state { display: none !important; }
   .gold-history { width: calc(100% - 24px); margin-bottom: 12px; }
 }
-

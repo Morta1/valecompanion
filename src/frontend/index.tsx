@@ -11,10 +11,12 @@ import { LootWorkspace } from "./loot-workspace.tsx";
 import { GoldWorkspace } from "./gold-workspace.tsx";
 import { MarketWorkspace } from "./market-workspace.tsx";
 import { companionModules, isModuleId, type ModuleId } from "./modules.ts";
+import { UpdateNotice, UpdateSettings, useUpdates, type UpdatesModel } from "./updates.tsx";
 
 const apiRoot = window.location.origin;
 
 function App() {
+  const updates = useUpdates();
   const [activeModule, setActiveModule] = useState<ModuleId>(() => {
     const stored = window.localStorage.getItem("valecompanion.active-module");
     return stored && isModuleId(stored) ? stored : "loot";
@@ -170,12 +172,14 @@ function App() {
 
       {switcherOpen && <div class="overlay-scrim" onMouseDown={() => setSwitcherOpen(false)}><section class="module-switcher" role="dialog" aria-modal="true" aria-labelledby="switcher-title" onMouseDown={(event) => event.stopPropagation()}><header><div><div class="eyebrow">Vale Companion</div><h2 id="switcher-title">Switch module</h2></div><button type="button" onClick={() => setSwitcherOpen(false)} aria-label="Close module switcher"><X size={17} /></button></header><div>{companionModules.map((module) => { const Icon = module.id === "loot" ? Coins : module.id === "market" ? Store : ChartNoAxesCombined; return <button class={activeModule === module.id ? "active" : ""} type="button" onClick={() => activateModule(module.id)}><Icon size={19} /><span><strong>{module.name}</strong><small>{module.description}</small></span><kbd>Ctrl {module.shortcut}</kbd></button>; })}</div></section></div>}
 
-      {settingsOpen && <GlobalSettings state={state} devices={devices} busy={settingsBusy} error={settingsError} onClose={() => setSettingsOpen(false)} onUpdate={updateSettings} onRestart={restartCapture} />}
+      {!settingsOpen && <UpdateNotice updates={updates} onDetails={() => setSettingsOpen(true)} />}
+      {settingsOpen && <GlobalSettings updates={updates} state={state} devices={devices} busy={settingsBusy} error={settingsError} onClose={() => setSettingsOpen(false)} onUpdate={updateSettings} onRestart={restartCapture} />}
     </div>
   );
 }
 
-function GlobalSettings({ state, devices, busy, error, onClose, onUpdate, onRestart }: {
+function GlobalSettings({ updates, state, devices, busy, error, onClose, onUpdate, onRestart }: {
+  updates: UpdatesModel;
   state: DesktopState | undefined;
   devices: CaptureDevice[];
   busy: boolean;
@@ -188,6 +192,7 @@ function GlobalSettings({ state, devices, busy, error, onClose, onUpdate, onRest
   return <aside class="settings-drawer" aria-label="Settings">
     <header><div><div class="eyebrow">Vale Companion</div><h2>Settings</h2></div><button type="button" onClick={onClose} aria-label="Close settings"><X size={17} /></button></header>
     <div class="settings-scroll">
+      <UpdateSettings updates={updates} />
       {error && <div class="settings-error" role="alert">{error}</div>}
       <section><div class="settings-heading"><span>Capture</span><button type="button" disabled={!state || busy} onClick={onRestart}>{busy ? "Working…" : "Restart"}</button></div>
         <label class="switch-row"><span><strong>Passive capture</strong><small>Observe local Spirit Vale traffic for enabled modules.</small></span><input type="checkbox" role="switch" checked={state?.enabled ?? false} disabled={!state || busy} onChange={(event) => onUpdate({ enabled: event.currentTarget.checked })} /></label>

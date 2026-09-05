@@ -448,7 +448,8 @@ class DumpcapSession implements CaptureSession {
     diagnostics.info("Starting dumpcap helper", { executable, device, filter });
     const child = spawn(
       executable,
-      ["-q", "-F", "pcap", "-i", device.name, "-f", filter, "-w", "-"],
+      // -P also works with Wireshark 3.x (Ubuntu 22.04); -F was added later.
+      ["-q", "-P", "-i", device.name, "-f", filter, "-w", "-"],
       {
         stdio: ["ignore", "pipe", "pipe"],
         windowsHide: true,

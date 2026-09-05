@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { parseCollectorMessage, type CollectorMessage } from "../src/shared/collector-protocol.ts";
@@ -52,8 +52,31 @@ test("collector starts when the legacy fixed port is occupied", async () => {
     expect(missingSession.status).toBe(404);
   } finally {
     collector.stdin.end();
-    await collector.exited;
+    expect(await collector.exited).toBe(0);
     blocker.stop(true);
+    rmSync(dataDirectory, { recursive: true, force: true });
+  }
+}, 10_000);
+
+test("collector reports a failed final save through its exit code", async () => {
+  const dataDirectory = mkdtempSync(path.join(tmpdir(), "valecompanion-save-failure-"));
+  writeFileSync(path.join(dataDirectory, "settings.json"), JSON.stringify({ enabled: false, contributionEnabled: false }));
+  // A directory at the destination makes atomic replacement fail on both platforms.
+  mkdirSync(path.join(dataDirectory, "gold-sessions.json"));
+  const collector = Bun.spawn([process.execPath, "src/backend/index.ts"], {
+    cwd: root,
+    env: { ...process.env, VALECOMPANION_DATA_DIR: dataDirectory, VALECOMPANION_APP_ROOT: root, VALECOMPANION_LOG_FILE: path.join(dataDirectory, "collector.log") },
+    stdin: "pipe", stdout: "pipe", stderr: "ignore",
+  });
+  const timeout = setTimeout(() => collector.kill(), 8_000);
+  try {
+    expect((await readCollectorMessage(collector.stdout))?.type).toBe("ready");
+    collector.stdin.end();
+    expect(await collector.exited).toBe(1);
+  } finally {
+    clearTimeout(timeout);
+    collector.kill();
+    await collector.exited;
     rmSync(dataDirectory, { recursive: true, force: true });
   }
 }, 10_000);

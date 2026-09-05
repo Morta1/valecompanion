@@ -195,23 +195,26 @@ function scheduleGoldSave(): void {
   }, 250);
 }
 
+let lastGoldSaveError: unknown;
 function queueGoldSave(): void {
   const value = goldSession.persisted();
   goldSaveChain = goldSaveChain
-    .then(() => writeJsonAtomic(goldStatePath, value))
+    .then(async () => { await writeJsonAtomic(goldStatePath, value); lastGoldSaveError = undefined; })
     .catch((error) => {
+      lastGoldSaveError = error;
       warning = `Gold session history could not be saved: ${formatError(error)}`;
       diagnostics.warn("Could not save gold analytics state", { error: formatError(error) });
     });
 }
 
-async function flushGoldSave(): Promise<void> {
+async function flushGoldSave(requireSuccess = false): Promise<void> {
   if (goldSaveTimer !== undefined) {
     clearTimeout(goldSaveTimer);
     goldSaveTimer = undefined;
   }
   queueGoldSave();
   await goldSaveChain;
+  if (requireSuccess && lastGoldSaveError) throw lastGoldSaveError;
 }
 const fishNetDecoder = new FishNetCaptureDecoder({
   onPacket: (packet) => {
@@ -879,13 +882,18 @@ async function shutdown(): Promise<void> {
   stopping = true;
   diagnostics.info("Collector shutdown requested", { packetsObserved, snapshotsDecoded, partialSnapshots, duplicateSnapshots });
   server.stop(true);
+  await flushGoldSave();
   if (routeMonitor !== undefined) {
     clearInterval(routeMonitor);
     routeMonitor = undefined;
   }
   await capture?.stop().catch((error) => diagnostics.warn("Packet capture did not stop cleanly during shutdown", { error: formatError(error) }));
   await marketContributor.shutdown().catch((error) => diagnostics.warn("Market contributor did not stop cleanly during shutdown", { error: formatError(error) }));
-  await flushGoldSave();
+  try { await flushGoldSave(true); }
+  catch (error) {
+    process.exitCode = 1;
+    diagnostics.error("Collector could not save before shutdown", { error: formatError(error) });
+  }
   diagnostics.info("Collector shutdown completed");
 }
 process.on("SIGINT", () => void shutdown());
@@ -902,6 +910,6 @@ process.stdout.write(serializeCollectorMessage({ type: "ready", port: listeningP
 if (!process.stdin.isTTY) {
   process.stdin.resume();
   process.stdin.once("end", () => {
-    void shutdown().then(() => { process.exitCode = 0; });
+    void shutdown().then(() => { process.exitCode ??= 0; });
   });
 }

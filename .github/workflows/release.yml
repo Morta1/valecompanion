@@ -1,0 +1,111 @@
+name: Build desktop releases
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: desktop-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-22.04]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.0
+      - name: Install Linux build and capture dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libpcap0.8 libcap2-bin libarchive-tools rpm xvfb libgtk-3-0 libnss3 libasound2
+      - run: bun install --frozen-lockfile
+      - name: Check tag matches application version
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: bun -e 'if (process.env.GITHUB_REF_NAME !== `v${(await Bun.file("package.json").json()).version}`) throw new Error("Tag must match package.json version")'
+      - run: bun run check
+      - name: Package Windows installer and portable app
+        if: runner.os == 'Windows'
+        env:
+          CSC_LINK: ${{ secrets.WINDOWS_CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.WINDOWS_CSC_KEY_PASSWORD }}
+        run: bun run package:win
+      - name: Install and smoke test Windows NSIS package
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem -LiteralPath dist -Filter '*-setup.exe' | Select-Object -First 1
+          $installProcess = Start-Process -FilePath $installer.FullName -ArgumentList '/S' -WindowStyle Hidden -Wait -PassThru
+          if ($installProcess.ExitCode -ne 0) { throw 'NSIS installation failed' }
+          bun run smoke:package:win "$env:LOCALAPPDATA\Programs\valecompanion\Vale Companion.exe"
+          if ($LASTEXITCODE -ne 0) { throw 'Installed Windows smoke test failed' }
+      - name: Package Linux
+        if: runner.os == 'Linux'
+        run: bun run package:linux
+      - name: Smoke test Linux AppImage
+        if: runner.os == 'Linux'
+        run: xvfb-run -a bun run smoke:package:linux
+      - name: Install and smoke test Linux DEB
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y ./dist/*.deb
+          getcap '/opt/Vale Companion/resources/collector/bin/bun' | grep 'cap_net_admin,cap_net_raw=eip'
+          xvfb-run -a bun run smoke:package:linux '/opt/Vale Companion/valecompanion'
+      - name: Validate release files
+        run: bun run src/verify-release.ts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ runner.os }}
+          if-no-files-found: error
+          path: |
+            dist/*.exe
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.blockmap
+            dist/latest*.yml
+
+  draft:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          merge-multiple: true
+          path: release
+      - name: Archive corresponding source
+        shell: bash
+        run: git archive --format=zip --prefix="valecompanion-${GITHUB_REF_NAME#v}/" --output="release/ValeCompanion-${GITHUB_REF_NAME#v}-source.zip" HEAD
+      - name: Create checksums
+        working-directory: release
+        run: sha256sum *.exe *.AppImage *.deb *.rpm *.blockmap *.yml *.zip > SHA256SUMS.txt
+      - name: Assemble draft after both platforms pass
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          notes="docs/release-notes/${GITHUB_REF_NAME}.md"
+          if [ ! -f "$notes" ]; then notes=docs/release-notes-template.md; fi
+          if gh release view "$GITHUB_REF_NAME" --json isDraft > release-status.json; then
+            test "$(jq -r .isDraft release-status.json)" = true || { echo 'Refusing to modify a published release'; exit 1; }
+          else
+            gh release create "$GITHUB_REF_NAME" --verify-tag --draft --title "Vale Companion $GITHUB_REF_NAME" --notes-file "$notes"
+          fi
+          gh release upload "$GITHUB_REF_NAME" release/* --clobber

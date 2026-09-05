@@ -1,0 +1,2 @@
+assets/linux/*.sh text eol=lf
+assets/linux/*.tpl text eol=lf

@@ -27,13 +27,13 @@ Requirements:
 - Spirit Vale
 
 1. Install Npcap using its default options.
-2. Download `ValeCompanion-<version>-windows-x64.exe` from the [latest release](https://github.com/bjb2/valecompanion/releases/latest).
-3. Run the downloaded executable as your normal user.
+2. Download `ValeCompanion-<version>-windows-x64-setup.exe` from the [latest release](https://github.com/bjb2/valecompanion/releases/latest).
+3. Run the installer as your normal user. It installs for your account and supports in-app updates. The executable without `-setup` is an optional portable download with manual replacement.
 4. Start Spirit Vale. Vale Companion automatically selects the active network adapter and begins observing the game connection.
 
 Npcap is not bundled. Without it, Vale Companion still opens its market browser and settings, but cannot observe inventory or contribute market listings.
 
-The initial release is unsigned, so Windows may show an unknown-publisher warning. Verify that the download came from this repository and compare its SHA-256 checksum with the release notes.
+Windows builds are currently unsigned, so Windows may show an unknown-publisher warning. Verify that the download came from this repository and compare its SHA-256 checksum with the release's `SHA256SUMS.txt` file.
 
 ### Linux
 
@@ -47,6 +47,16 @@ Requirements:
 Native `.deb` and `.rpm` packages configure the collector's packet-capture capabilities during installation. Run Vale Companion as your normal user; do not run the desktop application with `sudo`.
 
 The AppImage is portable but cannot retain Linux file capabilities. AppImage users should configure their distribution's `dumpcap` package for non-root capture. On Debian or Ubuntu, install `libpcap0.8` and `wireshark-common`, allow non-superusers to capture when prompted, add your account to the `wireshark` group, then sign out and back in.
+
+## Updates
+
+Vale Companion checks for stable releases shortly after startup and every six hours. An in-app notice offers release details, **Later**, and **Update and restart**. Settings includes **Check for updates**, **Skip this version**, and a toggle to disable automatic checks.
+
+Nothing downloads or installs until you choose **Update and restart**. That action downloads and verifies the update, saves the current session, stops capture, installs, and restarts. Closing the app normally never installs a pending update. Windows installer and Linux AppImage builds support this flow; DEB/RPM updates may request system authorization. AppImages must be in a writable folder. Windows portable builds link to GitHub Releases for manual replacement.
+
+Older releases need one manual download to acquire this updater. Normal application data stays in place. If you use `.valecompanion-portable` on Windows, keep replacing the portable executable beside its `data` folder, or close the app, back up that folder, and copy its contents into `%APPDATA%\Vale Companion` before opening the installed edition. Reconcile any existing destination data first.
+
+See [release maintenance](docs/releases.md) for the build workflow and upgrade validation.
 
 ## Loot workspace
 
@@ -133,7 +143,7 @@ Useful commands:
 bun run dev           Build and launch a development window
 bun run check         Type-check and run the complete test suite
 bun run build         Prepare the Electron application
-bun run package:win   Build the Windows portable executable
+bun run package:win   Build Windows installer and portable executable; smoke-test portable
 bun run package:linux Build Linux AppImage, deb, and rpm artifacts
 ```
 
