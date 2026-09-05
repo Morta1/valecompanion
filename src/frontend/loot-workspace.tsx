@@ -14,6 +14,23 @@ const apiRoot = window.location.origin;
 type Surface = "bag" | "storage" | "filters" | "history";
 type BagOrder = "name" | "value";
 
+const INVENTORY_CATEGORIES: Array<[LootItemView["kind"], string]> = [
+  ["equipment", "Equipment"], ["artifact", "Artifacts"], ["card", "Cards"], ["gem", "Gems"],
+  ["material", "Materials"], ["consumable", "Consumables"], ["cosmetic", "Cosmetics"],
+];
+interface InventoryGrouping {
+  enabled: boolean;
+  collapsed: string[];
+  setEnabled(value: boolean): void;
+  toggle(kind: string): void;
+}
+function readGrouping(): { enabled: boolean; collapsed: string[] } {
+  try {
+    const value = JSON.parse(localStorage.getItem("valecompanion.inventory-grouping") ?? "null");
+    return { enabled: value?.enabled !== false, collapsed: Array.isArray(value?.collapsed) ? value.collapsed.filter((kind: unknown) => typeof kind === "string" && INVENTORY_CATEGORIES.some(([key]) => key === kind)) : [] };
+  } catch { return { enabled: true, collapsed: [] }; }
+}
+
 export interface LootWorkspaceProps {
   state: DesktopState | undefined;
   connectionError: string | undefined;
@@ -22,6 +39,15 @@ export interface LootWorkspaceProps {
 }
 
 export function LootWorkspace({ state, connectionError, refreshState, onFindInMarket }: LootWorkspaceProps) {
+  const [groupPreference, setGroupPreference] = useState(readGrouping);
+  useEffect(() => {
+    try { localStorage.setItem("valecompanion.inventory-grouping", JSON.stringify(groupPreference)); } catch { /* Keep the preference for this session when storage is unavailable. */ }
+  }, [groupPreference]);
+  const grouping: InventoryGrouping = {
+    ...groupPreference,
+    setEnabled: (enabled) => setGroupPreference((previous) => ({ ...previous, enabled })),
+    toggle: (kind) => setGroupPreference((previous) => ({ ...previous, collapsed: previous.collapsed.includes(kind) ? previous.collapsed.filter((key) => key !== kind) : [...previous.collapsed, kind] })),
+  };
   const [surface, setSurface] = useState<Surface>("filters");
   const [actionError, setActionError] = useState<string>();
   const [busy, setBusy] = useState<string>();
@@ -156,8 +182,8 @@ export function LootWorkspace({ state, connectionError, refreshState, onFindInMa
       <main class="loot-workspace">
         {actionError && <div class="notice error" role="alert"><span>{actionError}</span><button type="button" onClick={() => setActionError(undefined)} aria-label="Dismiss error">×</button></div>}
         {state?.warning && <div class="notice warning" role="status">{state.warning}</div>}
-        {(surface === "bag" || surface === "storage") && <BagSurface storage={surface === "storage"} state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} order={order} onOrder={setOrder} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
-        {surface === "filters" && <FiltersSurface state={state} text={filterText} dirty={filterDirty} scroll={editorScroll} lineNumbers={lineNumbers} profileName={profileName} selected={selected} busy={busy} onText={(value) => { setFilterText(value); setFilterDirty(true); }} onScroll={setEditorScroll} onSave={() => void saveFilter()} onProfileName={setProfileName} onProfile={profile} onSelect={setSelectedUid} />}
+        {(surface === "bag" || surface === "storage") && <BagSurface grouping={grouping} storage={surface === "storage"} state={state} error={connectionError} query={query} matchesOnly={matchesOnly} items={filteredBag} selected={selected} busy={busy} onQuery={setQuery} onMatchesOnly={setMatchesOnly} order={order} onOrder={setOrder} onSelect={setSelectedUid} onRetry={() => void refreshState()} />}
+        {surface === "filters" && <FiltersSurface grouping={grouping} state={state} text={filterText} dirty={filterDirty} scroll={editorScroll} lineNumbers={lineNumbers} profileName={profileName} selected={selected} busy={busy} onText={(value) => { setFilterText(value); setFilterDirty(true); }} onScroll={setEditorScroll} onSave={() => void saveFilter()} onProfileName={setProfileName} onProfile={profile} onSelect={setSelectedUid} />}
         {surface === "history" && <HistorySurface history={history} loading={!state && !connectionError} busy={busy} onClear={() => void clearHistory()} onReload={() => void loadHistory()} />}
         {surface !== "history" && selected && <ItemInspector item={selected} onClose={() => setSelectedUid(undefined)} onFindInMarket={onFindInMarket} />}
       </main>
@@ -169,8 +195,8 @@ function NavButton({ current, value, label, detail, onSelect }: { current: Surfa
   return <button class={`module-tab ${current === value ? "active" : ""}`} type="button" aria-current={current === value ? "page" : undefined} onClick={() => onSelect(value)}><span>{label}</span>{detail && <small>{detail}</small>}</button>;
 }
 
-function BagSurface({ storage = false, state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, order, onOrder, onSelect, onRetry }: {
-  storage?: boolean; state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; order: BagOrder; onOrder(value: BagOrder): void; onSelect(uid: string): void; onRetry(): void;
+function BagSurface({ grouping, storage = false, state, error, query, matchesOnly, items, selected, busy, onQuery, onMatchesOnly, order, onOrder, onSelect, onRetry }: {
+  grouping: InventoryGrouping; storage?: boolean; state: DesktopState | undefined; error: string | undefined; query: string; matchesOnly: boolean; items: LootItemView[]; selected: LootItemView | undefined; busy: string | undefined; onQuery(value: string): void; onMatchesOnly(value: boolean): void; order: BagOrder; onOrder(value: BagOrder): void; onSelect(uid: string): void; onRetry(): void;
 }) {
   const inventory = (storage ? state?.storage : state?.bag) ?? [];
   const generatedAt = storage ? state?.storageGeneratedAt : state?.bagGeneratedAt;
@@ -187,6 +213,7 @@ function BagSurface({ storage = false, state, error, query, matchesOnly, items, 
       <label class="search-field"><span class="visually-hidden">Search {label}</span><span aria-hidden="true">⌕</span><input type="search" value={query} placeholder="Search item, trait, rule, or tag" onInput={(event) => onQuery(event.currentTarget.value)} />{query && <button type="button" onClick={() => onQuery("")} aria-label={`Clear ${label} search`}>×</button>}</label>
       <div class="segmented order" aria-label={`${label} order`}><button class={order === "name" ? "selected" : ""} type="button" aria-pressed={order === "name"} onClick={() => onOrder("name")}>Name</button><button class={order === "value" ? "selected" : ""} type="button" aria-pressed={order === "value"} onClick={() => onOrder("value")}>Value</button></div>
       <div class="segmented" aria-label={`${label} scope`}><button class={!matchesOnly ? "selected" : ""} type="button" aria-pressed={!matchesOnly} onClick={() => onMatchesOnly(false)}>All <span>{inventory.length}</span></button><button class={matchesOnly ? "selected" : ""} type="button" aria-pressed={matchesOnly} onClick={() => onMatchesOnly(true)}>Matches <span>{inventory.filter((item) => item.match).length ?? 0}</span></button></div>
+      <GroupingControl grouping={grouping} />
       <span class="coverage">{coverage ?? "Waiting for a local snapshot"}</span>
     </div>
     <section class="ledger" aria-label={`Observed ${label}`} aria-live="polite">
@@ -199,7 +226,7 @@ function BagSurface({ storage = false, state, error, query, matchesOnly, items, 
         : !storage && state.phase === "disabled" ? <Empty title="Capture is paused" detail="Enable passive capture in Settings to watch the next bag snapshot." />
         : inventory.length === 0 ? <Empty title="Waiting for the first bag snapshot" detail={state.phase === "waiting-for-game" ? "Launch Spirit Vale, enter a character, then switch maps once to trigger a complete inventory snapshot." : "Switch maps once to trigger a complete inventory snapshot. Changing inventory can also make the game send one."} />
         : items.length === 0 ? <Empty title="No items match this view" detail={matchesOnly ? "No current item matches your active filter. Switch to All to inspect these items." : "Try a shorter search term or clear the search."} action={matchesOnly && !query ? "Show all" : "Clear search"} onAction={() => { if (matchesOnly && !query) onMatchesOnly(false); else onQuery(""); }} />
-        : <div class="ledger-body">{items.map((item) => <ItemRow key={item.uid} item={item} selected={selected?.uid === item.uid} onSelect={onSelect} />)}</div>}
+        : <InventoryGrid items={items} grouping={grouping} selected={selected} onSelect={onSelect} searching={Boolean(query.trim()) || matchesOnly} />}
     </section>
     {busy && <div class="busy-note" role="status">{busy}</div>}
   </>;
@@ -207,6 +234,31 @@ function BagSurface({ storage = false, state, error, query, matchesOnly, items, 
 
 function SurfaceHeader({ eyebrow, title, freshness, live = false, children }: { eyebrow: string; title: string; freshness: string; live?: boolean; children?: JSX.Element | undefined }) {
   return <header class="surface-header"><div><div class="eyebrow">{eyebrow}</div><h1>{title}</h1></div><div class="header-detail"><span class={`capture-pulse ${live ? "live" : ""}`} aria-hidden="true" /><span>{freshness}</span>{children}</div></header>;
+}
+
+function GroupingControl({ grouping }: { grouping: InventoryGrouping }) {
+  return <label class="inventory-group-control">Group <select aria-label="Group inventory" value={grouping.enabled ? "category" : "none"} onChange={(event) => grouping.setEnabled(event.currentTarget.value === "category")}><option value="none">None</option><option value="category">Category</option></select></label>;
+}
+
+function InventoryGrid({ items, grouping, selected, onSelect, preview = false, searching = false }: {
+  items: LootItemView[]; grouping: InventoryGrouping; selected: LootItemView | undefined; onSelect(uid: string): void; preview?: boolean; searching?: boolean;
+}) {
+  const renderItem = (item: LootItemView) => <ItemRow key={item.uid} item={item} selected={selected?.uid === item.uid} onSelect={onSelect} />;
+  return <div class={preview ? "preview-grid" : "ledger-body"}>{!grouping.enabled ? items.map(renderItem) : INVENTORY_CATEGORIES.flatMap(([kind, label]) => {
+    const members = items.filter((item) => item.kind === kind);
+    if (!members.length) return [];
+    const priced = members.filter((item) => item.value !== undefined);
+    const total = priced.reduce((sum, item) => sum + item.value!.low, 0);
+    // Searching temporarily opens sections so remembered collapses cannot hide results.
+    const collapsed = !searching && grouping.collapsed.includes(kind);
+    return [
+      <button key={`category-${kind}`} class="inventory-category" type="button" aria-expanded={!collapsed} disabled={searching} onClick={() => grouping.toggle(kind)}>
+        <span class="category-chevron" aria-hidden="true">{collapsed ? ">" : "v"}</span><strong>{label}</strong><span class="category-count">{members.length} {members.length === 1 ? "item" : "items"}</span>
+        {priced.length > 0 && <span class="category-value" title={`${exactMoney(total)} estimated total for ${priced.length} of ${members.length} displayed items; includes stack quantities`}>{"\u2248 "}{shortMoney(total)}{priced.length < members.length ? " priced" : ""}</span>}
+      </button>,
+      ...(collapsed ? [] : members.map(renderItem)),
+    ];
+  })}</div>;
 }
 
 function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: boolean; onSelect(uid: string): void }) {
@@ -238,8 +290,8 @@ function ItemInspector({ item, onClose, onFindInMarket }: { item: LootItemView; 
   </aside>;
 }
 
-function FiltersSurface({ state, text, dirty, scroll, lineNumbers, profileName, selected, busy, onText, onScroll, onSave, onProfileName, onProfile, onSelect }: {
-  state: DesktopState | undefined; text: string; dirty: boolean; scroll: number; lineNumbers: string[]; profileName: string; selected: LootItemView | undefined; busy: string | undefined; onText(value: string): void; onScroll(value: number): void; onSave(): void; onProfileName(value: string): void; onProfile(command: ProfileCommand): void; onSelect(uid: string): void;
+function FiltersSurface({ grouping, state, text, dirty, scroll, lineNumbers, profileName, selected, busy, onText, onScroll, onSave, onProfileName, onProfile, onSelect }: {
+  grouping: InventoryGrouping;   state: DesktopState | undefined; text: string; dirty: boolean; scroll: number; lineNumbers: string[]; profileName: string; selected: LootItemView | undefined; busy: string | undefined; onText(value: string): void; onScroll(value: number): void; onSave(): void; onProfileName(value: string): void; onProfile(command: ProfileCommand): void; onSelect(uid: string): void;
 }) {
   const active = state?.profiles.find((profile) => profile.active);
   const activeName = active?.name ?? "";
@@ -256,9 +308,10 @@ function FiltersSurface({ state, text, dirty, scroll, lineNumbers, profileName, 
       </section>
       <section class="filter-bag-preview" aria-label="Bag as painted by the filter">
         <div class="preview-head"><div class="section-kicker">{ruleCount === 0 ? "Inventory preview · no rules active" : "Your bag, as the filter paints it"}</div><div class="preview-tally"><span><b>{matched}</b> rule match{matched === 1 ? "" : "es"}</span><span><b>{Math.max(0, (state?.bag.length ?? 0) - matched)}</b> unmatched</span><span><b>{state?.bag.length ?? 0}</b> seen this session</span></div></div>
+        <div class="preview-grouping"><GroupingControl grouping={grouping} /></div>
         {!state || state.bag.length === 0
           ? <Empty title="Waiting for the bag" detail="Enter a character, then switch maps once to trigger the first complete inventory snapshot. That snapshot becomes the silent baseline." />
-          : <div class="preview-grid">{state.bag.map((item) => <ItemRow key={item.uid} item={item} selected={selected?.uid === item.uid} onSelect={onSelect} />)}</div>}
+          : <InventoryGrid items={state.bag} grouping={grouping} selected={selected} onSelect={onSelect} preview />}
       </section>
       <aside class="filter-side">
         <section class="side-section"><div class="section-kicker">High-roll threshold</div><output class="threshold-value">{state ? `${state.filter.threshold}%` : "—"}</output><p>Defines the HighRolls item metric. It never highlights an item without a matching Show rule.</p></section>
