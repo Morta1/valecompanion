@@ -201,15 +201,16 @@ function SurfaceHeader({ eyebrow, title, freshness, live = false, children }: { 
 }
 
 function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: boolean; onSelect(uid: string): void }) {
+  const name = `${item.refine > 0 ? `+${item.refine} ` : ""}${item.name || item.itemId}`;
   const approx = item.value !== undefined && approximate(item.value);
   const bestLines = item.lines.filter((line) => line.over || line.rollPct >= 90).slice(0, 2);
   const style = item.match ? { "--rule-color": item.match.color } as JSX.CSSProperties : undefined;
   const treatment = item.match ? `matched highlight-${item.match.highlight} background-${item.match.background} ${item.match.border ? "" : "border-off"}` : "";
-  return <button class={`item-row ${selected ? "selected" : ""} ${treatment}`} style={style} type="button" onClick={() => onSelect(item.uid)}>
-    <span class="item-cell">{item.icon ? <img class="item-icon" src={iconUrl(item.icon)} alt="" loading="lazy" decoding="async" /> : <span class={`item-sigil ${item.kind}`}>{item.kind.charAt(0).toUpperCase()}</span>}<span><strong>{item.name || item.itemId}</strong><small>{item.type} · {item.refine > 0 ? `+${item.refine}` : item.itemId}{item.count > 1 ? ` · ×${item.count}` : ""}{item.favorite ? " · favorited" : ""}</small></span></span>
+  return <button class={`item-row ${selected ? "selected" : ""} ${treatment}`} style={style} title={name} aria-pressed={selected} type="button" onClick={() => onSelect(item.uid)}>
+    <span class="item-cell">{item.icon ? <img class="item-icon" src={iconUrl(item.icon)} alt="" loading="lazy" decoding="async" /> : <span class={`item-sigil ${item.kind}`}>{item.kind.charAt(0).toUpperCase()}</span>}<span><strong>{name}</strong>{item.count > 1 && <small class="item-quantity">{`\u00d7${item.count}`}</small>}</span></span>
     <span class="roll-summary">{bestLines.length ? bestLines.map((line) => <span key={line.stat} title={line.stat}>{statLabel(line.stat)} <b>{formatPct(line.rollPct)}</b></span>) : <em>{item.kind === "card" ? `${item.count} owned` : item.hasChaos ? "Chaos item" : "No high roll"}</em>}</span>
-    <span class="rule-cell">{item.match ? <><i /><span>{item.match.tag || item.match.rule}</span></> : <em>—</em>}</span>
-    <span class="roll-count">{item.topRolls ? `${item.topRolls} top` : ""}{item.highRolls ? `${item.highRolls} high` : ""}{item.value ? <small class={`value ${approx ? "approx" : ""}`} title={valueDetail(item.value, item.count)}>{approx ? "~" : ""}{shortMoney(item.value.low)}</small> : <small>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</small>}</span>
+    <span class="rule-cell">{item.match ? <><i /><span>{item.match.tag || item.match.rule}</span></> : <em>�</em>}</span>
+    <span class="roll-count">{item.topRolls ? `${item.topRolls} top ` : ""}{item.highRolls ? `${item.highRolls} high` : ""}{item.value ? <small class={`value ${approx ? "approx" : ""}`} title={valueDetail(item.value, item.count)}>{approx ? "~" : ""}{shortMoney(item.value.low)}</small> : <small>{item.avgRollPct === null ? "�" : formatPct(item.avgRollPct)}</small>}</span>
   </button>;
 }
 

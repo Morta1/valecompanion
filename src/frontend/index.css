@@ -451,3 +451,18 @@ h1, h2, h3 { font-family: var(--ui); font-weight: 600; }
   .gold-session-state { display: none !important; }
   .gold-history { width: calc(100% - 24px); margin-bottom: 12px; }
 }
+
+
+/* Keep the original dense bag and rules-preview geometry. */
+.item-cell small.item-quantity { top: 3px; right: 0; left: auto; color: var(--dim); font: 10px/1 var(--ui); letter-spacing: 0; }
+.item-row:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.inspector { width: min(400px, 100vw); gap: 16px; padding: 18px; }
+.inspector h2 { font-size: 18px; line-height: 1.3; white-space: normal; overflow-wrap: anywhere; }
+.inspector header p { font-size: 12px; line-height: 1.5; }
+.inspector .eyebrow, .inspector .section-kicker, .inspector-summary small { font-size: 11px; }
+.inspector .eyebrow { overflow-wrap: anywhere; }
+.inspector .stat-list { font-size: 13px; line-height: 1.5; }
+.inspector .stat-list div { padding: 7px 8px; }
+.inspector .muted, .inspector .market-value p, .inspector .match-detail p, .inspector .item-meta div, .inspector-actions small { font-size: 12px; line-height: 1.5; }
+.inspector .market-value strong { font-size: 17px; }
+.inspector .quiet-action, .inspector .close-button { min-height: 32px; font-size: 13px; }
