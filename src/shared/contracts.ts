@@ -109,7 +109,6 @@ export interface GoldSessionSummaryView {
 }
 
 export interface GoldAnalyticsView {
-  /** `paused`: a session exists but the game is not running, so the clock and rates hold still. */
   status: "waiting" | "tracking" | "paused";
   balance: number | null;
   startedAt: string | null;

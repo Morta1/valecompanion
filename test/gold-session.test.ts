@@ -219,9 +219,9 @@ describe("GoldSession pauses while the game is off", () => {
   test("time with the game closed does not count toward rates or session length", () => {
     const session = new GoldSession();
     session.consumeBalance(1_000, START);
-    session.consumeBalance(1_600, START + 30 * MIN);           // 600 earned over 30 min of play
+    session.consumeBalance(1_600, START + 30 * MIN);
     session.setGameActive(false, START + 30 * MIN);
-    const afterLongBreak = session.snapshot(START + 5 * 60 * MIN); // 4.5 hours later, game still off
+    const afterLongBreak = session.snapshot(START + 5 * 60 * MIN);
     expect(afterLongBreak.status).toBe("paused");
     expect(afterLongBreak.elapsedSeconds).toBe(30 * 60);
     expect(afterLongBreak.goldPerHour).toBe(1_200);
@@ -232,8 +232,8 @@ describe("GoldSession pauses while the game is off", () => {
     const session = new GoldSession();
     session.consumeBalance(1_000, START);
     session.setGameActive(false, START + 10 * MIN);
-    session.setGameActive(true, START + 70 * MIN);              // an hour away
-    session.consumeBalance(1_500, START + 80 * MIN);           // 500 earned, 20 min of play in total
+    session.setGameActive(true, START + 70 * MIN);
+    session.consumeBalance(1_500, START + 80 * MIN);
     const view = session.snapshot(START + 80 * MIN);
     expect(view.status).toBe("tracking");
     expect(view.elapsedSeconds).toBe(20 * 60);
@@ -255,7 +255,7 @@ describe("GoldSession pauses while the game is off", () => {
     session.consumeBalance(1_000, START);
     session.consumeBalance(1_300, START + 15 * MIN);
     const restored = GoldSession.restore(session.persisted());
-    const view = restored.snapshot(START + 8 * 60 * MIN);       // process was down for hours
+    const view = restored.snapshot(START + 8 * 60 * MIN);
     expect(view.status).toBe("paused");
     expect(view.elapsedSeconds).toBe(15 * 60);
     expect(view.goldPerHour).toBe(1_200);

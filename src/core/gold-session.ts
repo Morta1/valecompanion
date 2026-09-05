@@ -25,9 +25,7 @@ type PersistedActiveSession = {
   monsterKills: number;
   confirmedMonsterKills?: number;
   lastMonsterKillCount?: number;
-  /** Milliseconds of finished game-running stretches. Absent in saves from before pausing existed. */
   activeMs?: number;
-  /** Start of the stretch in progress when saved, if the game was running. */
   activeSince?: number;
   events: GoldEvent[];
 };
@@ -55,9 +53,8 @@ export class GoldSession {
   #monsterKills = 0;
   #confirmedMonsterKills = 0;
   #lastMonsterKillCount: number | undefined;
-  // Rates divide by time the game was running, not wall-clock time. `#activeMs` holds finished
-  // stretches, `#activeSince` the one in progress (null while the game is off), and
-  // `#activeIntervals` the last hour of stretches so the recent-window rate can exclude pauses.
+  // Rates divide by played time, not wall-clock. Intervals keep the last hour of stretches so the
+  // recent-window rate can exclude pauses.
   #activeMs = 0;
   #activeSince: number | null = null;
   readonly #activeIntervals: ActiveInterval[] = [];
@@ -81,10 +78,9 @@ export class GoldSession {
         ?? (state.active.earned > 0 ? state.active.monsterKills : 0);
       session.#lastMonsterKillCount = state.active.lastMonsterKillCount;
       session.#events.push(...state.active.events);
-      // The process was down, so nothing was observed since the save: a restored session starts
-      // paused. A stretch that was in progress is closed at the last balance change, the latest
-      // moment the game is known to have been running. Older saves have neither field; start to
-      // last change is the same idea applied to the whole session.
+      // Restore starts paused. An in-progress stretch is closed at the last balance change, the
+      // latest moment the game is known to have been running. Saves without activeMs use
+      // start-to-last-change.
       const lastKnownActive = state.active.lastChangeAt ?? state.active.startedAt;
       session.#activeMs = state.active.activeMs === undefined
         ? Math.max(0, lastKnownActive - state.active.startedAt)
@@ -93,7 +89,6 @@ export class GoldSession {
     return session;
   }
 
-  /** Called by the collector when the game appears or disappears. Pauses the clock while it is off. */
   setGameActive(active: boolean, at = Date.now()): void {
     if (active) this.#markActive(at);
     else this.#pause(at);
@@ -296,7 +291,6 @@ export class GoldSession {
     this.#monsterKills = 0;
     this.#confirmedMonsterKills = 0;
     this.#lastMonsterKillCount = undefined;
-    // Starting on a balance update means the game is running right now.
     this.#activeMs = 0;
     this.#activeSince = observedAt;
     this.#activeIntervals.length = 0;
@@ -317,12 +311,10 @@ export class GoldSession {
     while (this.#activeIntervals.length && this.#activeIntervals[0]!.to < cutoff) this.#activeIntervals.shift();
   }
 
-  /** Total game-running time in this session, including the stretch in progress. */
   #activeElapsed(at: number): number {
     return this.#activeMs + (this.#activeSince === null ? 0 : Math.max(0, at - this.#activeSince));
   }
 
-  /** Game-running time that falls inside [from, to]. */
   #activeWithin(from: number, to: number): number {
     const overlap = (interval: ActiveInterval) => Math.max(0, Math.min(interval.to, to) - Math.max(interval.from, from));
     let total = this.#activeIntervals.reduce((sum, interval) => sum + overlap(interval), 0);
