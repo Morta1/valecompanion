@@ -14,6 +14,11 @@ export function marketOpenRequest(item: LootItemView): MarketBridgeMessage {
   return { type: "valecompanion:market-open", search: params.toString(), name: item.name || item.itemId };
 }
 
+// Covers every field the market frame displays or prices, so a refine or reroll on an
+// existing UID re-sends the bag.
 export function bagSignature(bag: LootItemView[]): string {
-  return bag.map((item) => `${item.uid}:${item.count}`).join("|");
+  return bag.map((item) => [
+    item.uid, item.count, item.refine, item.favorite ? 1 : 0, item.hasChaos ? 1 : 0,
+    ...item.lines.map((line) => `${line.stat}=${line.printed ?? ""}${line.isChaos ? "c" : ""}`),
+  ].join(":")).join("|");
 }
