@@ -146,6 +146,8 @@ h1, h2, h3 { font-family: var(--ui); font-weight: 600; }
 .match-detail { display: grid; grid-template-columns: 9px 1fr; align-items: center; gap: 7px; margin-top: 7px; padding: 8px; border: 1px solid var(--line); border-left: 3px solid var(--rule-color); background: var(--sunk); }
 .match-swatch { width: 8px; height: 8px; background: var(--rule-color); }
 .match-detail p { grid-column: 1 / -1; color: var(--faint); font-size: 10px; }
+.inspector-actions { display: flex; flex-direction: column; gap: 6px; }
+.inspector-actions small { color: var(--faint); font-size: 10px; }
 .item-meta div { display: flex; justify-content: space-between; gap: 12px; color: var(--faint); font-size: 10px; }
 .item-meta code { overflow: hidden; max-width: 220px; color: var(--dim); text-overflow: ellipsis; white-space: nowrap; }
 
