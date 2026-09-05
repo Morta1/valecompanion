@@ -210,7 +210,7 @@ function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: b
     <span class="item-cell">{item.icon ? <img class="item-icon" src={iconUrl(item.icon)} alt="" loading="lazy" decoding="async" /> : <span class={`item-sigil ${item.kind}`}>{item.kind.charAt(0).toUpperCase()}</span>}<span><strong>{name}</strong>{item.count > 1 && <small class="item-quantity">{`\u00d7${item.count}`}</small>}</span></span>
     <span class="roll-summary">{bestLines.length ? bestLines.map((line) => <span key={line.stat} title={line.stat}>{statLabel(line.stat)} <b>{formatPct(line.rollPct)}</b></span>) : <em>{item.kind === "card" ? `${item.count} owned` : item.hasChaos ? "Chaos item" : "No high roll"}</em>}</span>
     <span class="rule-cell">{item.match ? <><i /><span>{item.match.tag || item.match.rule}</span></> : <em>�</em>}</span>
-    <span class="roll-count">{item.topRolls ? `${item.topRolls} top ` : ""}{item.highRolls ? `${item.highRolls} high` : ""}{item.value ? <small class={`value ${approx ? "approx" : ""}`} title={valueDetail(item.value, item.count)}>{approx ? "~" : ""}{shortMoney(item.value.low)}</small> : <small>{item.avgRollPct === null ? "�" : formatPct(item.avgRollPct)}</small>}</span>
+    <span class="roll-count">{item.topRolls ? `${item.topRolls} top ` : ""}{item.highRolls ? `${item.highRolls} high` : ""}{item.value ? <small class={`value ${approx ? "approx" : ""}`} title={valueDetail(item.value, item.count)}>{approx ? "~" : ""}{shortMoney(item.value.tier === "unit" ? item.value.low / Math.max(1, item.count) : item.value.low)}{item.value.tier === "unit" ? " each" : ""}</small> : <small>{item.avgRollPct === null ? "�" : formatPct(item.avgRollPct)}</small>}</span>
   </button>;
 }
 
@@ -222,7 +222,7 @@ function ItemInspector({ item, onClose, onFindInMarket }: { item: LootItemView; 
     <section class="inspector-section"><div class="section-kicker">Observed stats</div><dl class="stat-list">{item.lines.length ? item.lines.map((line) => <div key={`${line.stat}:${line.printed ?? ""}`} class={line.over ? "over" : ""}><dt title={`${line.stat} in rules`}>{statLabel(line.stat)}{line.isChaos && <span> Chaos</span>}</dt><dd>{line.printed === null ? "—" : line.printed}<b>{formatPct(line.rollPct)}</b></dd></div>) : <p class="muted">No stat lines were decoded for this item.</p>}</dl></section>
     <section class="inspector-section"><div class="section-kicker">Filter result</div>{item.match ? <div class="match-detail"><span class="match-swatch" /><strong>{item.match.rule}</strong><p><b>{item.match.tag || "Untagged"}</b> · {item.match.highlight} {item.match.background}{item.match.border ? " border" : ""}{item.match.sound ? ` · ${item.match.sound} sound` : " · no sound"}</p></div> : <p class="muted">This item does not match an active rule.</p>}</section>
     <section class="inspector-section"><div class="section-kicker">Market value</div>{item.value
-      ? <div class="market-value"><strong class={approx ? "approx" : ""}>{approx ? "~" : ""}{valueRange(item.value)}</strong><p>{valueDetail(item.value, item.count)}</p></div>
+      ? <div class="market-value"><strong class={approx ? "approx" : ""}>{approx ? "~" : ""}{item.value.tier === "unit" ? `${shortMoney(item.value.low)} stack value` : valueRange(item.value)}</strong><p>{valueDetail(item.value, item.count)}</p></div>
       : <p class="muted">Nothing of this item is listed on ValeMarket right now.</p>}</section>
     <section class="inspector-section item-meta"><div><span>UID</span><code>{item.uid}</code></div><div><span>Favorite</span><b>{item.favorite ? "Yes" : "No"}</b></div></section>
     <section class="inspector-section inspector-actions"><button class="quiet-action" type="button" onClick={() => onFindInMarket(item)}>Find in market</button><small>Opens ValeMarket on this item, filtered to rolls at least as good as yours.</small></section>
@@ -286,7 +286,7 @@ function valueDetail(value: MarketValueView, count: number): string {
     case "comparable": return `Asks for rolls at least as good as yours, cheapest to median · ${listings}`;
     case "same-lines": return `Asks with the same stat lines, values differ · ${listings}`;
     case "other-lines": return `Asks for this item, stat lines differ · ${listings}`;
-    case "unit": return `P25 to median unit ask × ${count} · ${listings}`;
+    case "unit": return `${exactMoney(value.low / Math.max(1, count))} each \u00d7 ${Math.max(1, count)} = ${exactMoney(value.low)} stack value. Based on P25 asking price; median ${exactMoney(value.median / Math.max(1, count))} each. ${listings}`;
   }
 }
 function relativeTime(value: string): string {
