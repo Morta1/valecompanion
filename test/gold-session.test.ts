@@ -4,6 +4,7 @@ import { GoldSession } from "../src/core/gold-session.ts";
 import type { SaviSnapshot } from "../src/core/types.ts";
 
 const START = Date.parse("2026-09-04T12:00:00.000Z");
+const MIN = 60_000;
 
 describe("GoldSession", () => {
   test("computes gross, spend, net, and normalized session rates from balance deltas", () => {
@@ -214,8 +215,6 @@ function coinPacket(rpcName: string, coins: number | string, objectId: number, o
 }
 
 describe("GoldSession pauses while the game is off", () => {
-  const MIN = 60_000;
-
   test("time with the game closed does not count toward rates or session length", () => {
     const session = new GoldSession();
     session.consumeBalance(1_000, START);
@@ -260,10 +259,8 @@ describe("GoldSession pauses while the game is off", () => {
     expect(view.elapsedSeconds).toBe(15 * 60);
     expect(view.goldPerHour).toBe(1_200);
 
-    const legacy = session.persisted();
-    delete (legacy.active as { activeMs?: number; activeSince?: number }).activeMs;
-    delete (legacy.active as { activeMs?: number; activeSince?: number }).activeSince;
-    const fromLegacy = GoldSession.restore(legacy);
+    const { activeMs, activeSince, ...legacyActive } = session.persisted().active!;
+    const fromLegacy = GoldSession.restore({ ...session.persisted(), active: legacyActive });
     expect(fromLegacy.snapshot(START + 8 * 60 * MIN).elapsedSeconds).toBe(15 * 60);
   });
 

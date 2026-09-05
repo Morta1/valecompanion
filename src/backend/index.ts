@@ -187,6 +187,15 @@ let routeMonitor: NodeJS.Timeout | undefined;
 let goldSaveTimer: NodeJS.Timeout | undefined;
 let goldSaveChain: Promise<void> = Promise.resolve();
 
+// The one place the game-running flag changes. Everything that keys off it hangs here.
+function setGameDetected(next: boolean): void {
+  if (gameDetected === next) return;
+  gameDetected = next;
+  targetActiveAtMs = next ? Date.now() : undefined;
+  goldSession.setGameActive(next);
+  scheduleGoldSave();
+}
+
 function scheduleGoldSave(): void {
   clearTimeout(goldSaveTimer);
   goldSaveTimer = setTimeout(() => {
@@ -328,10 +337,8 @@ async function restartCapture(
   resolvedCaptureDevice = undefined;
   captureHealthWarning = undefined;
   if (!preserveDecoder) {
-    gameDetected = false;
+    setGameDetected(false);
     activeConnectionId = undefined;
-    targetActiveAtMs = undefined;
-    goldSession.setGameActive(false);
   }
   warning = undefined;
 
@@ -376,13 +383,8 @@ async function restartCapture(
     const nextCapture = createPacketCapture();
     nextCapture.on("targetStatus", (status: CaptureTargetStatus) => {
       const wasDetected = gameDetected;
-      gameDetected = status.state === "active";
-      if (wasDetected !== gameDetected) {
-        targetActiveAtMs = gameDetected ? Date.now() : undefined;
-        if (!gameDetected) captureHealthWarning = undefined;
-        goldSession.setGameActive(gameDetected);
-        scheduleGoldSave();
-      }
+      setGameDetected(status.state === "active");
+      if (wasDetected && !gameDetected) captureHealthWarning = undefined;
       phase = gameDetected ? "capturing" : "waiting-for-game";
       detail = gameDetected
         ? `Spirit Vale detected on ${adapterLabel()}`
@@ -443,9 +445,8 @@ async function restartCapture(
     });
     capture = nextCapture;
     if (preserveDecoder && previousGameDetected) {
-      gameDetected = true;
-      targetActiveAtMs = Date.now();
-      goldSession.setGameActive(true);
+      setGameDetected(true);
+      targetActiveAtMs = Date.now(); // the health check counts from this restart, not the original detection
     }
     phase = gameDetected ? "capturing" : "waiting-for-game";
     detail = gameDetected

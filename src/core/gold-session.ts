@@ -79,12 +79,12 @@ export class GoldSession {
       session.#lastMonsterKillCount = state.active.lastMonsterKillCount;
       session.#events.push(...state.active.events);
       // Restore starts paused. An in-progress stretch is closed at the last balance change, the
-      // latest moment the game is known to have been running. Saves without activeMs use
-      // start-to-last-change.
-      const lastKnownActive = state.active.lastChangeAt ?? state.active.startedAt;
-      session.#activeMs = state.active.activeMs === undefined
-        ? Math.max(0, lastKnownActive - state.active.startedAt)
-        : state.active.activeMs + (state.active.activeSince === undefined ? 0 : Math.max(0, lastKnownActive - state.active.activeSince));
+      // latest moment the game is known to have been running. Saves without activeMs predate
+      // pausing and are treated as one stretch from the start.
+      const { activeMs, activeSince, startedAt, lastChangeAt } = state.active;
+      session.#activeMs = activeMs ?? 0;
+      session.#activeSince = activeMs === undefined ? startedAt : activeSince ?? null;
+      session.#pause(lastChangeAt ?? startedAt);
     }
     return session;
   }
@@ -187,22 +187,7 @@ export class GoldSession {
 
   end(observedAt = Date.now()): void {
     this.#archiveCurrent(observedAt);
-    this.#balance = null;
-    this.#startingBalance = null;
-    this.#playerObjectId = undefined;
-    this.#startedAt = null;
-    this.#lastChangeAt = null;
-    this.#events.length = 0;
-    this.#earned = 0;
-    this.#spent = 0;
-    this.#earningEvents = 0;
-    this.#spendingEvents = 0;
-    this.#monsterKills = 0;
-    this.#confirmedMonsterKills = 0;
-    this.#lastMonsterKillCount = undefined;
-    this.#activeMs = 0;
-    this.#activeSince = null;
-    this.#activeIntervals.length = 0;
+    this.#clearSession();
   }
 
   clearHistory(): void {
@@ -278,10 +263,19 @@ export class GoldSession {
   }
 
   #start(balance: number, observedAt: number, playerObjectId: number | undefined): void {
+    this.#clearSession();
     this.#balance = balance;
     this.#startingBalance = balance;
     this.#playerObjectId = playerObjectId;
     this.#startedAt = observedAt;
+    this.#activeSince = observedAt;
+  }
+
+  #clearSession(): void {
+    this.#balance = null;
+    this.#startingBalance = null;
+    this.#playerObjectId = undefined;
+    this.#startedAt = null;
     this.#lastChangeAt = null;
     this.#events.length = 0;
     this.#earned = 0;
@@ -292,7 +286,7 @@ export class GoldSession {
     this.#confirmedMonsterKills = 0;
     this.#lastMonsterKillCount = undefined;
     this.#activeMs = 0;
-    this.#activeSince = observedAt;
+    this.#activeSince = null;
     this.#activeIntervals.length = 0;
   }
 
@@ -307,8 +301,8 @@ export class GoldSession {
     this.#activeMs += to - from;
     this.#activeIntervals.push({ from, to });
     this.#activeSince = null;
-    const cutoff = at - EVENT_RETENTION_MS;
-    while (this.#activeIntervals.length && this.#activeIntervals[0]!.to < cutoff) this.#activeIntervals.shift();
+    // Only the recent-window rate reads intervals, so nothing older than that window is kept.
+    dropBefore(this.#activeIntervals, at - RECENT_WINDOW_MS, (interval) => interval.to);
   }
 
   #activeElapsed(at: number): number {
@@ -349,11 +343,8 @@ export class GoldSession {
   }
 
   #pruneEvents(observedAt: number): void {
-    const cutoff = observedAt - EVENT_RETENTION_MS;
-    let remove = 0;
-    while (remove < this.#events.length && this.#events[remove]!.at < cutoff) remove++;
-    if (this.#events.length - remove > MAX_EVENTS) remove = this.#events.length - MAX_EVENTS;
-    if (remove > 0) this.#events.splice(0, remove);
+    dropBefore(this.#events, observedAt - EVENT_RETENTION_MS, (event) => event.at);
+    if (this.#events.length > MAX_EVENTS) this.#events.splice(0, this.#events.length - MAX_EVENTS);
   }
 
   #buckets(observedAt: number): GoldBucketView[] {
@@ -448,6 +439,13 @@ function numericField(packet: CapturedFishNetPacket, name: string): number | und
 
 function rate(value: number, duration: number): number {
   return duration <= 0 ? 0 : value / duration;
+}
+
+/** Drops the leading entries of a chronologically ordered list whose timestamp is before `cutoff`. */
+function dropBefore<T>(list: T[], cutoff: number, at: (entry: T) => number): void {
+  let remove = 0;
+  while (remove < list.length && at(list[remove]!) < cutoff) remove++;
+  if (remove > 0) list.splice(0, remove);
 }
 
 function safeInteger(value: unknown, field: string): number {
