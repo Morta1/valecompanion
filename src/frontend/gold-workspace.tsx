@@ -66,9 +66,11 @@ export function GoldWorkspace({ state, connectionError, refreshState }: {
         <div><span class="eyebrow">Session ledger</span><strong>Gold analytics</strong></div>
         <div class="gold-session-state">
           <span class={`capture-pulse ${gold?.status === "tracking" ? "live" : ""}`} />
-          {gold?.status === "tracking" ? `Tracking · ${duration(gold.elapsedSeconds)}` : "Waiting for gold balance"}
+          {gold?.status === "tracking" ? `Tracking · ${duration(gold.elapsedSeconds)}`
+            : gold?.status === "paused" ? `Paused · game not running · ${duration(gold.elapsedSeconds)}`
+            : "Waiting for gold balance"}
         </div>
-        <button class="gold-reset" type="button" disabled={!gold || gold.status !== "tracking" || busyAction !== undefined} onClick={() => void reset()}>
+        <button class="gold-reset" type="button" disabled={!gold || gold.status === "waiting" || busyAction !== undefined} onClick={() => void reset()}>
           <RotateCcw size={13} />{busyAction === "reset" ? "Saving" : "Finish session"}
         </button>
       </header>

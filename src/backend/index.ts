@@ -331,6 +331,7 @@ async function restartCapture(
     gameDetected = false;
     activeConnectionId = undefined;
     targetActiveAtMs = undefined;
+    goldSession.setGameActive(false);
   }
   warning = undefined;
 
@@ -379,6 +380,8 @@ async function restartCapture(
       if (wasDetected !== gameDetected) {
         targetActiveAtMs = gameDetected ? Date.now() : undefined;
         if (!gameDetected) captureHealthWarning = undefined;
+        goldSession.setGameActive(gameDetected);
+        scheduleGoldSave();
       }
       phase = gameDetected ? "capturing" : "waiting-for-game";
       detail = gameDetected
@@ -442,6 +445,7 @@ async function restartCapture(
     if (preserveDecoder && previousGameDetected) {
       gameDetected = true;
       targetActiveAtMs = Date.now();
+      goldSession.setGameActive(true);
     }
     phase = gameDetected ? "capturing" : "waiting-for-game";
     detail = gameDetected

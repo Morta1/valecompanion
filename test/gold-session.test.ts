@@ -37,7 +37,9 @@ describe("GoldSession", () => {
     restored.consumePacket(coinPacket("ExpCoinsChanged_T", 8_001_000, 21, START + 120_000));
     const view = restored.snapshot(START + 120_000);
     expect(view.earned).toBe(1_000);
-    expect(view.goldPerHour).toBe(30_000);
+    // The process restarted between the two packets; the clock only runs from the first packet
+    // seen after the restore, so the 1_000 was earned over one active minute, not two.
+    expect(view.goldPerHour).toBe(60_000);
   });
 
   test("keeps one session across transient player object IDs and process restarts", () => {
@@ -108,13 +110,15 @@ describe("GoldSession", () => {
 
     const restored = GoldSession.restore(JSON.parse(JSON.stringify(session.persisted())));
     const active = restored.snapshot(START + 180_000);
+    // Restored sessions start paused: the minute the process was down is not played time.
     expect(active).toMatchObject({
-      status: "tracking",
+      status: "paused",
       balance: 1_650,
       earned: 150,
       previousSessions: [{ startingBalance: 1_000, endingBalance: 1_500, net: 500 }],
     });
-    expect(active.goldPerHour).toBe(4_500);
+    expect(active.elapsedSeconds).toBe(60);
+    expect(active.goldPerHour).toBe(9_000);
 
     restored.end(START + 180_000);
     const ended = restored.snapshot(START + 180_000);
@@ -124,7 +128,7 @@ describe("GoldSession", () => {
       startingBalance: 1_500,
       endingBalance: 1_650,
       earned: 150,
-      elapsedSeconds: 120,
+      elapsedSeconds: 60,
     });
 
     restored.clearHistory();
@@ -208,3 +212,69 @@ function coinPacket(rpcName: string, coins: number | string, objectId: number, o
     },
   };
 }
+
+describe("GoldSession pauses while the game is off", () => {
+  const MIN = 60_000;
+
+  test("time with the game closed does not count toward rates or session length", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.consumeBalance(1_600, START + 30 * MIN);           // 600 earned over 30 min of play
+    session.setGameActive(false, START + 30 * MIN);
+    const afterLongBreak = session.snapshot(START + 5 * 60 * MIN); // 4.5 hours later, game still off
+    expect(afterLongBreak.status).toBe("paused");
+    expect(afterLongBreak.elapsedSeconds).toBe(30 * 60);
+    expect(afterLongBreak.goldPerHour).toBe(1_200);
+    expect(afterLongBreak.recentGoldPerHour).toBe(0);
+  });
+
+  test("the clock resumes when the game returns and only the played stretches add up", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.setGameActive(false, START + 10 * MIN);
+    session.setGameActive(true, START + 70 * MIN);              // an hour away
+    session.consumeBalance(1_500, START + 80 * MIN);           // 500 earned, 20 min of play in total
+    const view = session.snapshot(START + 80 * MIN);
+    expect(view.status).toBe("tracking");
+    expect(view.elapsedSeconds).toBe(20 * 60);
+    expect(view.goldPerHour).toBe(1_500);
+    expect(view.recentGoldPerHour).toBe(3_000);                // 500 in the 10 active minutes of the last 15
+  });
+
+  test("a balance update while marked paused resumes the clock on its own", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.setGameActive(false, START + 5 * MIN);
+    session.consumeBalance(1_100, START + 65 * MIN);
+    expect(session.snapshot(START + 65 * MIN).status).toBe("tracking");
+    expect(session.snapshot(START + 70 * MIN).elapsedSeconds).toBe(10 * 60); // 5 played + 5 since the update
+  });
+
+  test("restoring from disk starts paused and keeps the played time, old saves included", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.consumeBalance(1_300, START + 15 * MIN);
+    const restored = GoldSession.restore(session.persisted());
+    const view = restored.snapshot(START + 8 * 60 * MIN);       // process was down for hours
+    expect(view.status).toBe("paused");
+    expect(view.elapsedSeconds).toBe(15 * 60);
+    expect(view.goldPerHour).toBe(1_200);
+
+    const legacy = session.persisted();
+    delete (legacy.active as { activeMs?: number; activeSince?: number }).activeMs;
+    delete (legacy.active as { activeMs?: number; activeSince?: number }).activeSince;
+    const fromLegacy = GoldSession.restore(legacy);
+    expect(fromLegacy.snapshot(START + 8 * 60 * MIN).elapsedSeconds).toBe(15 * 60);
+  });
+
+  test("finishing a session archives played time, not wall time", () => {
+    const session = new GoldSession();
+    session.consumeBalance(1_000, START);
+    session.consumeBalance(1_200, START + 10 * MIN);
+    session.setGameActive(false, START + 10 * MIN);
+    session.reset(START + 3 * 60 * MIN);
+    const archived = session.snapshot(START + 3 * 60 * MIN).previousSessions[0]!;
+    expect(archived.elapsedSeconds).toBe(10 * 60);
+    expect(archived.goldPerHour).toBe(1_200);
+  });
+});
