@@ -75,7 +75,8 @@ h1, h2, h3 { font-family: var(--ui); font-weight: 600; }
 .search-field input { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 11px; }
 .search-field input::placeholder { color: var(--faint); }
 .search-field button { border: 0; background: transparent; color: var(--dim); }
-.segmented { display: flex; margin-left: auto; }
+.segmented { display: flex; }
+.ledger-tools .search-field { margin-right: auto; }
 .segmented button { padding: 3px 8px; border: 1px solid var(--line); background: var(--panel); color: var(--faint); font-size: 10px; }
 .segmented button + button { border-left: 0; }
 .segmented button.selected { border-color: var(--gold-dim); color: var(--gold); background: #161d19; }
@@ -110,6 +111,12 @@ h1, h2, h3 { font-family: var(--ui); font-weight: 600; }
 .roll-count { position: absolute; right: 5px; bottom: 4px; left: 5px; display: flex; gap: 5px; color: var(--warn); font: 8.5px/1 var(--mono); text-shadow: 0 1px 2px #000; }
 .item-row:not(.matched) .roll-count { color: var(--faint); }
 .roll-count small { margin-left: auto; color: var(--dim); }
+.roll-count small.value { color: var(--gold); }
+.roll-count small.value.approx { color: var(--dim); }
+.bag-total { color: var(--gold); }
+.market-value strong { display: block; color: var(--gold); font: 600 15px/1 var(--mono); }
+.market-value strong.approx { color: var(--dim); }
+.market-value p { margin-top: 5px; color: var(--faint); font-size: 10px; line-height: 1.4; }
 @keyframes item-glow { 50% { box-shadow: inset 0 0 22px color-mix(in srgb, var(--rule-color) 72%, transparent), 0 0 14px -1px var(--rule-color); } }
 @keyframes holo-shift { 50% { background-position: 100% 100%; } }
 .empty-state { display: grid; min-height: 300px; flex: 1; place-content: center; padding: 32px; text-align: center; }

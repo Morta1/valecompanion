@@ -2,9 +2,9 @@ import { Coins, History, RotateCcw, Trash2 } from "lucide-preact";
 import { useState } from "preact/hooks";
 import type { DesktopState, GoldAnalyticsView, GoldSessionSummaryView } from "../shared/contracts.ts";
 
+import { compactMoney, exactMoney } from "./format.ts";
+
 const apiRoot = window.location.origin;
-const compactFormatter = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 });
-const exactFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
 export function GoldWorkspace({ state, connectionError, refreshState }: {
   state: DesktopState | undefined;
@@ -183,17 +183,8 @@ function SessionHistory({ sessions, clearing, deletingSessionId, onClear, onDele
   </section>;
 }
 
-function compactMoney(value: number): string {
-  const rounded = Math.round(Math.abs(value));
-  return rounded < 1_000_000 ? exactFormatter.format(rounded) : compactFormatter.format(rounded);
-}
-
 function signedCompact(value: number): string {
   return `${value >= 0 ? "+" : "−"}${compactMoney(value)}`;
-}
-
-function exactMoney(value: number): string {
-  return exactFormatter.format(Math.round(value));
 }
 
 function duration(seconds: number): string {
