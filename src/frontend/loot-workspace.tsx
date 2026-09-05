@@ -6,6 +6,7 @@ import {
   type LootItemView,
   type ProfileCommand,
 } from "../shared/contracts.ts";
+import { statLabel } from "../shared/stat-labels.ts";
 
 const apiRoot = window.location.origin;
 type Surface = "bag" | "filters" | "history";
@@ -74,7 +75,8 @@ export function LootWorkspace({ state, connectionError, refreshState }: LootWork
   const filteredBag = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase();
     return (state?.bag ?? []).filter((item) => {
-      const searchable = [item.name, item.type, item.itemId, ...item.lines.map((line) => line.stat), item.match?.rule, item.match?.tag]
+      // Both spellings are searchable: "Attack Speed" as displayed, "AtkSpd" as written in rules.
+      const searchable = [item.name, item.type, item.itemId, ...item.lines.flatMap((line) => [line.stat, statLabel(line.stat)]), item.match?.rule, item.match?.tag]
         .filter((part): part is string => Boolean(part))
         .join(" ").toLocaleLowerCase();
       return (!matchesOnly || item.match !== null) && (!needle || searchable.includes(needle));
@@ -193,7 +195,7 @@ function ItemRow({ item, selected, onSelect }: { item: LootItemView; selected: b
   const treatment = item.match ? `matched highlight-${item.match.highlight} background-${item.match.background} ${item.match.border ? "" : "border-off"}` : "";
   return <button class={`item-row ${selected ? "selected" : ""} ${treatment}`} style={style} type="button" onClick={() => onSelect(item.uid)}>
     <span class="item-cell">{item.icon ? <img class="item-icon" src={iconUrl(item.icon)} alt="" loading="lazy" decoding="async" /> : <span class={`item-sigil ${item.kind}`}>{item.kind.charAt(0).toUpperCase()}</span>}<span><strong>{item.name || item.itemId}</strong><small>{item.type} · {item.refine > 0 ? `+${item.refine}` : item.itemId}{item.count > 1 ? ` · ×${item.count}` : ""}{item.favorite ? " · favorited" : ""}</small></span></span>
-    <span class="roll-summary">{bestLines.length ? bestLines.map((line) => <span key={line.stat}>{line.stat} <b>{formatPct(line.rollPct)}</b></span>) : <em>{item.kind === "card" ? `${item.count} owned` : item.hasChaos ? "Chaos item" : "No high roll"}</em>}</span>
+    <span class="roll-summary">{bestLines.length ? bestLines.map((line) => <span key={line.stat} title={line.stat}>{statLabel(line.stat)} <b>{formatPct(line.rollPct)}</b></span>) : <em>{item.kind === "card" ? `${item.count} owned` : item.hasChaos ? "Chaos item" : "No high roll"}</em>}</span>
     <span class="rule-cell">{item.match ? <><i /><span>{item.match.tag || item.match.rule}</span></> : <em>—</em>}</span>
     <span class="roll-count">{item.topRolls ? `${item.topRolls} top` : ""}{item.highRolls ? `${item.highRolls} high` : ""}<small>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</small></span>
   </button>;
@@ -203,7 +205,7 @@ function ItemInspector({ item, onClose }: { item: LootItemView; onClose(): void 
   return <aside class="inspector" aria-label="Selected item" style={item.match ? { "--rule-color": item.match.color } as JSX.CSSProperties : undefined}>
     <header>{item.icon && <img class="inspector-icon" src={iconUrl(item.icon)} alt="" />}<div><div class="eyebrow">{item.kind} · {item.itemId}</div><h2>{item.name || item.itemId}</h2><p>{item.type}{item.refine > 0 ? ` · Refine +${item.refine}` : ""}</p></div><button type="button" class="close-button" onClick={onClose} aria-label="Close item inspector">×</button></header>
     <section class="inspector-summary"><div><small>Average roll</small><strong>{item.avgRollPct === null ? "—" : formatPct(item.avgRollPct)}</strong></div><div><small>High rolls</small><strong>{item.highRolls}</strong></div><div><small>Chaos</small><strong>{item.hasChaos ? "Yes" : "No"}</strong></div></section>
-    <section class="inspector-section"><div class="section-kicker">Observed stats</div><dl class="stat-list">{item.lines.length ? item.lines.map((line) => <div key={`${line.stat}:${line.printed ?? ""}`} class={line.over ? "over" : ""}><dt>{line.stat}{line.isChaos && <span> Chaos</span>}</dt><dd>{line.printed === null ? "—" : line.printed}<b>{formatPct(line.rollPct)}</b></dd></div>) : <p class="muted">No stat lines were decoded for this item.</p>}</dl></section>
+    <section class="inspector-section"><div class="section-kicker">Observed stats</div><dl class="stat-list">{item.lines.length ? item.lines.map((line) => <div key={`${line.stat}:${line.printed ?? ""}`} class={line.over ? "over" : ""}><dt title={`${line.stat} in rules`}>{statLabel(line.stat)}{line.isChaos && <span> Chaos</span>}</dt><dd>{line.printed === null ? "—" : line.printed}<b>{formatPct(line.rollPct)}</b></dd></div>) : <p class="muted">No stat lines were decoded for this item.</p>}</dl></section>
     <section class="inspector-section"><div class="section-kicker">Filter result</div>{item.match ? <div class="match-detail"><span class="match-swatch" /><strong>{item.match.rule}</strong><p><b>{item.match.tag || "Untagged"}</b> · {item.match.highlight} {item.match.background}{item.match.border ? " border" : ""}{item.match.sound ? ` · ${item.match.sound} sound` : " · no sound"}</p></div> : <p class="muted">This item does not match an active rule.</p>}</section>
     <section class="inspector-section item-meta"><div><span>UID</span><code>{item.uid}</code></div><div><span>Favorite</span><b>{item.favorite ? "Yes" : "No"}</b></div></section>
   </aside>;
